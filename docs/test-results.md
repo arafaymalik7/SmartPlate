@@ -20,3 +20,9 @@
 - `npm run db:generate`: passed, Prisma Client 7.10.0 generated.
 - `npm run typecheck`: passed.
 - PostgreSQL migration/constraint checks: UNVERIFIED; no development database URL was supplied.
+
+## Browser E2E attempt
+
+- `npm run test:e2e` was executed with two public-route Playwright tests.
+- Result: 0/2 completed because Playwright could not find `chromium_headless_shell-1200`; no browser page was opened and no screenshot is claimed.
+- A Chromium installation was started; the required headless-shell download did not complete during the observed runtime.
