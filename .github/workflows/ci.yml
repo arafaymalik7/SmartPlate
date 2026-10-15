@@ -31,7 +31,8 @@ jobs:
       - run: npm run db:seed
       - run: npm run db:seed
       - run: npm run db:verify-seed
+      - run: npm run db:verify-public-catalog
       - run: npm test
       - run: npm run build
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e
+      - run: DATABASE_URL= DIRECT_URL= npm run test:e2e

@@ -26,6 +26,12 @@
 - Scope: made the idempotent illustrative seed assign explicit vegan verification to a bounded subset of dishes and update existing seed rows consistently. This gives the published PostgreSQL catalog the same verified-diet filter scenario exercised by the browser journey.
 - Verification: local lint, strict TypeScript, unit, build, and fallback Playwright checks are run before push; the real PostgreSQL seed/browser path is verified only by the next CI run.
 
+## CP-21 — Published-catalog CI separation increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added a PostgreSQL CI verifier for the real published catalog (four restaurants, 48 items, and vegan coverage) after migration and repeat seeding. Browser snapshots now intentionally run in explicit no-database fallback mode, preserving deterministic UI coverage while the separate verifier proves the database branch.
+- Verification: local lint, strict TypeScript, unit, build, and 24 fallback Playwright checks pass. The new remote catalog verifier awaits the pushed CI run.
+
 ## CP-06/07/13 — Published-data catalog increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

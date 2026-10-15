@@ -24,6 +24,7 @@
     "db:deploy": "prisma migrate deploy",
     "db:seed": "prisma db seed",
     "db:verify-seed": "tsx scripts/verify-seed-idempotency.ts",
+    "db:verify-public-catalog": "tsx scripts/verify-public-catalog.ts",
     "admin:bootstrap": "tsx scripts/bootstrap-admin.ts"
   },
   "dependencies": {
