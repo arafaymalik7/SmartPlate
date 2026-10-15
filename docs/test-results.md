@@ -68,3 +68,8 @@
 ## Public crawl metadata
 
 - `npm run test:e2e`: passed, 21/21. `/robots.txt` returns 200 and excludes `/admin`; `/sitemap.xml` returns 200 and includes the restaurant directory.
+
+## Interactive comparison
+
+- `npm run test:e2e`: passed, 21/21. The test changes a selected dish and confirms the new comparison column renders while a missing nutrient remains `Not available`.
+- Visual evidence: `docs/evidence/mobile-375-comparison.png`, `docs/evidence/tablet-768-comparison.png`, and `docs/evidence/desktop-1440-comparison.png`; the mobile capture was reviewed after improving table readability.

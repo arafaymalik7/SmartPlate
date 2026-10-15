@@ -10,10 +10,18 @@ test("public pages expose transparent demo guidance", async ({ page }, testInfo)
     fullPage: true,
   });
 });
-test("comparison preserves unavailable values", async ({ page }) => {
+test("comparison preserves unavailable values", async ({ page }, testInfo) => {
   await page.goto("/compare");
   await expect(page.getByRole("heading", { name: /compare meals/i })).toBeVisible();
   await expect(page.getByText("Not available").first()).toBeVisible();
+  const checkboxes = page.getByRole("checkbox");
+  await checkboxes.nth(1).uncheck();
+  await checkboxes.nth(3).check();
+  await expect(page.getByRole("columnheader", { name: /oat pancakes/i })).toBeVisible();
+  await page.screenshot({
+    path: `docs/evidence/${testInfo.project.name}-comparison.png`,
+    fullPage: true,
+  });
 });
 
 test("keyboard users can bypass repeated navigation", async ({ page }) => {

@@ -148,3 +148,10 @@
 - Scope: added Next.js metadata, robots and sitemap routes; public pages may be indexed while `/admin` and `/api/` are excluded in the generated robots policy.
 - Verification: lint/typecheck/unit checks passed and production Playwright passed 21/21, including direct `robots.txt` and `sitemap.xml` assertions at 375px, 768px and 1440px test projects.
 - Deployment note: `NEXT_PUBLIC_APP_URL` must be set to the actual public HTTPS origin before deployment so generated sitemap URLs do not use the local fallback.
+
+## CP-14 â€” Interactive comparison increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: replaced the fixed comparison with a bounded two-to-three dish selector, with per-serving metric table, null handling and mobile horizontal-scroll guidance.
+- Verification: production Playwright passed 21/21 and exercises selection of a different dish. The mobile comparison capture at `docs/evidence/mobile-375-comparison.png` was visually reviewed and the initially cramped table was corrected.
+- Limit: comparison currently uses labelled illustrative fallback data; persistence/bookmarking and database-backed options await the PostgreSQL environment.
