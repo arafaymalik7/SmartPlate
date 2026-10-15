@@ -1,0 +1,31 @@
+# Dependencies and Next.js build output
+node_modules/
+.next/
+out/
+coverage/
+playwright-report/
+test-results/
+
+# Local configuration and credentials
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Private university source materials: never commit or publish without written permission.
+docs/university/reference/
+
+# Legacy local runtime data and Python artefacts (the legacy implementation remains unmodified).
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
