@@ -64,3 +64,7 @@
 ## Keyboard navigation
 
 - `npm run test:e2e`: passed, 18/18. At each responsive viewport, the initial Tab lands on the “Skip to content” link and Enter targets `#content`.
+
+## Public crawl metadata
+
+- `npm run test:e2e`: passed, 21/21. `/robots.txt` returns 200 and excludes `/admin`; `/sitemap.xml` returns 200 and includes the restaurant directory.

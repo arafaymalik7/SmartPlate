@@ -25,6 +25,15 @@ test("keyboard users can bypass repeated navigation", async ({ page }) => {
   await expect(page).toHaveURL(/#content$/);
 });
 
+test("public crawl metadata excludes protected routes", async ({ request }) => {
+  const robots = await request.get("/robots.txt");
+  expect(robots.status()).toBe(200);
+  await expect(robots.text()).resolves.toContain("Disallow: /admin");
+  const sitemap = await request.get("/sitemap.xml");
+  expect(sitemap.status()).toBe(200);
+  await expect(sitemap.text()).resolves.toContain("/restaurants");
+});
+
 test("restaurant search has a truthful empty state", async ({ page }) => {
   await page.goto("/restaurants");
   await page.getByLabel(/search restaurants/i).fill("no-such-venue");

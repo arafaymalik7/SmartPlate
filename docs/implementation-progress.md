@@ -141,3 +141,10 @@
 - Timestamp: 2026-10-15 (Asia/Karachi)
 - Scope: added implementation-derived Mermaid source diagrams for runtime architecture, ERD, recommendation flow and admin mutation sequence, plus an accurate ten-slide defense outline and demo script.
 - Verification: diagrams were checked against the current schema, route handlers and recommendation engine. They remain Markdown source diagrams; no faculty approval, user-study result or rendered report figure is claimed.
+
+## CP-19 â€” Public crawl metadata increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added Next.js metadata, robots and sitemap routes; public pages may be indexed while `/admin` and `/api/` are excluded in the generated robots policy.
+- Verification: lint/typecheck/unit checks passed and production Playwright passed 21/21, including direct `robots.txt` and `sitemap.xml` assertions at 375px, 768px and 1440px test projects.
+- Deployment note: `NEXT_PUBLIC_APP_URL` must be set to the actual public HTTPS origin before deployment so generated sitemap URLs do not use the local fallback.
