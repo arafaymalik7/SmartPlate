@@ -85,3 +85,10 @@
 
 - Docker CLI and Compose are installed, but `docker compose up -d db` failed because `//./pipe/dockerDesktopLinuxEngine` does not exist: Docker Desktop's Linux engine is not running.
 - `psql` is not installed. Migration, seed and authenticated DB tests remain blocked by this environment state.
+
+## CP-19 â€” Responsive browser verification
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: configured Playwright to use an installed local Chromium when its standard headless-shell bundle is absent; browser tests run against a production build, cover 375px, 768px and 1440px viewports, and save reviewed public discovery captures under `docs/evidence/`.
+- Verification: `npm run test:e2e` passed 6/6. The restaurant-discovery captures at all three viewports were visually reviewed; navigation, restaurant content, transparent demo disclosure, links and footer are visible without overlap.
+- Remaining limits: these browser checks use typed illustrative in-memory data. Database-backed menus, authentication and admin journeys remain unverified until Docker Desktop's Linux engine is started or usable PostgreSQL `DATABASE_URL` and `DIRECT_URL` values are supplied.
