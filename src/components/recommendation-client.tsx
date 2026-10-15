@@ -8,13 +8,16 @@ export function RecommendationClient() {
   const [priority, setPriority] = useState<Priority>("NONE");
   const [target, setTarget] = useState(500);
   useEffect(() => {
-    const saved = window.localStorage.getItem("smartplate-preferences");
-    if (saved) {
-      const value = JSON.parse(saved) as { diet: Diet; priority: Priority; target: number };
-      setDiet(value.diet);
-      setPriority(value.priority);
-      setTarget(value.target);
-    }
+    const timer = window.setTimeout(() => {
+      const saved = window.localStorage.getItem("smartplate-preferences");
+      if (saved) {
+        const value = JSON.parse(saved) as { diet: Diet; priority: Priority; target: number };
+        setDiet(value.diet);
+        setPriority(value.priority);
+        setTarget(value.target);
+      }
+    });
+    return () => window.clearTimeout(timer);
   }, []);
   useEffect(() => {
     window.localStorage.setItem(
