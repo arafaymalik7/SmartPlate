@@ -13,6 +13,12 @@
 - Scope: corrected the restaurant empty-state browser assertion to accept the truthful published-data wording used in PostgreSQL-backed CI as well as the demonstration wording used in no-database local fallback mode.
 - Verification: lint, strict TypeScript, 20 Vitest checks, production build, and 24 local Playwright checks passed. The preceding catalog CI failures are traceable to the old fallback-only assertion; the pushed correction awaits its new CI result.
 
+## CP-04/09/21 — Dietary seed parity correction
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: made the idempotent illustrative seed assign explicit vegan verification to a bounded subset of dishes and update existing seed rows consistently. This gives the published PostgreSQL catalog the same verified-diet filter scenario exercised by the browser journey.
+- Verification: local lint, strict TypeScript, unit, build, and fallback Playwright checks are run before push; the real PostgreSQL seed/browser path is verified only by the next CI run.
+
 ## CP-06/07/13 — Published-data catalog increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

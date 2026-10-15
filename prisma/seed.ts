@@ -57,9 +57,11 @@ async function main() {
       },
     });
     for (const [index, name] of dishes.entries()) {
+      const dietaryStatus =
+        index % 6 === 0 ? "VEGAN_VERIFIED" : index % 3 === 0 ? "VEGETARIAN_VERIFIED" : "UNKNOWN";
       const item = await prisma.menuItem.upsert({
         where: { slug: `${slug}-${index + 1}` },
-        update: {},
+        update: { dietaryStatus },
         create: {
           restaurantId: restaurant.id,
           categoryId: category.id,
@@ -69,7 +71,7 @@ async function main() {
           price: 12 + index,
           servingSize: "1 serving",
           status: PublicationStatus.PUBLISHED,
-          dietaryStatus: index % 3 === 0 ? "VEGETARIAN_VERIFIED" : "UNKNOWN",
+          dietaryStatus,
         },
       });
       await prisma.menuItemNutrition.upsert({
