@@ -122,6 +122,28 @@ export function AdminConsole() {
     }
   };
 
+  const changeStatus = async (path: string, status: "DRAFT" | "PUBLISHED" | "ARCHIVED") => {
+    const isArchive = status === "ARCHIVED";
+    if (isArchive && !window.confirm("Archive this record? It will no longer be published."))
+      return;
+    setMessage("");
+    try {
+      await jsonOrError(
+        await fetch(path, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status }),
+        }),
+      );
+      setMessage(
+        isArchive ? "Record archived and audit record created." : "Publication status updated.",
+      );
+      await refresh();
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "The record status was not updated.");
+    }
+  };
+
   const submitRestaurant = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (
@@ -435,6 +457,53 @@ export function AdminConsole() {
           </button>
         </form>
         <section className="feature-card">
+          <h2>Restaurant records</h2>
+          {restaurants.length ? (
+            <ul className="admin-list">
+              {restaurants.map((restaurant) => (
+                <li key={restaurant.id}>
+                  <strong>{restaurant.name}</strong>
+                  <span>
+                    {restaurant.cuisine} · {restaurant.location} · {restaurant.status.toLowerCase()}
+                  </span>
+                  <p className="admin-actions">
+                    {restaurant.status === "DRAFT" && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          changeStatus(`/api/admin/restaurants/${restaurant.id}`, "PUBLISHED")
+                        }
+                      >
+                        Publish
+                      </button>
+                    )}
+                    {restaurant.status === "PUBLISHED" && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          changeStatus(`/api/admin/restaurants/${restaurant.id}`, "DRAFT")
+                        }
+                      >
+                        Unpublish
+                      </button>
+                    )}
+                    {restaurant.status !== "ARCHIVED" && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          changeStatus(`/api/admin/restaurants/${restaurant.id}`, "ARCHIVED")
+                        }
+                      >
+                        Archive
+                      </button>
+                    )}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No restaurant records are available yet.</p>
+          )}
           <h2>Recent records</h2>
           {items.length ? (
             <ul className="admin-list">
@@ -446,6 +515,34 @@ export function AdminConsole() {
                     {item.status.toLowerCase()} ·{" "}
                     {item.nutrition?.calories ?? "Nutrition unavailable"} kcal
                   </span>
+                  <p className="admin-actions">
+                    {item.status === "DRAFT" && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          changeStatus(`/api/admin/menu-items/${item.id}`, "PUBLISHED")
+                        }
+                      >
+                        Publish
+                      </button>
+                    )}
+                    {item.status === "PUBLISHED" && (
+                      <button
+                        type="button"
+                        onClick={() => changeStatus(`/api/admin/menu-items/${item.id}`, "DRAFT")}
+                      >
+                        Unpublish
+                      </button>
+                    )}
+                    {item.status !== "ARCHIVED" && (
+                      <button
+                        type="button"
+                        onClick={() => changeStatus(`/api/admin/menu-items/${item.id}`, "ARCHIVED")}
+                      >
+                        Archive
+                      </button>
+                    )}
+                  </p>
                 </li>
               ))}
             </ul>
@@ -469,8 +566,9 @@ export function AdminConsole() {
             <p>No audit events are available yet.</p>
           )}
           <p className="form-hint">
-            All writes remain server-authorized. Edit, delete, and production acceptance testing are
-            still not implemented or verified.
+            All writes remain server-authorized. Publication and archive actions are confirmed
+            before the request; full record editing and production acceptance testing remain
+            unverified.
           </p>
         </section>
       </div>

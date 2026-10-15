@@ -339,6 +339,25 @@ button:focus-visible {
   color: var(--muted);
   margin-top: 4px;
 }
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 0;
+}
+.admin-actions button {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 700;
+  padding: 6px 9px;
+}
+.admin-actions button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--focus) 45%, transparent);
+  outline-offset: 1px;
+}
 .directory-controls {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(220px, 0.7fr);

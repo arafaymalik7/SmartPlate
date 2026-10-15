@@ -10,6 +10,9 @@ export const restaurantSchema = z.object({
   description: z.string().trim().min(10).max(1200),
   status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]),
 });
+export const publicationStatusSchema = z.object({
+  status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]),
+});
 export const menuItemSchema = z.object({
   restaurantId: z.string().min(1),
   categoryId: z.string().min(1).optional(),

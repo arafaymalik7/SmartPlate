@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { categorySchema, menuItemSchema, restaurantSchema } from "./admin";
+import { categorySchema, menuItemSchema, publicationStatusSchema, restaurantSchema } from "./admin";
 describe("admin validation", () => {
   it("rejects negative price and invalid slug", () =>
     expect(
@@ -40,5 +40,9 @@ describe("admin validation", () => {
         sourceUrl: "not a url",
       }).success,
     ).toBe(false);
+  });
+  it("accepts only defined publication states", () => {
+    expect(publicationStatusSchema.safeParse({ status: "ARCHIVED" }).success).toBe(true);
+    expect(publicationStatusSchema.safeParse({ status: "DELETED" }).success).toBe(false);
   });
 });

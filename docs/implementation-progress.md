@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-16/17 — Publication lifecycle increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added server-authorized, origin-checked, rate-limited status routes for restaurant and menu-item publication state. The authenticated console now offers publish, unpublish, and confirmation-gated archive controls; each transition creates an audit record.
+- Verification: lint, strict TypeScript, 16 Vitest checks, production build, and 24 responsive public Playwright checks passed. The new authenticated actions remain compile- and unit-boundary verified only because a real administrator/PostgreSQL server is unavailable.
+- Limit: category lifecycle and full field-edit forms, ingredient/allergen administration, and database-backed authenticated acceptance tests remain outstanding.
+
 ## CP-23 — Clean-install final verification increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)
