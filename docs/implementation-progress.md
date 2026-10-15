@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-16 — Category lifecycle schema increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added a versioned `MenuCategory.status` lifecycle field with draft default, updated illustrative seed categories to published, and exposed draft/published/archived selection in the guarded creation form.
+- Verification: Prisma Client generated from the updated schema without a database connection; lint, strict TypeScript, 19 Vitest checks, and production build passed.
+- Limit: applying the new migration and testing category publication changes against a real PostgreSQL database is delegated to CI; category edit/archive controls remain a subsequent admin slice.
+
 ## CP-04/21 — Remote repeat-seed verification
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

@@ -42,7 +42,7 @@ const initialRestaurant = {
   description: "",
   status: "DRAFT",
 };
-const initialCategory = { restaurantId: "", name: "", slug: "" };
+const initialCategory = { restaurantId: "", name: "", slug: "", status: "DRAFT" };
 const initialItem = {
   restaurantId: "",
   categoryId: "",
@@ -249,6 +249,17 @@ export function AdminConsole() {
                 setRestaurantForm({ ...restaurantForm, slug: event.target.value })
               }
             />
+          </label>
+          <label>
+            Status
+            <select
+              value={categoryForm.status}
+              onChange={(event) => setCategoryForm({ ...categoryForm, status: event.target.value })}
+            >
+              <option value="DRAFT">Draft</option>
+              <option value="PUBLISHED">Published</option>
+              <option value="ARCHIVED">Archived</option>
+            </select>
           </label>
           <label>
             Cuisine

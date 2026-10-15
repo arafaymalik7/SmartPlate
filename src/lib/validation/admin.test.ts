@@ -41,6 +41,11 @@ describe("admin validation", () => {
       }).success,
     ).toBe(false);
   });
+  it("defaults categories to draft", () => {
+    expect(categorySchema.parse({ restaurantId: "x", name: "Sides", slug: "sides" }).status).toBe(
+      "DRAFT",
+    );
+  });
   it("accepts only defined publication states", () => {
     expect(publicationStatusSchema.safeParse({ status: "ARCHIVED" }).success).toBe(true);
     expect(publicationStatusSchema.safeParse({ status: "DELETED" }).success).toBe(false);

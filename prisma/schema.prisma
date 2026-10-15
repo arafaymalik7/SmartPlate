@@ -55,6 +55,7 @@ model MenuCategory {
  restaurantId String
  name String
  slug String
+ status PublicationStatus @default(DRAFT)
  restaurant Restaurant @relation(fields:[restaurantId],references:[id],onDelete:Cascade)
  items MenuItem[]
  @@unique([restaurantId,slug])

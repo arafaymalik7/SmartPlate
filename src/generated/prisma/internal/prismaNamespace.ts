@@ -1318,7 +1318,8 @@ export const MenuCategoryScalarFieldEnum = {
   id: 'id',
   restaurantId: 'restaurantId',
   name: 'name',
-  slug: 'slug'
+  slug: 'slug',
+  status: 'status'
 } as const
 
 export type MenuCategoryScalarFieldEnum = (typeof MenuCategoryScalarFieldEnum)[keyof typeof MenuCategoryScalarFieldEnum]

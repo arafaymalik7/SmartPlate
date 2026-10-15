@@ -48,4 +48,5 @@ export const categorySchema = z.object({
     .string()
     .trim()
     .regex(/^[a-z0-9-]+$/),
+  status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]).default("DRAFT"),
 });

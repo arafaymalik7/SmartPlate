@@ -29,6 +29,7 @@ export type MenuCategoryMinAggregateOutputType = {
   restaurantId: string | null
   name: string | null
   slug: string | null
+  status: $Enums.PublicationStatus | null
 }
 
 export type MenuCategoryMaxAggregateOutputType = {
@@ -36,6 +37,7 @@ export type MenuCategoryMaxAggregateOutputType = {
   restaurantId: string | null
   name: string | null
   slug: string | null
+  status: $Enums.PublicationStatus | null
 }
 
 export type MenuCategoryCountAggregateOutputType = {
@@ -43,6 +45,7 @@ export type MenuCategoryCountAggregateOutputType = {
   restaurantId: number
   name: number
   slug: number
+  status: number
   _all: number
 }
 
@@ -52,6 +55,7 @@ export type MenuCategoryMinAggregateInputType = {
   restaurantId?: true
   name?: true
   slug?: true
+  status?: true
 }
 
 export type MenuCategoryMaxAggregateInputType = {
@@ -59,6 +63,7 @@ export type MenuCategoryMaxAggregateInputType = {
   restaurantId?: true
   name?: true
   slug?: true
+  status?: true
 }
 
 export type MenuCategoryCountAggregateInputType = {
@@ -66,6 +71,7 @@ export type MenuCategoryCountAggregateInputType = {
   restaurantId?: true
   name?: true
   slug?: true
+  status?: true
   _all?: true
 }
 
@@ -146,6 +152,7 @@ export type MenuCategoryGroupByOutputType = {
   restaurantId: string
   name: string
   slug: string
+  status: $Enums.PublicationStatus
   _count: MenuCategoryCountAggregateOutputType | null
   _min: MenuCategoryMinAggregateOutputType | null
   _max: MenuCategoryMaxAggregateOutputType | null
@@ -174,6 +181,7 @@ export type MenuCategoryWhereInput = {
   restaurantId?: Prisma.StringFilter<"MenuCategory"> | string
   name?: Prisma.StringFilter<"MenuCategory"> | string
   slug?: Prisma.StringFilter<"MenuCategory"> | string
+  status?: Prisma.EnumPublicationStatusFilter<"MenuCategory"> | $Enums.PublicationStatus
   restaurant?: Prisma.XOR<Prisma.RestaurantScalarRelationFilter, Prisma.RestaurantWhereInput>
   items?: Prisma.MenuItemListRelationFilter
 }
@@ -183,6 +191,7 @@ export type MenuCategoryOrderByWithRelationInput = {
   restaurantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   restaurant?: Prisma.RestaurantOrderByWithRelationInput
   items?: Prisma.MenuItemOrderByRelationAggregateInput
 }
@@ -196,6 +205,7 @@ export type MenuCategoryWhereUniqueInput = Prisma.AtLeast<{
   restaurantId?: Prisma.StringFilter<"MenuCategory"> | string
   name?: Prisma.StringFilter<"MenuCategory"> | string
   slug?: Prisma.StringFilter<"MenuCategory"> | string
+  status?: Prisma.EnumPublicationStatusFilter<"MenuCategory"> | $Enums.PublicationStatus
   restaurant?: Prisma.XOR<Prisma.RestaurantScalarRelationFilter, Prisma.RestaurantWhereInput>
   items?: Prisma.MenuItemListRelationFilter
 }, "id" | "restaurantId_slug">
@@ -205,6 +215,7 @@ export type MenuCategoryOrderByWithAggregationInput = {
   restaurantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   _count?: Prisma.MenuCategoryCountOrderByAggregateInput
   _max?: Prisma.MenuCategoryMaxOrderByAggregateInput
   _min?: Prisma.MenuCategoryMinOrderByAggregateInput
@@ -218,12 +229,14 @@ export type MenuCategoryScalarWhereWithAggregatesInput = {
   restaurantId?: Prisma.StringWithAggregatesFilter<"MenuCategory"> | string
   name?: Prisma.StringWithAggregatesFilter<"MenuCategory"> | string
   slug?: Prisma.StringWithAggregatesFilter<"MenuCategory"> | string
+  status?: Prisma.EnumPublicationStatusWithAggregatesFilter<"MenuCategory"> | $Enums.PublicationStatus
 }
 
 export type MenuCategoryCreateInput = {
   id?: string
   name: string
   slug: string
+  status?: $Enums.PublicationStatus
   restaurant: Prisma.RestaurantCreateNestedOneWithoutCategoriesInput
   items?: Prisma.MenuItemCreateNestedManyWithoutCategoryInput
 }
@@ -233,6 +246,7 @@ export type MenuCategoryUncheckedCreateInput = {
   restaurantId: string
   name: string
   slug: string
+  status?: $Enums.PublicationStatus
   items?: Prisma.MenuItemUncheckedCreateNestedManyWithoutCategoryInput
 }
 
@@ -240,6 +254,7 @@ export type MenuCategoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPublicationStatusFieldUpdateOperationsInput | $Enums.PublicationStatus
   restaurant?: Prisma.RestaurantUpdateOneRequiredWithoutCategoriesNestedInput
   items?: Prisma.MenuItemUpdateManyWithoutCategoryNestedInput
 }
@@ -249,6 +264,7 @@ export type MenuCategoryUncheckedUpdateInput = {
   restaurantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPublicationStatusFieldUpdateOperationsInput | $Enums.PublicationStatus
   items?: Prisma.MenuItemUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
@@ -257,12 +273,14 @@ export type MenuCategoryCreateManyInput = {
   restaurantId: string
   name: string
   slug: string
+  status?: $Enums.PublicationStatus
 }
 
 export type MenuCategoryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPublicationStatusFieldUpdateOperationsInput | $Enums.PublicationStatus
 }
 
 export type MenuCategoryUncheckedUpdateManyInput = {
@@ -270,6 +288,7 @@ export type MenuCategoryUncheckedUpdateManyInput = {
   restaurantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPublicationStatusFieldUpdateOperationsInput | $Enums.PublicationStatus
 }
 
 export type MenuCategoryListRelationFilter = {
@@ -292,6 +311,7 @@ export type MenuCategoryCountOrderByAggregateInput = {
   restaurantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type MenuCategoryMaxOrderByAggregateInput = {
@@ -299,6 +319,7 @@ export type MenuCategoryMaxOrderByAggregateInput = {
   restaurantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type MenuCategoryMinOrderByAggregateInput = {
@@ -306,6 +327,7 @@ export type MenuCategoryMinOrderByAggregateInput = {
   restaurantId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type MenuCategoryNullableScalarRelationFilter = {
@@ -375,6 +397,7 @@ export type MenuCategoryCreateWithoutRestaurantInput = {
   id?: string
   name: string
   slug: string
+  status?: $Enums.PublicationStatus
   items?: Prisma.MenuItemCreateNestedManyWithoutCategoryInput
 }
 
@@ -382,6 +405,7 @@ export type MenuCategoryUncheckedCreateWithoutRestaurantInput = {
   id?: string
   name: string
   slug: string
+  status?: $Enums.PublicationStatus
   items?: Prisma.MenuItemUncheckedCreateNestedManyWithoutCategoryInput
 }
 
@@ -419,12 +443,14 @@ export type MenuCategoryScalarWhereInput = {
   restaurantId?: Prisma.StringFilter<"MenuCategory"> | string
   name?: Prisma.StringFilter<"MenuCategory"> | string
   slug?: Prisma.StringFilter<"MenuCategory"> | string
+  status?: Prisma.EnumPublicationStatusFilter<"MenuCategory"> | $Enums.PublicationStatus
 }
 
 export type MenuCategoryCreateWithoutItemsInput = {
   id?: string
   name: string
   slug: string
+  status?: $Enums.PublicationStatus
   restaurant: Prisma.RestaurantCreateNestedOneWithoutCategoriesInput
 }
 
@@ -433,6 +459,7 @@ export type MenuCategoryUncheckedCreateWithoutItemsInput = {
   restaurantId: string
   name: string
   slug: string
+  status?: $Enums.PublicationStatus
 }
 
 export type MenuCategoryCreateOrConnectWithoutItemsInput = {
@@ -455,6 +482,7 @@ export type MenuCategoryUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPublicationStatusFieldUpdateOperationsInput | $Enums.PublicationStatus
   restaurant?: Prisma.RestaurantUpdateOneRequiredWithoutCategoriesNestedInput
 }
 
@@ -463,18 +491,21 @@ export type MenuCategoryUncheckedUpdateWithoutItemsInput = {
   restaurantId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPublicationStatusFieldUpdateOperationsInput | $Enums.PublicationStatus
 }
 
 export type MenuCategoryCreateManyRestaurantInput = {
   id?: string
   name: string
   slug: string
+  status?: $Enums.PublicationStatus
 }
 
 export type MenuCategoryUpdateWithoutRestaurantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPublicationStatusFieldUpdateOperationsInput | $Enums.PublicationStatus
   items?: Prisma.MenuItemUpdateManyWithoutCategoryNestedInput
 }
 
@@ -482,6 +513,7 @@ export type MenuCategoryUncheckedUpdateWithoutRestaurantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPublicationStatusFieldUpdateOperationsInput | $Enums.PublicationStatus
   items?: Prisma.MenuItemUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
@@ -489,6 +521,7 @@ export type MenuCategoryUncheckedUpdateManyWithoutRestaurantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumPublicationStatusFieldUpdateOperationsInput | $Enums.PublicationStatus
 }
 
 
@@ -527,6 +560,7 @@ export type MenuCategorySelect<ExtArgs extends runtime.Types.Extensions.Internal
   restaurantId?: boolean
   name?: boolean
   slug?: boolean
+  status?: boolean
   restaurant?: boolean | Prisma.RestaurantDefaultArgs<ExtArgs>
   items?: boolean | Prisma.MenuCategory$itemsArgs<ExtArgs>
   _count?: boolean | Prisma.MenuCategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -537,6 +571,7 @@ export type MenuCategorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   restaurantId?: boolean
   name?: boolean
   slug?: boolean
+  status?: boolean
   restaurant?: boolean | Prisma.RestaurantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["menuCategory"]>
 
@@ -545,6 +580,7 @@ export type MenuCategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   restaurantId?: boolean
   name?: boolean
   slug?: boolean
+  status?: boolean
   restaurant?: boolean | Prisma.RestaurantDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["menuCategory"]>
 
@@ -553,9 +589,10 @@ export type MenuCategorySelectScalar = {
   restaurantId?: boolean
   name?: boolean
   slug?: boolean
+  status?: boolean
 }
 
-export type MenuCategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "restaurantId" | "name" | "slug", ExtArgs["result"]["menuCategory"]>
+export type MenuCategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "restaurantId" | "name" | "slug" | "status", ExtArgs["result"]["menuCategory"]>
 export type MenuCategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   restaurant?: boolean | Prisma.RestaurantDefaultArgs<ExtArgs>
   items?: boolean | Prisma.MenuCategory$itemsArgs<ExtArgs>
@@ -579,6 +616,7 @@ export type $MenuCategoryPayload<ExtArgs extends runtime.Types.Extensions.Intern
     restaurantId: string
     name: string
     slug: string
+    status: $Enums.PublicationStatus
   }, ExtArgs["result"]["menuCategory"]>
   composites: {}
 }
@@ -1008,6 +1046,7 @@ export interface MenuCategoryFieldRefs {
   readonly restaurantId: Prisma.FieldRef<"MenuCategory", 'String'>
   readonly name: Prisma.FieldRef<"MenuCategory", 'String'>
   readonly slug: Prisma.FieldRef<"MenuCategory", 'String'>
+  readonly status: Prisma.FieldRef<"MenuCategory", 'PublicationStatus'>
 }
     
 

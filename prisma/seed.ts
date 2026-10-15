@@ -48,8 +48,13 @@ async function main() {
     });
     const category = await prisma.menuCategory.upsert({
       where: { restaurantId_slug: { restaurantId: restaurant.id, slug: "mains" } },
-      update: { name: "Mains" },
-      create: { restaurantId: restaurant.id, name: "Mains", slug: "mains" },
+      update: { name: "Mains", status: PublicationStatus.PUBLISHED },
+      create: {
+        restaurantId: restaurant.id,
+        name: "Mains",
+        slug: "mains",
+        status: PublicationStatus.PUBLISHED,
+      },
     });
     for (const [index, name] of dishes.entries()) {
       const item = await prisma.menuItem.upsert({
