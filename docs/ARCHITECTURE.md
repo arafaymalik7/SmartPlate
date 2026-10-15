@@ -10,3 +10,5 @@ Browser → Next.js App Router → Zod validation / Auth.js guard → Prisma 7 a
 Public routes present illustrative data and transparent uncertainty. The recommendation engine is a pure TypeScript module. Admin API routes call a server-side session guard before dynamically loading Prisma; this keeps production builds possible without embedding database credentials.
 
 The PostgreSQL schema defines users/sessions, restaurants/categories/items, nullable nutrition/provenance, explicit allergen and ingredient disclosure joins, and audit records. See `docs/database.md` and `docs/recommendation-algorithm.md`.
+
+Implementation-derived architecture, ERD, recommendation-flow and admin-sequence diagram sources are in `docs/diagrams.md`.

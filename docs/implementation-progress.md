@@ -135,3 +135,9 @@
 - Scope: added Playwright keyboard coverage for the primary skip link, confirming focus arrives on it first and keyboard activation bypasses repeated navigation to `#content`.
 - Verification: production Playwright passed 18/18 across 375px, 768px and 1440px. Existing responsive menu and recommendation captures remain reviewed.
 - Remaining a11y work: no automated screen-reader audit or authenticated admin keyboard journey is claimed; the latter requires PostgreSQL-backed authentication.
+
+## CP-23 â€” Academic evidence draft increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added implementation-derived Mermaid source diagrams for runtime architecture, ERD, recommendation flow and admin mutation sequence, plus an accurate ten-slide defense outline and demo script.
+- Verification: diagrams were checked against the current schema, route handlers and recommendation engine. They remain Markdown source diagrams; no faculty approval, user-study result or rendered report figure is claimed.
