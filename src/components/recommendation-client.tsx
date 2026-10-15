@@ -174,8 +174,14 @@ export function RecommendationClient() {
             <div className="warning-box">
               <h3>Unable to verify for your allergy-related exclusion</h3>
               <p>
-                {result.unableToVerify.map((item) => item.name).join(", ")}. These are not marked
-                safe because disclosure is incomplete.
+                {result.unableToVerify
+                  .slice(0, 5)
+                  .map((item) => `${item.name} (${item.restaurant})`)
+                  .join(", ")}
+                {result.unableToVerify.length > 5
+                  ? `, and ${result.unableToVerify.length - 5} other menu items`
+                  : ""}
+                . These are not marked safe because disclosure is incomplete.
               </p>
             </div>
           )}

@@ -24,6 +24,21 @@ test("restaurant search has a truthful empty state", async ({ page }) => {
   await expect(page.getByText(/4 demonstration venues shown/i)).toBeVisible();
 });
 
+test("menu filters retain unknown-disclosure safeguards", async ({ page }, testInfo) => {
+  await page.goto("/restaurants/green-ladle");
+  await expect(page.getByText(/12 illustrative menu items shown/i)).toBeVisible();
+  await page.getByLabel(/verified diet/i).selectOption("VEGAN");
+  await expect(page.getByText(/Garden Grain Bowl/i)).toBeVisible();
+  await page.getByLabel(/search this menu/i).fill("no-such-dish");
+  await expect(page.getByRole("heading", { name: /no dishes match/i })).toBeVisible();
+  await page.getByRole("button", { name: /clear filters/i }).click();
+  await expect(page.getByText(/12 illustrative menu items shown/i)).toBeVisible();
+  await page.screenshot({
+    path: `docs/evidence/${testInfo.project.name}-menu-filters.png`,
+    fullPage: true,
+  });
+});
+
 test("strict allergy-related exclusions are never presented as safe", async ({
   page,
 }, testInfo) => {

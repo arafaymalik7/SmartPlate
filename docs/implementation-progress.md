@@ -107,3 +107,10 @@
 - Scope: added an accessible name/cuisine/location search and location filter to the transparent illustrative restaurant directory, including a resettable no-results state.
 - Verification: lint, strict typecheck and 10 unit tests passed; production Playwright passed 12/12 across 375px, 768px and 1440px. The updated desktop restaurant directory capture was visually reviewed.
 - Limit: the interactive fallback directory is typed illustrative data. Its PostgreSQL query path, pagination and published-status enforcement still require a running test database.
+
+## CP-07/08/09 â€” Menu browsing and disclosure increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: expanded the illustrative public menu to 48 records (four venues, 12 dishes each), added category/search/sort/verified-diet filters and no-results reset handling, and completed item pages with serving size, nutrition values, ingredients, disclosure state, source classification and review date.
+- Verification: production Playwright passed 15/15 at 375px, 768px and 1440px; the mobile filter capture at `docs/evidence/mobile-375-menu-filters.png` was visually reviewed. A unit check verifies the four-menu/48-item shape and preservation of null nutrition values.
+- Limit: public runtime reads still use the explicitly labelled typed demonstration fallback. The equivalent PostgreSQL relation/query path and published/draft integration require the blocked database environment.

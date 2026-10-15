@@ -43,3 +43,9 @@
 
 - `npm run test:e2e`: passed, 12/12 after adding restaurant query/no-results/reset coverage at all three viewports.
 - The refreshed `docs/evidence/desktop-1440-restaurants.png` capture was visually reviewed after the filter controls were added.
+
+## Menu browsing and disclosure
+
+- `npm run test:e2e`: passed, 15/15 after adding menu search, verified-diet filter, no-results/reset and responsive capture coverage.
+- `npm test`: includes a data-shape assertion for four fictional venues and 48 illustrative menu records, plus null-nutrition preservation.
+- Visual evidence: `docs/evidence/mobile-375-menu-filters.png`, `docs/evidence/tablet-768-menu-filters.png`, `docs/evidence/desktop-1440-menu-filters.png`; mobile was visually inspected.

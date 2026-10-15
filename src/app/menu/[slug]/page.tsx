@@ -1,22 +1,26 @@
 import { notFound } from "next/navigation";
 import { SiteShell } from "@/components/site-shell";
 import { demoItems } from "@/lib/demo-data";
-const value = (n: number | null, unit: string) => (n === null ? "Not available" : `${n} ${unit}`);
+
+const value = (number: number | null, unit: string) =>
+  number === null ? "Not available" : `${number} ${unit}`;
+
 export default async function MenuItemPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const item = demoItems.find((v) => v.slug === slug);
+  const item = demoItems.find((value) => value.slug === slug);
   if (!item) notFound();
   return (
     <SiteShell>
       <section className="shell section">
-        <p className="state-label">{item.sourceType.toLowerCase()} data</p>
+        <p className="state-label">Illustrative nutrition data</p>
         <h1 className="page-title">{item.name}</h1>
         <p className="lede">
-          MYR {item.price.toFixed(2)} · {item.restaurant} · {item.category}
+          {item.description} MYR {item.price.toFixed(2)} · {item.restaurant} · {item.category}
         </p>
         <div className="feature-grid">
           <article>
             <h3>Per serving</h3>
+            <p>{item.servingSize}</p>
             <p>
               {value(item.calories, "kcal")}
               <br />
@@ -30,8 +34,13 @@ export default async function MenuItemPage({ params }: { params: Promise<{ slug:
             </p>
           </article>
           <article>
-            <h3>Ingredients</h3>
+            <h3>Ingredients and dietary status</h3>
             <p>{item.ingredients.join(", ")}</p>
+            <p>
+              {item.dietaryStatus === "UNKNOWN"
+                ? "Dietary status is not verified."
+                : item.dietaryStatus.replace("_", " ").toLowerCase()}
+            </p>
           </article>
           <article>
             <h3>Allergen disclosure</h3>
@@ -40,6 +49,11 @@ export default async function MenuItemPage({ params }: { params: Promise<{ slug:
                 ? "Not available — do not treat this item as allergy-safe."
                 : "Contains declared allergen information; cross-contact is not assessed."}
             </p>
+          </article>
+          <article>
+            <h3>Source and review</h3>
+            <p>{item.sourceCitation}</p>
+            <p>Last reviewed: {item.reviewedAt}</p>
           </article>
         </div>
       </section>

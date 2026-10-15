@@ -1,37 +1,23 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import { MenuBrowser } from "@/components/menu-browser";
 import { SiteShell } from "@/components/site-shell";
-import { demoItems } from "@/lib/demo-data";
+import { demoItems, demoRestaurants } from "@/lib/demo-data";
+
 export default async function RestaurantPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const name = slug
-    .split("-")
-    .map((v) => v[0].toUpperCase() + v.slice(1))
-    .join(" ");
-  const items = demoItems.filter((item) => item.restaurant === name);
-  if (!items.length) notFound();
+  const restaurant = demoRestaurants.find((value) => value.slug === slug);
+  if (!restaurant) notFound();
+  const items = demoItems.filter((item) => item.restaurantSlug === restaurant.slug);
   return (
     <SiteShell>
       <section className="shell section">
-        <p className="state-label">Illustrative menu</p>
-        <h1 className="page-title">{name}</h1>
+        <p className="state-label">Illustrative menu · {restaurant.location}</p>
+        <h1 className="page-title">{restaurant.name}</h1>
         <p className="lede">
-          Nutrition values are illustrative. Missing values are shown as not available.
+          {restaurant.description} Nutrition values are illustrative per-serving information;
+          missing values are shown as not available.
         </p>
-        <div className="feature-grid">
-          {items.map((item) => (
-            <article key={item.slug}>
-              <h3>{item.name}</h3>
-              <p>
-                {item.calories ?? "Not available"}
-                {item.calories ? " kcal" : ""} · MYR {item.price.toFixed(2)}
-              </p>
-              <Link className="text-link" href={`/menu/${item.slug}`}>
-                View nutrition
-              </Link>
-            </article>
-          ))}
-        </div>
+        <MenuBrowser items={items} />
       </section>
     </SiteShell>
   );

@@ -3,6 +3,7 @@ export type Priority = "NONE" | "HIGH_PROTEIN" | "LOW_SODIUM" | "LOW_CARB";
 export type Candidate = {
   slug: string;
   name: string;
+  restaurant?: string;
   active: boolean;
   calories: number | null;
   proteinG: number | null;
