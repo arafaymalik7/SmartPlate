@@ -8,6 +8,7 @@ const config = [
       "legacy/**",
       "playwright-report/**",
       "test-results/**",
+      "src/generated/**",
     ],
   },
   ...nextVitals,

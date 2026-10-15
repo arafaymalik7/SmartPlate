@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 export default function ErrorPage({
   reset,
 }: Readonly<{ error: Error & { digest?: string }; reset: () => void }>) {
@@ -13,9 +14,9 @@ export default function ErrorPage({
         <button className="button" onClick={reset}>
           Try again
         </button>
-        <a className="button button-secondary" href="/restaurants">
+        <Link className="button button-secondary" href="/restaurants">
           Browse restaurants
-        </a>
+        </Link>
       </div>
     </main>
   );
