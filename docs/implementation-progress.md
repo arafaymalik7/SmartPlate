@@ -128,3 +128,10 @@
 - Scope: added explicit same-origin checks to every current admin mutation endpoint before authorization/database access, with trusted/cross-origin/malformed-origin unit cases.
 - Verification: lint, strict TypeScript and production build passed; Vitest passed 14/14 including two origin-guard tests.
 - Remaining security work: database-backed authenticated mutation/CSRF/logout checks and production-appropriate rate limiting require a running test database and deployment context.
+
+## CP-19 â€” Keyboard navigation increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added Playwright keyboard coverage for the primary skip link, confirming focus arrives on it first and keyboard activation bypasses repeated navigation to `#content`.
+- Verification: production Playwright passed 18/18 across 375px, 768px and 1440px. Existing responsive menu and recommendation captures remain reviewed.
+- Remaining a11y work: no automated screen-reader audit or authenticated admin keyboard journey is claimed; the latter requires PostgreSQL-backed authentication.

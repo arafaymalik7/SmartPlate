@@ -60,3 +60,7 @@
 
 - `npm test`: passed, 14/14 including same-origin, no-origin, cross-origin and malformed-origin mutation cases.
 - `npm run lint`, `npm run typecheck` and `npm run build`: passed after the guard was added to all current admin POST routes.
+
+## Keyboard navigation
+
+- `npm run test:e2e`: passed, 18/18. At each responsive viewport, the initial Tab lands on the “Skip to content” link and Enter targets `#content`.

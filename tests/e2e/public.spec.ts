@@ -16,6 +16,15 @@ test("comparison preserves unavailable values", async ({ page }) => {
   await expect(page.getByText("Not available").first()).toBeVisible();
 });
 
+test("keyboard users can bypass repeated navigation", async ({ page }) => {
+  await page.goto("/");
+  await page.keyboard.press("Tab");
+  const skipLink = page.getByRole("link", { name: /skip to content/i });
+  await expect(skipLink).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/#content$/);
+});
+
 test("restaurant search has a truthful empty state", async ({ page }) => {
   await page.goto("/restaurants");
   await page.getByLabel(/search restaurants/i).fill("no-such-venue");
