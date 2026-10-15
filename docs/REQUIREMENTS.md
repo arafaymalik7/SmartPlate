@@ -1,6 +1,6 @@
 # SMARTPLATE — Software Requirements Specification (SRS)
 
-Revision 1.0 · 15 October 2026 · Scope aligned with the approved project proposal.
+Revision 1.1 · 15 October 2026 · Scope aligned with the approved project proposal and authoritative Next.js migration specification.
 
 ## Stakeholders
 
@@ -11,37 +11,36 @@ Revision 1.0 · 15 October 2026 · Scope aligned with the approved project propo
 
 ## Functional requirements and acceptance evidence
 
-| ID | Requirement | Acceptance criterion | Code location |
+| ID | Requirement | Acceptance criterion | Target code area |
 | --- | --- | --- | --- |
-| FR-01 | Browse restaurants | Public endpoint lists published venues | GET `/api/restaurants` |
-| FR-02 | Browse menus | Menus filtered by active restaurant | GET `/api/restaurants/{slug}` |
-| FR-03 | Search meals | Name/category/description case insensitive | GET `/api/items?q=` |
-| FR-04 | Filter meals | Category, vegetarian, restaurant filters | `static/app.js` |
-| FR-05 | View nutritional data | Display 6 values per serving, N/A when unknown | Detail modal |
-| FR-06 | Explain provenance | Show type and optional URL, flag illustrative seed | Detail and About views |
-| FR-07 | Configure preferences | Target calories, diet, nutrient priority, price, restrictions | `/recommend` |
-| FR-08 | Exclude unsuitable items | Apply strict eligibility rules; unknown allergy source fails closed | `recommender.py` |
-| FR-09 | Explain recommendation | Score components and supporting measured values | `recommender.py` |
-| FR-10 | Handle no results | Empty state plus explanation of exclusions | `/recommend` |
-| FR-11 | Compare meals | Side-by-side table, no more than 3 entries | `/compare` |
-| FR-12 | Save favorites | Local browser state without guest registration | `static/app.js` |
-| FR-13 | Authenticate admin | Unique admin credentials, secure hashed password | `security.py` |
-| FR-14 | Manage restaurants | Admin can create/edit/delete and publish/unpublish | `/api/admin/restaurants` |
-| FR-15 | Manage menu items | Admin can create/edit/delete, mark available, set nutrients | `/api/admin/items` |
-| FR-16 | Audit edits | Log admin create/update/delete operations | `audit_events` |
+| FR-01 | Browse restaurants | Public route lists published venues | `/restaurants` |
+| FR-02 | Browse menus | Published restaurant menu by slug | `/restaurants/[slug]` |
+| FR-03 | Search meals | Name/category/description search and empty state | Restaurant menu filters |
+| FR-04 | Filter meals | Category, diet and sort filters are truthful | Restaurant menu filters |
+| FR-05 | View nutritional data | Per-serving values; `Not available` when unknown | `/menu/[slug]` |
+| FR-06 | Explain provenance | Source type, date and optional URL shown | Item detail/admin |
+| FR-07 | Configure preferences | Zod-validated non-sensitive controls, reset and local storage | `/recommend` |
+| FR-08 | Exclude unsuitable items | Hard restrictions; unknown allergy data never marked safe | `src/lib/recommendation` |
+| FR-09 | Explain recommendation | Deterministic score components and measured reasons | `src/lib/recommendation` |
+| FR-10 | Handle no results | Explicit empty state and suggested adjustment | `/recommend` |
+| FR-11 | Compare meals | Two or three meals, unknown values retained | `/compare` |
+| FR-12 | Authenticate admin | Maintained auth, hashed secret, server-side sessions | `/admin` |
+| FR-13 | Manage restaurants | Server-authorized CRUD and public visibility | `/admin/restaurants` |
+| FR-14 | Manage menu items | Validated nutrition/provenance/ingredient management | `/admin/menu-items` |
+| FR-15 | Audit edits | Actor/action/entity/time audit records | `AdminAuditLog` |
 
 ## Non-functional requirements
 
 | ID | Requirement | Validation approach |
 | --- | --- | --- |
-| NFR-01 | Responsive | Manually review mobile 390px, tablet 768px, desktop 1440px |
-| NFR-02 | Accessible | Semantic structure, focus-visible, labels, keyboard navigation; audit separately |
-| NFR-03 | Input validation | Pydantic constraints; invalid input returns HTTP 422 |
-| NFR-04 | Data security | Parameterized SQL, scrypt hashing, CSRF, httponly session cookies |
-| NFR-05 | Maintainability | Separated modules, documented methods and route schemas |
-| NFR-06 | Transparency | Display illustrative provenance, never claim clinical reliability |
-| NFR-07 | Reproducibility | Setup and deterministic local demo seed |
-| NFR-08 | Testability | Automated unit/integration suite and a real-user evaluation procedure |
+| NFR-01 | Modern stack | Next.js, strict TypeScript, PostgreSQL and Prisma are present | package/schema/migration review |
+| NFR-02 | Responsive | Review actual 375px, 768px, 1440px screenshots | Playwright evidence |
+| NFR-03 | Accessible | Semantic structure, keyboard path, labels and focus states | Automated/manual audit |
+| NFR-04 | Input/data security | Zod validation, server auth, parameterized Prisma operations | Negative integration tests |
+| NFR-05 | Maintainability | Separated modules and documented decisions | Architecture review |
+| NFR-06 | Transparency | Illustrative provenance and non-medical wording | Content/test review |
+| NFR-07 | Reproducibility | npm, PostgreSQL migrations and idempotent seed | Clean-install/CI evidence |
+| NFR-08 | Testability | Unit, integration, browser and CI suite | Test logs |
 
 ## Constraint register
 
@@ -50,3 +49,4 @@ Revision 1.0 · 15 October 2026 · Scope aligned with the approved project propo
 3. Rule-based recommendation is sufficiently explainable for the minor project.
 4. Admin features are protected; guest usage requires no personal health data.
 5. User evaluation and supervisor feedback must be genuinely obtained and documented.
+6. Private university source originals are absent from this checkout and are ignored if provided later.

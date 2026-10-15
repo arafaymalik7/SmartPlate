@@ -1,0 +1,8 @@
+# Decision log
+
+## 2026-10-15 — CP-01 JavaScript stack baseline
+
+- **Decision:** use npm, Next.js 16.4.1, React 19.3.1, TypeScript 5.9.3, Tailwind CSS 4.1.16, Zod 4.1.12, Vitest 4.0.8 and Playwright 1.57.0.
+- **Reason:** `pnpm` is unavailable; npm is supported by the installed Node 22.18.0. Versions are pinned for reproducible installation rather than blindly accepting future breaking majors.
+- **Prisma direction:** use the supported Prisma 7 line, not Prisma 8 release candidates. Prisma’s current PostgreSQL documentation requires a driver adapter in Prisma 7; CP-03 will add `@prisma/adapter-pg` and `pg`.
+- **Evidence:** official [Prisma PostgreSQL documentation](https://www.prisma.io/docs/orm/v7/core-concepts/supported-databases/postgresql), [Prisma 7 documentation](https://www.prisma.io/docs/orm/v7), and [Prisma release status](https://www.prisma.io/docs/orm/release-status) were checked on 2026-10-15.
