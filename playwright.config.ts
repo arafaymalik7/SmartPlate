@@ -41,7 +41,9 @@ export default defineConfig({
   webServer: {
     command: "npm run build && npm run start -- --hostname 127.0.0.1",
     url: "http://127.0.0.1:3000",
-    reuseExistingServer: true,
+    // E2E must own its server. Reusing a stopping dev/test process can make all workers race
+    // against a closed port and accidentally exercise an unrelated build.
+    reuseExistingServer: false,
     timeout: 120000,
     env: {
       ...process.env,

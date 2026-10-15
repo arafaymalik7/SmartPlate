@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/auth/require-admin";
+import { missingNutritionWhere } from "@/lib/admin-summary";
 export async function GET() {
   const denied = await requireAdmin();
   if (denied) return denied;
@@ -8,7 +9,7 @@ export async function GET() {
     prisma.restaurant.count(),
     prisma.menuItem.count(),
     prisma.menuItem.count({ where: { status: "PUBLISHED" } }),
-    prisma.menuItemNutrition.count({ where: { OR: [{ calories: null }, { sodiumMg: null }] } }),
+    prisma.menuItem.count({ where: missingNutritionWhere }),
     prisma.adminAuditLog.count(),
   ]);
   return NextResponse.json({

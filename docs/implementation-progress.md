@@ -1,5 +1,17 @@
 # Implementation progress ledger
 
+## CP-21 — Isolated Playwright server increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Implementation: Playwright now always starts and owns its configured production server rather than reusing an arbitrary process on port 3000. This prevents a second run from attaching to a stopping server and producing connection-refused failures across otherwise unrelated browser cases.
+- Verification: `npm run lint`, `npm run typecheck`, `npm test` (11 files, 24 tests), `npm run build` (20 routes), and a clean `npm run test:e2e -- --reporter=line` (24 passed at 375px, 768px, and 1440px) all passed after the isolated-server change.
+
+## CP-18 — Complete nutrition counter increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Implementation: the admin completeness count now includes menu items with no nutrition relation as well as nutrition records with missing calories or sodium, so an absent row cannot be misleadingly omitted from the missing-data total.
+- Verification: a focused Vitest assertion covers the Prisma relation/null filter. `npm run lint`, `npm run typecheck`, `npm test` (11 files, 24 tests), `npm run build` (20 routes), and `npm run test:e2e -- --reporter=line` (24 passed at 375px, 768px, and 1440px) passed before commit.
+
 ## CP-16/17 — Public publication-visibility verification increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)
