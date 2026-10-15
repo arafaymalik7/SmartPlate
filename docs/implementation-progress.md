@@ -1,5 +1,11 @@
 # Implementation progress ledger
 
+## CP-04/06/07/09/13/14/21 — Remote PostgreSQL catalog verification
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Verification: GitHub Actions run #43 for `e5d8785d6635734b1d801cf46b25089569f5bbf7` completed successfully: https://github.com/arafaymalik7/SmartPlate/actions/runs/38784140805. It provisioned PostgreSQL, deployed migrations, seeded twice, checked exact seed counts, verified the published catalog contains four restaurants, 48 items, and vegan coverage, then passed lint, strict TypeScript, 20 Vitest checks, production build, and the 24-check fallback Playwright suite.
+- Limit: this confirms reproducible ephemeral CI behavior, not an authenticated administrator journey, a user-supplied database, or a production deployment.
+
 ## CP-17 — Multi-disclosure entry increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)
