@@ -78,3 +78,12 @@
 
 - GitHub Actions CI run #20 for commit `50981b4`: completed successfully (2m 05s), observed from the public Actions feed.
 - The verified workflow uses PostgreSQL 16, runs `db:deploy` and `db:seed`, then lint, typecheck, unit tests, build and Playwright. Newer runs are still in progress and are not included in this assertion.
+
+## Current local verification snapshot
+
+- `npm run lint`: passed with zero warnings.
+- `npm run typecheck`: passed.
+- `npm test`: passed, 8 files / 16 tests, including deterministic fixed-window admin mutation limiting.
+- `npm run build`: passed; route compilation includes the protected admin read/mutation and audit handlers.
+- `npm run test:e2e`: passed, 24/24 across 375px, 768px, and 1440px. It includes public discovery, comparison, keyboard navigation, crawl metadata, protected no-session admin access, filters, and unknown-allergen handling.
+- Reviewed protected-admin captures: `docs/evidence/mobile-375-admin-protected.png` and `docs/evidence/desktop-1440-admin-protected.png`. Authenticated admin/database flows remain unverified without a bootstrapped account and PostgreSQL.

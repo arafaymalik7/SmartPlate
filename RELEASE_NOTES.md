@@ -12,9 +12,9 @@ The local Docker Desktop service is stopped and Windows denied the normal servic
 
 - Public illustrative restaurant/menu, comparison and recommendation routes.
 - Deterministic recommendation eligibility, ranking and unknown-allergen handling.
-- Auth.js-based protected admin foundation, validated restaurant create API and audit-log write path.
+- Auth.js-based protected admin foundation, validated restaurant/category/menu-item creation UI and APIs, audit feed, origin checks and basic in-process mutation limit.
 - PostgreSQL/Prisma schema, committed baseline migration and idempotent illustrative seed implementation.
-- Responsive Playwright coverage and CI workflow configuration.
+- Responsive Playwright coverage (24 current checks) and CI workflow configuration with a confirmed PostgreSQL migration/seed run.
 
 ## Not a medical or restaurant-data claim
 
