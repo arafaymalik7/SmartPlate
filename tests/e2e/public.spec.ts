@@ -42,6 +42,16 @@ test("public crawl metadata excludes protected routes", async ({ request }) => {
   await expect(sitemap.text()).resolves.toContain("/restaurants");
 });
 
+test("admin workspace remains protected without a session", async ({ page }, testInfo) => {
+  await page.goto("/admin");
+  await expect(page.getByRole("heading", { name: /protected workspace/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /admin sign in/i })).toBeVisible();
+  await page.screenshot({
+    path: `docs/evidence/${testInfo.project.name}-admin-protected.png`,
+    fullPage: true,
+  });
+});
+
 test("restaurant search has a truthful empty state", async ({ page }) => {
   await page.goto("/restaurants");
   await page.getByLabel(/search restaurants/i).fill("no-such-venue");

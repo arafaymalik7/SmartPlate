@@ -81,7 +81,7 @@ The codebase includes a Prisma PostgreSQL schema, baseline migration, and an ide
 
 ### 5.2 Evaluation evidence
 
-The latest recorded local application checks passed linting, strict TypeScript, 14 Vitest tests, a production build, and 21 Playwright checks (seven journeys across three viewport projects). Reviewed captures are stored in `docs/evidence/`. Browser coverage includes public discovery, comparison, filtering, unknown-allergen messaging, generated crawl metadata, and keyboard skip navigation.
+The latest recorded local application checks passed linting, strict TypeScript, 14 Vitest tests, a production build, and 24 Playwright checks (eight journeys across three viewport projects). Reviewed captures are stored in `docs/evidence/`. Browser coverage includes public discovery, comparison, filtering, unknown-allergen messaging, generated crawl metadata, protected unauthenticated admin access, and keyboard skip navigation.
 
 This evidence does **not** demonstrate real restaurant accuracy, an authenticated admin journey, production hosting, a local Docker database, or user satisfaction. Those remain acceptance criteria for the next stage.
 

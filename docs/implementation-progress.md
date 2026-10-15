@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-16/17/18 — Admin workflow visibility increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: completed the authenticated UI slice for the already guarded restaurant, category, and illustrative menu-item creation routes; added protected category/item read endpoints and a latest-20 audit feed. The browser test server now creates an ephemeral Auth.js signing secret so a no-session `/admin` route can be tested in production mode without committing a secret.
+- Verification: lint, strict TypeScript, 14 Vitest checks, production build, and 24 Playwright checks (eight journeys across three viewports) passed. The public browser journey verifies an unauthenticated visitor sees the protected admin screen and sign-in link.
+- Limit: the authenticated admin UI and writes could not be exercised because no test administrator/database is available. Edit, delete, full publication workflow, and persisted audit acceptance tests remain unverified.
+
 ## CP-23 — Report and source-register increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

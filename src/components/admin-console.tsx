@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 
 type Summary = {
   restaurants: number;
@@ -17,8 +17,24 @@ type Restaurant = {
   location: string;
   status: string;
 };
+type Category = { id: string; name: string; restaurantId: string; restaurant: { name: string } };
+type Item = {
+  id: string;
+  name: string;
+  status: string;
+  restaurant: { name: string };
+  category: { name: string } | null;
+  nutrition: { calories: number | null; sodiumMg: number | null; sourceType: string } | null;
+};
+type Audit = {
+  id: string;
+  action: string;
+  entityType: string;
+  createdAt: string;
+  actor: { email: string };
+};
 
-const initialForm = {
+const initialRestaurant = {
   name: "",
   slug: "",
   cuisine: "",
@@ -26,24 +42,55 @@ const initialForm = {
   description: "",
   status: "DRAFT",
 };
+const initialCategory = { restaurantId: "", name: "", slug: "" };
+const initialItem = {
+  restaurantId: "",
+  categoryId: "",
+  slug: "",
+  name: "",
+  description: "",
+  price: "",
+  servingSize: "",
+  status: "DRAFT",
+  dietaryStatus: "",
+  calories: "",
+  sodiumMg: "",
+  sourceCitation: "",
+};
+
+async function jsonOrError(response: Response) {
+  const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+  if (!response.ok) throw new Error(payload?.error ?? "The request could not be completed.");
+  return payload;
+}
 
 export function AdminConsole() {
   const [summary, setSummary] = useState<Summary | null>(null);
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [form, setForm] = useState(initialForm);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [items, setItems] = useState<Item[]>([]);
+  const [audit, setAudit] = useState<Audit[]>([]);
+  const [restaurantForm, setRestaurantForm] = useState(initialRestaurant);
+  const [categoryForm, setCategoryForm] = useState(initialCategory);
+  const [itemForm, setItemForm] = useState(initialItem);
   const [message, setMessage] = useState("");
 
   const refresh = async () => {
-    const [summaryResponse, restaurantsResponse] = await Promise.all([
-      fetch("/api/admin/summary"),
-      fetch("/api/admin/restaurants"),
-    ]);
-    if (!summaryResponse.ok || !restaurantsResponse.ok) {
-      setMessage("Unable to load the current admin data. Refresh and sign in again if needed.");
-      return;
+    try {
+      const responses = await Promise.all(
+        ["summary", "restaurants", "categories", "menu-items", "audit"].map((path) =>
+          fetch(`/api/admin/${path}`, { cache: "no-store" }),
+        ),
+      );
+      const values = await Promise.all(responses.map(jsonOrError));
+      setSummary(values[0] as Summary);
+      setRestaurants(values[1] as Restaurant[]);
+      setCategories(values[2] as Category[]);
+      setItems(values[3] as Item[]);
+      setAudit(values[4] as Audit[]);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Unable to load the current admin data.");
     }
-    setSummary((await summaryResponse.json()) as Summary);
-    setRestaurants((await restaurantsResponse.json()) as Restaurant[]);
   };
 
   useEffect(() => {
@@ -51,21 +98,70 @@ export function AdminConsole() {
     return () => window.clearTimeout(timer);
   }, []);
 
-  const submit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const categoriesForItem = useMemo(
+    () => categories.filter((category) => category.restaurantId === itemForm.restaurantId),
+    [categories, itemForm.restaurantId],
+  );
+
+  const create = async (path: string, body: unknown, success: string) => {
     setMessage("");
-    const response = await fetch("/api/admin/restaurants", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-    if (!response.ok) {
-      setMessage("The restaurant was not saved. Check every field and try again.");
-      return;
+    try {
+      await jsonOrError(
+        await fetch(path, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }),
+      );
+      setMessage(success);
+      await refresh();
+      return true;
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "The record was not saved.");
+      return false;
     }
-    setForm(initialForm);
-    setMessage("Restaurant saved and audit record created.");
-    await refresh();
+  };
+
+  const submitRestaurant = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (
+      await create(
+        "/api/admin/restaurants",
+        restaurantForm,
+        "Restaurant saved and audit record created.",
+      )
+    ) {
+      setRestaurantForm(initialRestaurant);
+    }
+  };
+  const submitCategory = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (
+      await create(
+        "/api/admin/categories",
+        categoryForm,
+        "Category saved and audit record created.",
+      )
+    ) {
+      setCategoryForm(initialCategory);
+    }
+  };
+  const submitItem = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const numberOrNull = (value: string) => (value.trim() ? Number(value) : null);
+    const body = {
+      ...itemForm,
+      categoryId: itemForm.categoryId || undefined,
+      price: Number(itemForm.price),
+      dietaryStatus: itemForm.dietaryStatus || undefined,
+      calories: numberOrNull(itemForm.calories),
+      sodiumMg: numberOrNull(itemForm.sodiumMg),
+      sourceType: "ILLUSTRATIVE",
+      sourceCitation: itemForm.sourceCitation || "Administrator-entered illustrative record",
+    };
+    if (await create("/api/admin/menu-items", body, "Menu item saved and audit record created.")) {
+      setItemForm(initialItem);
+    }
   };
 
   return (
@@ -93,15 +189,22 @@ export function AdminConsole() {
           <p>Loading truthful data-completeness counts…</p>
         )}
       </section>
+      {message && (
+        <p className="form-hint" role="status">
+          {message}
+        </p>
+      )}
       <div className="admin-grid">
-        <form className="feature-card" onSubmit={submit}>
+        <form className="feature-card" onSubmit={submitRestaurant}>
           <h2>Add a restaurant</h2>
           <label>
             Name
             <input
               required
-              value={form.name}
-              onChange={(event) => setForm({ ...form, name: event.target.value })}
+              value={restaurantForm.name}
+              onChange={(event) =>
+                setRestaurantForm({ ...restaurantForm, name: event.target.value })
+              }
             />
           </label>
           <label>
@@ -109,24 +212,30 @@ export function AdminConsole() {
             <input
               required
               pattern="[a-z0-9-]+"
-              value={form.slug}
-              onChange={(event) => setForm({ ...form, slug: event.target.value })}
+              value={restaurantForm.slug}
+              onChange={(event) =>
+                setRestaurantForm({ ...restaurantForm, slug: event.target.value })
+              }
             />
           </label>
           <label>
             Cuisine
             <input
               required
-              value={form.cuisine}
-              onChange={(event) => setForm({ ...form, cuisine: event.target.value })}
+              value={restaurantForm.cuisine}
+              onChange={(event) =>
+                setRestaurantForm({ ...restaurantForm, cuisine: event.target.value })
+              }
             />
           </label>
           <label>
             Location
             <input
               required
-              value={form.location}
-              onChange={(event) => setForm({ ...form, location: event.target.value })}
+              value={restaurantForm.location}
+              onChange={(event) =>
+                setRestaurantForm({ ...restaurantForm, location: event.target.value })
+              }
             />
           </label>
           <label>
@@ -134,15 +243,19 @@ export function AdminConsole() {
             <textarea
               required
               minLength={10}
-              value={form.description}
-              onChange={(event) => setForm({ ...form, description: event.target.value })}
+              value={restaurantForm.description}
+              onChange={(event) =>
+                setRestaurantForm({ ...restaurantForm, description: event.target.value })
+              }
             />
           </label>
           <label>
             Status
             <select
-              value={form.status}
-              onChange={(event) => setForm({ ...form, status: event.target.value })}
+              value={restaurantForm.status}
+              onChange={(event) =>
+                setRestaurantForm({ ...restaurantForm, status: event.target.value })
+              }
             >
               <option value="DRAFT">Draft</option>
               <option value="PUBLISHED">Published</option>
@@ -152,31 +265,212 @@ export function AdminConsole() {
           <button className="button" type="submit">
             Save restaurant
           </button>
-          {message && (
-            <p className="form-hint" role="status">
-              {message}
-            </p>
-          )}
+        </form>
+        <form className="feature-card" onSubmit={submitCategory}>
+          <h2>Add a category</h2>
+          <label>
+            Restaurant
+            <select
+              required
+              value={categoryForm.restaurantId}
+              onChange={(event) =>
+                setCategoryForm({ ...categoryForm, restaurantId: event.target.value })
+              }
+            >
+              <option value="">Select a restaurant</option>
+              {restaurants.map((restaurant) => (
+                <option key={restaurant.id} value={restaurant.id}>
+                  {restaurant.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Name
+            <input
+              required
+              value={categoryForm.name}
+              onChange={(event) => setCategoryForm({ ...categoryForm, name: event.target.value })}
+            />
+          </label>
+          <label>
+            Slug
+            <input
+              required
+              pattern="[a-z0-9-]+"
+              value={categoryForm.slug}
+              onChange={(event) => setCategoryForm({ ...categoryForm, slug: event.target.value })}
+            />
+          </label>
+          <button className="button" type="submit">
+            Save category
+          </button>
+          <p className="form-hint">
+            Categories are attached to a selected restaurant and receive an audit event on save.
+          </p>
+        </form>
+        <form className="feature-card" onSubmit={submitItem}>
+          <h2>Add an illustrative menu item</h2>
+          <label>
+            Restaurant
+            <select
+              required
+              value={itemForm.restaurantId}
+              onChange={(event) =>
+                setItemForm({ ...itemForm, restaurantId: event.target.value, categoryId: "" })
+              }
+            >
+              <option value="">Select a restaurant</option>
+              {restaurants.map((restaurant) => (
+                <option key={restaurant.id} value={restaurant.id}>
+                  {restaurant.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Category (optional)
+            <select
+              value={itemForm.categoryId}
+              onChange={(event) => setItemForm({ ...itemForm, categoryId: event.target.value })}
+            >
+              <option value="">Uncategorised</option>
+              {categoriesForItem.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Name
+            <input
+              required
+              value={itemForm.name}
+              onChange={(event) => setItemForm({ ...itemForm, name: event.target.value })}
+            />
+          </label>
+          <label>
+            Slug
+            <input
+              required
+              pattern="[a-z0-9-]+"
+              value={itemForm.slug}
+              onChange={(event) => setItemForm({ ...itemForm, slug: event.target.value })}
+            />
+          </label>
+          <label>
+            Description
+            <textarea
+              required
+              minLength={2}
+              value={itemForm.description}
+              onChange={(event) => setItemForm({ ...itemForm, description: event.target.value })}
+            />
+          </label>
+          <label>
+            Price (MYR)
+            <input
+              required
+              min="0"
+              step="0.01"
+              type="number"
+              value={itemForm.price}
+              onChange={(event) => setItemForm({ ...itemForm, price: event.target.value })}
+            />
+          </label>
+          <label>
+            Serving size
+            <input
+              required
+              value={itemForm.servingSize}
+              onChange={(event) => setItemForm({ ...itemForm, servingSize: event.target.value })}
+            />
+          </label>
+          <label>
+            Dietary status (optional)
+            <input
+              value={itemForm.dietaryStatus}
+              onChange={(event) => setItemForm({ ...itemForm, dietaryStatus: event.target.value })}
+            />
+          </label>
+          <label>
+            Calories (optional)
+            <input
+              min="0"
+              type="number"
+              value={itemForm.calories}
+              onChange={(event) => setItemForm({ ...itemForm, calories: event.target.value })}
+            />
+          </label>
+          <label>
+            Sodium mg (optional)
+            <input
+              min="0"
+              type="number"
+              value={itemForm.sodiumMg}
+              onChange={(event) => setItemForm({ ...itemForm, sodiumMg: event.target.value })}
+            />
+          </label>
+          <label>
+            Status
+            <select
+              value={itemForm.status}
+              onChange={(event) => setItemForm({ ...itemForm, status: event.target.value })}
+            >
+              <option value="DRAFT">Draft</option>
+              <option value="PUBLISHED">Published</option>
+              <option value="ARCHIVED">Archived</option>
+            </select>
+          </label>
+          <label>
+            Illustrative source note (optional)
+            <input
+              value={itemForm.sourceCitation}
+              onChange={(event) => setItemForm({ ...itemForm, sourceCitation: event.target.value })}
+            />
+          </label>
+          <button className="button" type="submit">
+            Save menu item
+          </button>
         </form>
         <section className="feature-card">
-          <h2>Restaurant records</h2>
-          {restaurants.length ? (
+          <h2>Recent records</h2>
+          {items.length ? (
             <ul className="admin-list">
-              {restaurants.map((restaurant) => (
-                <li key={restaurant.id}>
-                  <strong>{restaurant.name}</strong>
+              {items.map((item) => (
+                <li key={item.id}>
+                  <strong>{item.name}</strong>
                   <span>
-                    {restaurant.cuisine} · {restaurant.location} · {restaurant.status.toLowerCase()}
+                    {item.restaurant.name} · {item.category?.name ?? "Uncategorised"} ·{" "}
+                    {item.status.toLowerCase()} ·{" "}
+                    {item.nutrition?.calories ?? "Nutrition unavailable"} kcal
                   </span>
                 </li>
               ))}
             </ul>
           ) : (
-            <p>No restaurant records are available yet.</p>
+            <p>No menu item records are available yet.</p>
+          )}
+          <h2>Recent audit events</h2>
+          {audit.length ? (
+            <ul className="admin-list">
+              {audit.map((entry) => (
+                <li key={entry.id}>
+                  <strong>{entry.action}</strong>
+                  <span>
+                    {entry.entityType} · {entry.actor.email} ·{" "}
+                    {new Date(entry.createdAt).toLocaleString()}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No audit events are available yet.</p>
           )}
           <p className="form-hint">
-            Menu item and category editors remain a planned database-backed administration slice;
-            restaurant creation is the currently implemented mutation.
+            All writes remain server-authorized. Edit, delete, and production acceptance testing are
+            still not implemented or verified.
           </p>
         </section>
       </div>

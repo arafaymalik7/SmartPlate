@@ -3,6 +3,23 @@ import { getAdminEmail } from "@/lib/auth/require-admin";
 import { hasTrustedMutationOrigin } from "@/lib/security/request-origin";
 import { menuItemSchema } from "@/lib/validation/admin";
 
+export async function GET() {
+  const email = await getAdminEmail();
+  if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const { prisma } = await import("@/lib/db/prisma");
+  return NextResponse.json(
+    await prisma.menuItem.findMany({
+      include: {
+        restaurant: { select: { id: true, name: true } },
+        category: { select: { id: true, name: true } },
+        nutrition: { select: { calories: true, sodiumMg: true, sourceType: true } },
+      },
+      orderBy: [{ restaurant: { name: "asc" } }, { name: "asc" }],
+      take: 25,
+    }),
+  );
+}
+
 export async function POST(request: Request) {
   if (!hasTrustedMutationOrigin(request))
     return NextResponse.json({ error: "Untrusted request origin" }, { status: 403 });

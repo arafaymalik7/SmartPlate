@@ -1,4 +1,5 @@
 import { defineConfig } from "@playwright/test";
+import { randomBytes } from "node:crypto";
 import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
@@ -24,6 +25,7 @@ function localChromiumExecutable(): string | undefined {
 }
 
 const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE ?? localChromiumExecutable();
+const e2eAuthSecret = process.env.AUTH_SECRET ?? randomBytes(32).toString("hex");
 
 export default defineConfig({
   testDir: "tests/e2e",
@@ -41,5 +43,10 @@ export default defineConfig({
     url: "http://127.0.0.1:3000",
     reuseExistingServer: true,
     timeout: 120000,
+    env: {
+      ...process.env,
+      AUTH_SECRET: e2eAuthSecret,
+      NEXTAUTH_URL: "http://127.0.0.1:3000",
+    },
   },
 });
