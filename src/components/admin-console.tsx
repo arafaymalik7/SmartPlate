@@ -15,11 +15,13 @@ type Restaurant = {
   slug: string;
   cuisine: string;
   location: string;
+  description: string;
   status: string;
 };
 type Category = {
   id: string;
   name: string;
+  slug: string;
   restaurantId: string;
   status: string;
   restaurant: { name: string };
@@ -83,6 +85,8 @@ export function AdminConsole() {
   const [restaurantForm, setRestaurantForm] = useState(initialRestaurant);
   const [categoryForm, setCategoryForm] = useState(initialCategory);
   const [itemForm, setItemForm] = useState(initialItem);
+  const [editingRestaurantId, setEditingRestaurantId] = useState<string | null>(null);
+  const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
   const [message, setMessage] = useState("");
 
   const refresh = async () => {
@@ -113,12 +117,12 @@ export function AdminConsole() {
     [categories, itemForm.restaurantId],
   );
 
-  const create = async (path: string, body: unknown, success: string) => {
+  const write = async (path: string, method: "POST" | "PATCH", body: unknown, success: string) => {
     setMessage("");
     try {
       await jsonOrError(
         await fetch(path, {
-          method: "POST",
+          method,
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
         }),
@@ -157,25 +161,35 @@ export function AdminConsole() {
   const submitRestaurant = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (
-      await create(
-        "/api/admin/restaurants",
+      await write(
+        editingRestaurantId
+          ? `/api/admin/restaurants/${editingRestaurantId}`
+          : "/api/admin/restaurants",
+        editingRestaurantId ? "PATCH" : "POST",
         restaurantForm,
-        "Restaurant saved and audit record created.",
+        editingRestaurantId
+          ? "Restaurant updated and audit record created."
+          : "Restaurant saved and audit record created.",
       )
     ) {
       setRestaurantForm(initialRestaurant);
+      setEditingRestaurantId(null);
     }
   };
   const submitCategory = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (
-      await create(
-        "/api/admin/categories",
+      await write(
+        editingCategoryId ? `/api/admin/categories/${editingCategoryId}` : "/api/admin/categories",
+        editingCategoryId ? "PATCH" : "POST",
         categoryForm,
-        "Category saved and audit record created.",
+        editingCategoryId
+          ? "Category updated and audit record created."
+          : "Category saved and audit record created.",
       )
     ) {
       setCategoryForm(initialCategory);
+      setEditingCategoryId(null);
     }
   };
   const submitItem = async (event: FormEvent<HTMLFormElement>) => {
@@ -197,7 +211,14 @@ export function AdminConsole() {
       sourceType: "ILLUSTRATIVE",
       sourceCitation: itemForm.sourceCitation || "Administrator-entered illustrative record",
     };
-    if (await create("/api/admin/menu-items", body, "Menu item saved and audit record created.")) {
+    if (
+      await write(
+        "/api/admin/menu-items",
+        "POST",
+        body,
+        "Menu item saved and audit record created.",
+      )
+    ) {
       setItemForm(initialItem);
     }
   };
@@ -234,7 +255,7 @@ export function AdminConsole() {
       )}
       <div className="admin-grid">
         <form className="feature-card" onSubmit={submitRestaurant}>
-          <h2>Add a restaurant</h2>
+          <h2>{editingRestaurantId ? "Edit restaurant" : "Add a restaurant"}</h2>
           <label>
             Name
             <input
@@ -301,11 +322,23 @@ export function AdminConsole() {
             </select>
           </label>
           <button className="button" type="submit">
-            Save restaurant
+            {editingRestaurantId ? "Update restaurant" : "Save restaurant"}
           </button>
+          {editingRestaurantId && (
+            <button
+              className="button button-secondary"
+              type="button"
+              onClick={() => {
+                setRestaurantForm(initialRestaurant);
+                setEditingRestaurantId(null);
+              }}
+            >
+              Cancel edit
+            </button>
+          )}
         </form>
         <form className="feature-card" onSubmit={submitCategory}>
-          <h2>Add a category</h2>
+          <h2>{editingCategoryId ? "Edit category" : "Add a category"}</h2>
           <label>
             Restaurant
             <select
@@ -352,8 +385,20 @@ export function AdminConsole() {
             </select>
           </label>
           <button className="button" type="submit">
-            Save category
+            {editingCategoryId ? "Update category" : "Save category"}
           </button>
+          {editingCategoryId && (
+            <button
+              className="button button-secondary"
+              type="button"
+              onClick={() => {
+                setCategoryForm(initialCategory);
+                setEditingCategoryId(null);
+              }}
+            >
+              Cancel edit
+            </button>
+          )}
           <p className="form-hint">
             Categories are attached to a selected restaurant and receive an audit event on save.
           </p>
@@ -532,6 +577,20 @@ export function AdminConsole() {
                     {category.restaurant.name} · {category.status.toLowerCase()}
                   </span>
                   <p className="admin-actions">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCategoryForm({
+                          restaurantId: category.restaurantId,
+                          name: category.name,
+                          slug: category.slug,
+                          status: category.status,
+                        });
+                        setEditingCategoryId(category.id);
+                      }}
+                    >
+                      Edit
+                    </button>
                     {category.status === "DRAFT" && (
                       <button
                         type="button"
@@ -579,6 +638,22 @@ export function AdminConsole() {
                     {restaurant.cuisine} · {restaurant.location} · {restaurant.status.toLowerCase()}
                   </span>
                   <p className="admin-actions">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setRestaurantForm({
+                          name: restaurant.name,
+                          slug: restaurant.slug,
+                          cuisine: restaurant.cuisine,
+                          location: restaurant.location,
+                          description: restaurant.description,
+                          status: restaurant.status,
+                        });
+                        setEditingRestaurantId(restaurant.id);
+                      }}
+                    >
+                      Edit
+                    </button>
                     {restaurant.status === "DRAFT" && (
                       <button
                         type="button"

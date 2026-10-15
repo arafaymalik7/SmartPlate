@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-16/17 — Guarded full-update increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added full validated PATCH support for restaurants, categories, and menu items alongside their lightweight publication-state actions. Restaurant/category console forms now support edit and cancel. A full menu update validates restaurant/category ownership and atomically replaces ingredient/allergen disclosures plus upserts nutrition provenance; every update records changed field names in the audit trail.
+- Verification: lint, strict TypeScript, 19 Vitest checks, production build, and 24 public Playwright checks at 375px, 768px, and 1440px passed. The authenticated admin data path remains intentionally unclaimed because no PostgreSQL-backed administrator is configured locally.
+- Limit: the menu form remains a focused creation surface rather than a multi-row editor, and authenticated PostgreSQL CRUD acceptance remains outstanding.
+
 ## CP-16 — Category publication controls increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)
