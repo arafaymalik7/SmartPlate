@@ -1,4 +1,5 @@
 import { getPublicCatalog } from "../src/lib/public-catalog";
+import { recommend } from "../src/lib/recommendation/engine";
 
 async function catalogItemSlugs() {
   const catalog = await getPublicCatalog();
@@ -15,6 +16,21 @@ async function main() {
     orderBy: { slug: "asc" },
   });
   if (!item?.category) throw new Error("Expected a published seeded menu item with a category.");
+
+  const initialCatalog = await getPublicCatalog();
+  if (initialCatalog.source !== "DATABASE") throw new Error("Public catalog was unavailable.");
+  const recommendations = recommend(
+    initialCatalog.items.map((candidate) => ({ ...candidate, active: true })),
+    {
+      calorieTarget: 500,
+      diet: "NONE",
+      priority: "NONE",
+      excludedIngredients: [],
+      allergenExclusions: [],
+    },
+  );
+  if (!recommendations.eligible.length)
+    throw new Error("Expected database-backed catalog items to produce recommendations.");
 
   const original = {
     restaurantStatus: item.restaurant.status,
@@ -73,7 +89,9 @@ async function main() {
     await prisma.$disconnect();
   }
 
-  console.log("Verified draft, unavailable, category, and restaurant records are hidden publicly.");
+  console.log(
+    "Verified database-backed recommendations plus draft, unavailable, category, and restaurant visibility.",
+  );
 }
 
 main().catch((error: unknown) => {
