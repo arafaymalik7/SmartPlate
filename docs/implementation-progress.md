@@ -7,6 +7,12 @@
 - Verification: lint, strict TypeScript, 19 Vitest checks, production build, and 24 responsive public Playwright checks passed. The protected no-session route remains covered; the authenticated database transition is deliberately not claimed without a PostgreSQL-backed administrator.
 - Limit: full category field editing and authenticated PostgreSQL acceptance remain outstanding.
 
+## CP-16 — Category creation form correction
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: moved the category publication selector from the restaurant form to the category form, restoring the intended draft/published/archived category creation input.
+- Verification: lint, strict TypeScript, 19 Vitest checks, production build, and 24 responsive public Playwright checks passed.
+
 ## CP-16 — Category lifecycle schema increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

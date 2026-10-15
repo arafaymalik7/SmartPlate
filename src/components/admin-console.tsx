@@ -257,17 +257,6 @@ export function AdminConsole() {
             />
           </label>
           <label>
-            Status
-            <select
-              value={categoryForm.status}
-              onChange={(event) => setCategoryForm({ ...categoryForm, status: event.target.value })}
-            >
-              <option value="DRAFT">Draft</option>
-              <option value="PUBLISHED">Published</option>
-              <option value="ARCHIVED">Archived</option>
-            </select>
-          </label>
-          <label>
             Cuisine
             <input
               required
@@ -350,6 +339,17 @@ export function AdminConsole() {
               value={categoryForm.slug}
               onChange={(event) => setCategoryForm({ ...categoryForm, slug: event.target.value })}
             />
+          </label>
+          <label>
+            Status
+            <select
+              value={categoryForm.status}
+              onChange={(event) => setCategoryForm({ ...categoryForm, status: event.target.value })}
+            >
+              <option value="DRAFT">Draft</option>
+              <option value="PUBLISHED">Published</option>
+              <option value="ARCHIVED">Archived</option>
+            </select>
           </label>
           <button className="button" type="submit">
             Save category
