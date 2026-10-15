@@ -38,3 +38,8 @@
 - `npm run test:e2e`: passed, 9/9 after adding the strict allergy-related exclusion journey at each viewport.
 - Acceptance criterion: an incomplete allergen disclosure is grouped as “Unable to verify” and is explicitly not marked safe.
 - Visual evidence: `docs/evidence/mobile-375-recommendations.png`, `docs/evidence/tablet-768-recommendations.png`, and `docs/evidence/desktop-1440-recommendations.png`; the mobile capture was visually reviewed.
+
+## Restaurant directory filtering
+
+- `npm run test:e2e`: passed, 12/12 after adding restaurant query/no-results/reset coverage at all three viewports.
+- The refreshed `docs/evidence/desktop-1440-restaurants.png` capture was visually reviewed after the filter controls were added.

@@ -100,3 +100,10 @@
 - Scope: added a versioned PostgreSQL baseline migration, a strict preference flow with non-persisted allergy-related exclusions, a Playwright safety journey, a protected admin restaurant form, transactional admin audit creation, and a PostgreSQL-backed CI workflow definition.
 - Verification: `npm run lint`, `npm run typecheck` and `npm test` passed (10 unit tests); `npm run test:e2e` passed (9 checks across 375px, 768px and 1440px). The preference capture at `docs/evidence/mobile-375-recommendations.png` was visually reviewed.
 - Unverified: `db:deploy`, seed idempotency, CI execution, authenticated admin mutation, and live PostgreSQL relations require Docker Desktop's Linux engine or a disposable PostgreSQL URL. The workflow is configured to execute migration, seed, lint, typecheck, unit, production build and browser checks when GitHub Actions runs.
+
+## CP-06 â€” Bounded directory interaction
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added an accessible name/cuisine/location search and location filter to the transparent illustrative restaurant directory, including a resettable no-results state.
+- Verification: lint, strict typecheck and 10 unit tests passed; production Playwright passed 12/12 across 375px, 768px and 1440px. The updated desktop restaurant directory capture was visually reviewed.
+- Limit: the interactive fallback directory is typed illustrative data. Its PostgreSQL query path, pagination and published-status enforcement still require a running test database.

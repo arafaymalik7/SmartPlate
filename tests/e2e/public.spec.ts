@@ -16,7 +16,17 @@ test("comparison preserves unavailable values", async ({ page }) => {
   await expect(page.getByText("Not available").first()).toBeVisible();
 });
 
-test("strict allergy-related exclusions are never presented as safe", async ({ page }, testInfo) => {
+test("restaurant search has a truthful empty state", async ({ page }) => {
+  await page.goto("/restaurants");
+  await page.getByLabel(/search restaurants/i).fill("no-such-venue");
+  await expect(page.getByRole("heading", { name: /no demonstration venues match/i })).toBeVisible();
+  await page.getByRole("button", { name: /clear filters/i }).click();
+  await expect(page.getByText(/4 demonstration venues shown/i)).toBeVisible();
+});
+
+test("strict allergy-related exclusions are never presented as safe", async ({
+  page,
+}, testInfo) => {
   await page.goto("/recommend");
   await page.getByLabel(/allergy-related exclusions/i).fill("peanuts");
   await expect(page.getByRole("heading", { name: /unable to verify/i })).toBeVisible();

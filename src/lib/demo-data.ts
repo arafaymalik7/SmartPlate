@@ -14,6 +14,37 @@ export type DemoItem = {
   allergenDisclosure: "UNKNOWN" | "PRESENT";
   sourceType: "ILLUSTRATIVE";
 };
+
+export const demoRestaurants = [
+  {
+    slug: "green-ladle",
+    name: "Green Ladle",
+    cuisine: "Plant-forward",
+    location: "Kuala Lumpur",
+    description: "Fictional plant-forward demonstration menu.",
+  },
+  {
+    slug: "harbor-bowl",
+    name: "Harbor Bowl",
+    cuisine: "Coastal bowls",
+    location: "Penang",
+    description: "Fictional coastal-bowl demonstration menu.",
+  },
+  {
+    slug: "saffron-table",
+    name: "Saffron Table",
+    cuisine: "Modern Malaysian",
+    location: "Shah Alam",
+    description: "Fictional modern Malaysian demonstration menu.",
+  },
+  {
+    slug: "daylight-kitchen",
+    name: "Daylight Kitchen",
+    cuisine: "Everyday café",
+    location: "Johor Bahru",
+    description: "Fictional everyday café demonstration menu.",
+  },
+] as const;
 export const demoItems: DemoItem[] = [
   {
     slug: "green-ladle-garden-bowl",
