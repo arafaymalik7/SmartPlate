@@ -1,5 +1,11 @@
 # Implementation progress ledger
 
+## CP-06/07/08 — Database-source labeling correction
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Implementation: public restaurant and menu-detail pages now use one mutually exclusive source label. Database-backed records say “Published”, while the fallback says “Illustrative”; detail provenance copy also distinguishes illustrative nutrition from published source types.
+- Verification: `npm run lint`, `npm run typecheck`, `npm test` (11 files, 24 tests), `npm run build` (20 routes), and `npm run test:e2e -- --reporter=line` (24 passed at 375px, 768px, and 1440px) passed before commit.
+
 ## CP-21 — Isolated Playwright server increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

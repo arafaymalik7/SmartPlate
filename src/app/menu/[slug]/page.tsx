@@ -13,9 +13,10 @@ export default async function MenuItemPage({ params }: { params: Promise<{ slug:
   return (
     <SiteShell>
       <section className="shell section">
-        <p className="state-label">Illustrative nutrition data</p>
+        <p className="state-label">
+          {catalog.source === "DATABASE" ? "Published nutrition data" : "Illustrative nutrition data"}
+        </p>
         <h1 className="page-title">{item.name}</h1>
-        {catalog.source === "DATABASE" && <p className="state-label">Published nutrition data</p>}
         <p className="lede">
           {item.description} MYR {item.price.toFixed(2)} · {item.restaurant} · {item.category}
         </p>
@@ -55,6 +56,11 @@ export default async function MenuItemPage({ params }: { params: Promise<{ slug:
           <article>
             <h3>Source and review</h3>
             <p>{item.sourceCitation}</p>
+            <p>
+              {item.sourceType === "ILLUSTRATIVE"
+                ? "This nutrition information is illustrative, not restaurant-verified."
+                : "This published nutrition information has the source type shown in the menu record."}
+            </p>
             <p>Last reviewed: {item.reviewedAt}</p>
           </article>
         </div>
