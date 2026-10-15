@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-23 — Report and source-register increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added a clearly marked six-chapter technical-report draft and a source register separating checked public context sources from product data; reconciled the rubric and QA/test documents with existing CI and browser evidence.
+- Verification: report statements were cross-checked against the implementation ledger, test suite scope, schema/routes, and public official WHO, USDA, and OWASP pages. `prettier` and `git diff --check` passed for the documentation change.
+- Limit: the draft has no university metadata, human-subject/user-study results, supervisor review, faculty formatting approval, or production deployment result. It must not be submitted as final without those genuine inputs.
+
 ## CP-00 — Intake and baseline
 
 - Timestamp: 2026-10-15 (Asia/Karachi)
