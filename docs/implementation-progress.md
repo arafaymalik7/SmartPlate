@@ -74,3 +74,9 @@
 - Scope: server-side admin session guard, restaurant API with validated mutation path, truthful summary endpoint and Zod validation for restaurant/menu input.
 - Verification: lint, strict typecheck, 9/9 unit tests and production build passed.
 - Unverified: direct authenticated CRUD, relational integrity, audit persistence and admin UI require PostgreSQL and a bootstrapped admin.
+
+## CP-23 — Final evidence reconciliation (partial)
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Local release checks: lint, strict TypeScript, 9/9 Vitest tests and production build passed at commit `41b234950d27ceb1e0ccc0903a5dc2c2ad2e3bd2`, pushed to `codex/smartplate-complete`.
+- Release status: FUNCTIONAL BUT PARTIALLY UNVERIFIED. PostgreSQL integration, browser E2E/accessibility captures, real admin journey, GitHub Actions result, deployment, user testing and university approval remain outstanding.
