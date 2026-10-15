@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { parseDisclosures } from "@/lib/disclosure-parser";
 
 type Summary = {
   restaurants: number;
@@ -73,21 +74,6 @@ async function jsonOrError(response: Response) {
   if (!response.ok) throw new Error(payload?.error ?? "The request could not be completed.");
   return payload;
 }
-
-const disclosureStates = new Set(["PRESENT", "ABSENT_VERIFIED", "UNKNOWN"]);
-const parseDisclosures = (value: string) =>
-  value
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((line) => {
-      const [name, rawState] = line.split("|").map((entry) => entry.trim());
-      return {
-        name,
-        state: disclosureStates.has(rawState) ? rawState : "UNKNOWN",
-      };
-    })
-    .filter((entry) => entry.name.length > 0);
 
 export function AdminConsole() {
   const [summary, setSummary] = useState<Summary | null>(null);
