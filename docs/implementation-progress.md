@@ -60,3 +60,10 @@
 - Scope: added public information routes, GitHub Actions lint/typecheck/test/build workflow, security posture and deployment runbook.
 - Verification: lint, typecheck, 5/5 unit tests and production build passed.
 - Unverified: browser accessibility/screenshots, cloud CI result and Vercel/managed PostgreSQL deployment require browser/cloud credentials not available in this runtime.
+
+## CP-15 — Authentication and admin access
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added Auth.js/NextAuth credentials flow, hashed password bootstrap command, sign-in UI and dynamic admin route with server session check.
+- Verification: lint, strict TypeScript, 7/7 tests and production build passed. Build verifies `/admin` and `/api/auth/[...nextauth]` route compilation.
+- Unverified: actual administrator bootstrap/login/logout/unauthorized mutation tests require PostgreSQL and configured `DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, and strong bootstrap credentials.
