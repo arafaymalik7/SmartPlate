@@ -46,3 +46,10 @@
 - Verification: strict typecheck passed; Vitest passed 2/2 and checks illustrative source labels plus an intentionally unknown calorie value.
 - Blocker: seed execution against PostgreSQL is UNVERIFIED pending an approved database URL.
 - Next action: public restaurant discovery routes.
+
+## CP-11/12 — Recommendation engine
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: pure deterministic eligibility/ranking module with explicit unknown-allergen handling, grounded explanations, missing-data limitations and stable tie breaking.
+- Verification: lint and strict TypeScript passed; Vitest passed 5/5; production build passed.
+- Next action: build preference/results UI over this engine.
