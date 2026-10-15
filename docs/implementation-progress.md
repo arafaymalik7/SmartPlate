@@ -1,5 +1,11 @@
 # Implementation progress ledger
 
+## CP-15/16 — Direct unauthenticated API verification increment
+
+- Timestamp: 2026-10-16 (Asia/Karachi)
+- Implementation: browser-level checks now request each protected admin read route and representative create/update routes without a session, asserting `401` before a database import or mutation can occur; an explicit hostile origin is asserted to receive `403` before authorization.
+- Verification: `npm run lint`, `npm run typecheck`, `npm test` (12 files, 26 tests), `npm run build` (20 routes), and `npm run test:e2e -- --reporter=line` (30 passed at 375px, 768px, and 1440px) passed before commit.
+
 ## CP-19 — Rendered-link integrity increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

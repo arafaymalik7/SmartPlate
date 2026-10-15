@@ -74,6 +74,31 @@ test("admin workspace remains protected without a session", async ({ page }, tes
   });
 });
 
+test("admin APIs reject unauthenticated reads and mutations", async ({ request }) => {
+  for (const path of [
+    "/api/admin/restaurants",
+    "/api/admin/categories",
+    "/api/admin/menu-items",
+    "/api/admin/summary",
+    "/api/admin/audit",
+  ]) {
+    expect((await request.get(path)).status(), `${path} should require an admin session`).toBe(401);
+  }
+
+  expect((await request.post("/api/admin/restaurants", { data: {} })).status()).toBe(401);
+  expect((await request.patch("/api/admin/menu-items/not-a-record", { data: {} })).status()).toBe(
+    401,
+  );
+  expect(
+    (
+      await request.post("/api/admin/restaurants", {
+        data: {},
+        headers: { origin: "https://attacker.example" },
+      })
+    ).status(),
+  ).toBe(403);
+});
+
 test("restaurant search has a truthful empty state", async ({ page }) => {
   await page.goto("/restaurants");
   await page.getByLabel(/search restaurants/i).fill("no-such-venue");
