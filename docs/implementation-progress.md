@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-20 — Admin mutation rate-limit increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added a fixed-window in-process guard to all authenticated admin mutation routes. It allows 20 writes per administrator email per minute and returns a `429` response with `Retry-After` after the limit is reached.
+- Verification: deterministic unit tests cover limit exhaustion and expiry; full lint, strict TypeScript, unit, production build, and public Playwright checks are run with this increment.
+- Limit: in-process memory is intentionally a basic single-instance safeguard, not distributed production rate limiting. A managed shared rate-limit service remains required for horizontal scaling.
+
 ## CP-16/17/18 — Admin workflow visibility increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

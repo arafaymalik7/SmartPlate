@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAdminEmail } from "@/lib/auth/require-admin";
 import { hasTrustedMutationOrigin } from "@/lib/security/request-origin";
+import { checkRateLimit } from "@/lib/security/rate-limit";
 import { menuItemSchema } from "@/lib/validation/admin";
 
 export async function GET() {
@@ -25,6 +26,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Untrusted request origin" }, { status: 403 });
   const email = await getAdminEmail();
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const rateLimit = checkRateLimit(`admin-mutation:${email}`);
+  if (!rateLimit.allowed)
+    return NextResponse.json(
+      { error: "Too many admin mutations. Try again shortly." },
+      { status: 429, headers: { "Retry-After": String(rateLimit.retryAfterSeconds) } },
+    );
   const parsed = menuItemSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success)
     return NextResponse.json({ error: "Invalid menu item input" }, { status: 400 });

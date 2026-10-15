@@ -4,6 +4,8 @@ SMARTPLATE validates user-controlled values with Zod before admin mutations, avo
 
 Auth uses Auth.js credentials with an administrator-only bootstrap and scrypt password verification. Session cookies and CSRF protection use the maintained Auth.js/NextAuth defaults; rate limiting is not yet implemented. Live invalid-login, logout, CSRF and authorized mutation checks remain unverified until a disposable PostgreSQL environment is available.
 
-Every current admin mutation additionally compares an explicit browser `Origin` with the request URL before checking a session or importing the database client. Same-origin and non-browser requests are allowed; malformed or cross-origin browser requests are rejected with `403`. This is unit-tested, but it is not a substitute for production rate limiting and real authenticated browser verification.
+Every current admin mutation additionally compares an explicit browser `Origin` with the request URL before checking a session or importing the database client. Same-origin and non-browser requests are allowed; malformed or cross-origin browser requests are rejected with `403`. This is unit-tested.
+
+Authenticated admin mutations have a tested in-process fixed-window limit of 20 writes per administrator email per minute and return `429` with `Retry-After` when the limit is reached. This provides a basic guard for the current single-process deployment shape; production multi-instance deployments must replace or augment it with a shared provider-aware rate-limit store. Live authenticated browser verification remains outstanding.
 
 Nutrition and allergy information is informational only. Missing disclosure is unknown, never safe. Guest preferences are limited to non-sensitive meal controls and may be cleared locally.
