@@ -10,6 +10,6 @@
 
 ## Configured but awaiting PostgreSQL
 
-The GitHub Actions workflow provisions an ephemeral PostgreSQL 16 service, runs the committed migration and seed, repeats the seed, verifies expected row counts, published catalog facts, publication visibility mutations, and database-backed recommendation generation, then runs lint/typecheck/unit/build/browser checks. CI run #50 for commit `7891aa6` completed successfully, and CI run #55 for `b0d2283` completed successfully. Local migration deployment and authenticated admin CRUD are still unverified because Docker Desktop's Linux engine is stopped.
+The GitHub Actions workflow provisions an ephemeral PostgreSQL 16 service, runs the committed migration and seed, repeats the seed, verifies expected row counts, published catalog facts, publication visibility mutations, and database-backed recommendation generation, then runs lint/typecheck/unit/build/browser checks. CI run #62 for `f3500af` completed successfully, including the full 27-case unit suite and 33-check browser suite: https://github.com/arafaymalik7/SmartPlate/actions/runs/38793976765. Local migration deployment and authenticated admin CRUD are still unverified because Docker Desktop's Linux engine is stopped.
 
 Never use a production database for test migration or seed verification.
