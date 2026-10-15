@@ -53,3 +53,10 @@
 - Scope: pure deterministic eligibility/ranking module with explicit unknown-allergen handling, grounded explanations, missing-data limitations and stable tie breaking.
 - Verification: lint and strict TypeScript passed; Vitest passed 5/5; production build passed.
 - Next action: build preference/results UI over this engine.
+
+## CP-19/21/22 — Quality, CI and deployment preparation
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added public information routes, GitHub Actions lint/typecheck/test/build workflow, security posture and deployment runbook.
+- Verification: lint, typecheck, 5/5 unit tests and production build passed.
+- Unverified: browser accessibility/screenshots, cloud CI result and Vercel/managed PostgreSQL deployment require browser/cloud credentials not available in this runtime.
