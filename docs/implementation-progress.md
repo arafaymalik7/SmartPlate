@@ -1,5 +1,10 @@
 # Implementation progress ledger
 
+## CP-15 — Admin sign-out increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Implementation: authenticated administrator workspace now presents a keyboard-accessible sign-out action that invokes Auth.js sign-out and returns to the protected sign-in route while preventing duplicate clicks.
+- Verification: focused client test plus `npm run lint`, `npm run typecheck`, `npm test` (12 files, 25 tests), `npm run build` (20 routes), and `npm run test:e2e -- --reporter=line` (24 passed at 375px, 768px, and 1440px) all passed before commit. End-to-end sign-in/sign-out still requires the supplied administrator and PostgreSQL credentials.
 ## CP-06/07/08 — Database-source labeling correction
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

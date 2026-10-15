@@ -3,6 +3,7 @@ import Link from "next/link";
 import { authOptions } from "@/lib/auth/options";
 import { SiteShell } from "@/components/site-shell";
 import { AdminConsole } from "@/components/admin-console";
+import { SignOutButton } from "@/components/sign-out-button";
 export const dynamic = "force-dynamic";
 export default async function AdminPage() {
   const session = await getServerSession(authOptions);
@@ -17,6 +18,9 @@ export default async function AdminPage() {
               Signed in as {session.user?.email}. This workspace only exposes server-authorized
               menu-management operations.
             </p>
+            <div className="inline-actions">
+              <SignOutButton />
+            </div>
             <AdminConsole />
           </>
         ) : (
