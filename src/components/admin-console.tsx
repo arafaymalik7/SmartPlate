@@ -17,7 +17,13 @@ type Restaurant = {
   location: string;
   status: string;
 };
-type Category = { id: string; name: string; restaurantId: string; restaurant: { name: string } };
+type Category = {
+  id: string;
+  name: string;
+  restaurantId: string;
+  status: string;
+  restaurant: { name: string };
+};
 type Item = {
   id: string;
   name: string;
@@ -516,6 +522,53 @@ export function AdminConsole() {
           </button>
         </form>
         <section className="feature-card">
+          <h2>Category records</h2>
+          {categories.length ? (
+            <ul className="admin-list">
+              {categories.map((category) => (
+                <li key={category.id}>
+                  <strong>{category.name}</strong>
+                  <span>
+                    {category.restaurant.name} · {category.status.toLowerCase()}
+                  </span>
+                  <p className="admin-actions">
+                    {category.status === "DRAFT" && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          changeStatus(`/api/admin/categories/${category.id}`, "PUBLISHED")
+                        }
+                      >
+                        Publish
+                      </button>
+                    )}
+                    {category.status === "PUBLISHED" && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          changeStatus(`/api/admin/categories/${category.id}`, "DRAFT")
+                        }
+                      >
+                        Unpublish
+                      </button>
+                    )}
+                    {category.status !== "ARCHIVED" && (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          changeStatus(`/api/admin/categories/${category.id}`, "ARCHIVED")
+                        }
+                      >
+                        Archive
+                      </button>
+                    )}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No category records are available yet.</p>
+          )}
           <h2>Restaurant records</h2>
           {restaurants.length ? (
             <ul className="admin-list">

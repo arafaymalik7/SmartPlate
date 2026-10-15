@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-16 — Category publication controls increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: completed the guarded category publication lifecycle with origin-checked, rate-limited status transitions, immutable audit records, and authenticated console controls for publish, unpublish, and confirmation-gated archive.
+- Verification: lint, strict TypeScript, 19 Vitest checks, production build, and 24 responsive public Playwright checks passed. The protected no-session route remains covered; the authenticated database transition is deliberately not claimed without a PostgreSQL-backed administrator.
+- Limit: full category field editing and authenticated PostgreSQL acceptance remain outstanding.
+
 ## CP-16 — Category lifecycle schema increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)
