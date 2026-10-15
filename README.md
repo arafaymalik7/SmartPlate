@@ -6,7 +6,7 @@ SMARTPLATE is being delivered as a Next.js, TypeScript, PostgreSQL and Prisma un
 
 ## Current status
 
-The active branch is `codex/smartplate-complete`. Public menu routes, preference validation, a tested recommendation engine, comparison, Prisma schema, illustrative seed blueprint, CI workflow and operational documentation are implemented. Real Playwright browser evidence is captured at 375px, 768px and 1440px under `docs/evidence/`. PostgreSQL migration/seed execution, authenticated database-backed administration and cloud deployment remain unverified until appropriate database/cloud access is supplied. See `docs/implementation-progress.md` for checkpoint evidence.
+The active branch is `codex/smartplate-complete`. Public menu routes, preference validation, a tested recommendation engine, comparison, Prisma schema, illustrative seed blueprint, guarded admin foundation, CI workflow and operational documentation are implemented. Real Playwright browser evidence is captured at 375px, 768px and 1440px under `docs/evidence/`. GitHub Actions has exercised the committed migration/seed flow against ephemeral PostgreSQL; authenticated database-backed administration and cloud deployment remain unverified until appropriate database/cloud access is supplied. See `docs/implementation-progress.md` for checkpoint evidence.
 
 ## Local setup
 
@@ -21,7 +21,10 @@ npm run lint
 npm run typecheck
 npm test
 npm run build
+npm run test:e2e
 ```
+
+After an actual HTTPS deployment, run `npm run verify:public-url -- https://your-smartplate.example`. The command is a public smoke check and does not itself prove authenticated administration or database acceptance.
 
 ## Data integrity
 

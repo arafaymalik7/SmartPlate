@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-22 — Deployment runbook increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: expanded the Vercel/managed-PostgreSQL release, monitoring, recovery, migration, and rollback instructions; added an HTTPS-only public smoke-check script for the health, robots, and sitemap endpoints.
+- Verification: `node --check scripts/verify-public-url.mjs` passed. Its missing-URL and non-HTTPS rejection paths were exercised locally; no public target was supplied, so a successful deployed-URL smoke check is not claimed.
+- Blocker: deployment requires a hosting account/project, managed PostgreSQL credentials, configured production environment variables, and a public HTTPS URL. No credentials or deployment action were available in this workspace.
+
 ## CP-20 — Admin mutation rate-limit increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)
