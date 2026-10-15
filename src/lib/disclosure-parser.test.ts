@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseDisclosures } from "./disclosure-parser";
+import { formatDisclosures, parseDisclosures } from "./disclosure-parser";
 
 describe("disclosure parser", () => {
   it("retains explicit states for multiple disclosure lines", () => {
@@ -13,6 +13,17 @@ describe("disclosure parser", () => {
     expect(parseDisclosures("milk\nsoy | SAFE\n | PRESENT")).toEqual([
       { name: "milk", state: "UNKNOWN" },
       { name: "soy", state: "UNKNOWN" },
+    ]);
+  });
+
+  it("formats stored disclosures so they can be safely edited and parsed again", () => {
+    const formatted = formatDisclosures([
+      { name: "oats", state: "PRESENT" },
+      { name: "soy", state: "ABSENT_VERIFIED" },
+    ]);
+    expect(parseDisclosures(formatted)).toEqual([
+      { name: "oats", state: "PRESENT" },
+      { name: "soy", state: "ABSENT_VERIFIED" },
     ]);
   });
 });

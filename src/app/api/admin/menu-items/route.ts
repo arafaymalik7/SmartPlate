@@ -13,7 +13,20 @@ export async function GET() {
       include: {
         restaurant: { select: { id: true, name: true } },
         category: { select: { id: true, name: true } },
-        nutrition: { select: { calories: true, sodiumMg: true, sourceType: true } },
+        nutrition: {
+          select: {
+            calories: true,
+            proteinG: true,
+            carbsG: true,
+            fatG: true,
+            sodiumMg: true,
+            sourceType: true,
+            sourceUrl: true,
+            sourceCitation: true,
+          },
+        },
+        ingredients: { select: { state: true, ingredient: { select: { name: true } } } },
+        allergens: { select: { state: true, allergen: { select: { name: true } } } },
       },
       orderBy: [{ restaurant: { name: "asc" } }, { name: "asc" }],
       take: 25,

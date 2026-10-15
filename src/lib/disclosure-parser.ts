@@ -17,3 +17,6 @@ export const parseDisclosures = (value: string) =>
       };
     })
     .filter((entry): entry is { name: string; state: DisclosureState } => entry.name.length > 0);
+
+export const formatDisclosures = (entries: ReadonlyArray<{ name: string; state: string }>) =>
+  entries.map((entry) => `${entry.name} | ${entry.state}`).join("\n");

@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
-import { parseDisclosures } from "@/lib/disclosure-parser";
+import { formatDisclosures, parseDisclosures } from "@/lib/disclosure-parser";
 
 type Summary = {
   restaurants: number;
@@ -29,11 +29,31 @@ type Category = {
 };
 type Item = {
   id: string;
+  restaurantId: string;
+  categoryId: string | null;
+  slug: string;
   name: string;
+  description: string;
+  price: number;
+  currency: string;
+  servingSize: string;
   status: string;
+  isAvailable: boolean;
+  dietaryStatus: string | null;
   restaurant: { name: string };
   category: { name: string } | null;
-  nutrition: { calories: number | null; sodiumMg: number | null; sourceType: string } | null;
+  nutrition: {
+    calories: number | null;
+    proteinG: number | null;
+    carbsG: number | null;
+    fatG: number | null;
+    sodiumMg: number | null;
+    sourceType: string;
+    sourceUrl: string | null;
+    sourceCitation: string | null;
+  } | null;
+  ingredients: { state: string; ingredient: { name: string } }[];
+  allergens: { state: string; allergen: { name: string } }[];
 };
 type Audit = {
   id: string;
@@ -59,13 +79,20 @@ const initialItem = {
   name: "",
   description: "",
   price: "",
+  currency: "MYR",
   servingSize: "",
   status: "DRAFT",
+  isAvailable: true,
   dietaryStatus: "",
   ingredientDisclosures: "",
   allergenDisclosures: "",
   calories: "",
+  proteinG: "",
+  carbsG: "",
+  fatG: "",
   sodiumMg: "",
+  sourceType: "ILLUSTRATIVE",
+  sourceUrl: "",
   sourceCitation: "",
 };
 
@@ -86,6 +113,7 @@ export function AdminConsole() {
   const [itemForm, setItemForm] = useState(initialItem);
   const [editingRestaurantId, setEditingRestaurantId] = useState<string | null>(null);
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
+  const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [message, setMessage] = useState("");
 
   const refresh = async () => {
@@ -202,19 +230,30 @@ export function AdminConsole() {
       ingredients: parseDisclosures(itemForm.ingredientDisclosures),
       allergens: parseDisclosures(itemForm.allergenDisclosures),
       calories: numberOrNull(itemForm.calories),
+      proteinG: numberOrNull(itemForm.proteinG),
+      carbsG: numberOrNull(itemForm.carbsG),
+      fatG: numberOrNull(itemForm.fatG),
       sodiumMg: numberOrNull(itemForm.sodiumMg),
-      sourceType: "ILLUSTRATIVE",
-      sourceCitation: itemForm.sourceCitation || "Administrator-entered illustrative record",
+      sourceType: itemForm.sourceType,
+      sourceUrl: itemForm.sourceUrl || undefined,
+      sourceCitation:
+        itemForm.sourceCitation ||
+        (itemForm.sourceType === "ILLUSTRATIVE"
+          ? "Administrator-entered illustrative record"
+          : undefined),
     };
     if (
       await write(
-        "/api/admin/menu-items",
-        "POST",
+        editingItemId ? `/api/admin/menu-items/${editingItemId}` : "/api/admin/menu-items",
+        editingItemId ? "PATCH" : "POST",
         body,
-        "Menu item saved and audit record created.",
+        editingItemId
+          ? "Menu item updated and audit record created."
+          : "Menu item saved and audit record created.",
       )
     ) {
       setItemForm(initialItem);
+      setEditingItemId(null);
     }
   };
 
@@ -399,7 +438,7 @@ export function AdminConsole() {
           </p>
         </form>
         <form className="feature-card" onSubmit={submitItem}>
-          <h2>Add an illustrative menu item</h2>
+          <h2>{editingItemId ? "Edit menu item" : "Add an illustrative menu item"}</h2>
           <label>
             Restaurant
             <select
@@ -469,6 +508,18 @@ export function AdminConsole() {
             />
           </label>
           <label>
+            Currency
+            <input
+              required
+              minLength={3}
+              maxLength={3}
+              value={itemForm.currency}
+              onChange={(event) =>
+                setItemForm({ ...itemForm, currency: event.target.value.toUpperCase() })
+              }
+            />
+          </label>
+          <label>
             Serving size
             <input
               required
@@ -482,6 +533,14 @@ export function AdminConsole() {
               value={itemForm.dietaryStatus}
               onChange={(event) => setItemForm({ ...itemForm, dietaryStatus: event.target.value })}
             />
+          </label>
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={itemForm.isAvailable}
+              onChange={(event) => setItemForm({ ...itemForm, isAvailable: event.target.checked })}
+            />
+            Available to order
           </label>
           <label>
             Ingredient disclosures (optional)
@@ -518,6 +577,33 @@ export function AdminConsole() {
             />
           </label>
           <label>
+            Protein g (optional)
+            <input
+              min="0"
+              type="number"
+              value={itemForm.proteinG}
+              onChange={(event) => setItemForm({ ...itemForm, proteinG: event.target.value })}
+            />
+          </label>
+          <label>
+            Carbohydrates g (optional)
+            <input
+              min="0"
+              type="number"
+              value={itemForm.carbsG}
+              onChange={(event) => setItemForm({ ...itemForm, carbsG: event.target.value })}
+            />
+          </label>
+          <label>
+            Fat g (optional)
+            <input
+              min="0"
+              type="number"
+              value={itemForm.fatG}
+              onChange={(event) => setItemForm({ ...itemForm, fatG: event.target.value })}
+            />
+          </label>
+          <label>
             Sodium mg (optional)
             <input
               min="0"
@@ -544,9 +630,40 @@ export function AdminConsole() {
               onChange={(event) => setItemForm({ ...itemForm, sourceCitation: event.target.value })}
             />
           </label>
+          <label>
+            Source type
+            <select
+              value={itemForm.sourceType}
+              onChange={(event) => setItemForm({ ...itemForm, sourceType: event.target.value })}
+            >
+              <option value="ILLUSTRATIVE">Illustrative</option>
+              <option value="FOOD_COMPOSITION_DERIVED">Food composition derived</option>
+              <option value="RESTAURANT_VERIFIED">Restaurant verified</option>
+            </select>
+          </label>
+          <label>
+            Source URL (optional)
+            <input
+              type="url"
+              value={itemForm.sourceUrl}
+              onChange={(event) => setItemForm({ ...itemForm, sourceUrl: event.target.value })}
+            />
+          </label>
           <button className="button" type="submit">
-            Save menu item
+            {editingItemId ? "Update menu item" : "Save menu item"}
           </button>
+          {editingItemId && (
+            <button
+              className="button button-secondary"
+              type="button"
+              onClick={() => {
+                setItemForm(initialItem);
+                setEditingItemId(null);
+              }}
+            >
+              Cancel edit
+            </button>
+          )}
         </form>
         <section className="feature-card">
           <h2>Category records</h2>
@@ -685,6 +802,47 @@ export function AdminConsole() {
                     {item.nutrition?.calories ?? "Nutrition unavailable"} kcal
                   </span>
                   <p className="admin-actions">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setItemForm({
+                          restaurantId: item.restaurantId,
+                          categoryId: item.categoryId ?? "",
+                          slug: item.slug,
+                          name: item.name,
+                          description: item.description,
+                          price: String(item.price),
+                          currency: item.currency,
+                          servingSize: item.servingSize,
+                          status: item.status,
+                          isAvailable: item.isAvailable,
+                          dietaryStatus: item.dietaryStatus ?? "",
+                          ingredientDisclosures: formatDisclosures(
+                            item.ingredients.map((entry) => ({
+                              name: entry.ingredient.name,
+                              state: entry.state,
+                            })),
+                          ),
+                          allergenDisclosures: formatDisclosures(
+                            item.allergens.map((entry) => ({
+                              name: entry.allergen.name,
+                              state: entry.state,
+                            })),
+                          ),
+                          calories: item.nutrition?.calories == null ? "" : String(item.nutrition.calories),
+                          proteinG: item.nutrition?.proteinG == null ? "" : String(item.nutrition.proteinG),
+                          carbsG: item.nutrition?.carbsG == null ? "" : String(item.nutrition.carbsG),
+                          fatG: item.nutrition?.fatG == null ? "" : String(item.nutrition.fatG),
+                          sodiumMg: item.nutrition?.sodiumMg == null ? "" : String(item.nutrition.sodiumMg),
+                          sourceType: item.nutrition?.sourceType ?? "ILLUSTRATIVE",
+                          sourceUrl: item.nutrition?.sourceUrl ?? "",
+                          sourceCitation: item.nutrition?.sourceCitation ?? "",
+                        });
+                        setEditingItemId(item.id);
+                      }}
+                    >
+                      Edit
+                    </button>
                     {item.status === "DRAFT" && (
                       <button
                         type="button"
@@ -736,8 +894,7 @@ export function AdminConsole() {
           )}
           <p className="form-hint">
             All writes remain server-authorized. Publication and archive actions are confirmed
-            before the request; full record editing and production acceptance testing remain
-            unverified.
+            before the request; authenticated production acceptance testing remains unverified.
           </p>
         </section>
       </div>

@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-17 — Editable menu record increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Implementation: the protected menu list API now returns the record fields needed for a lossless edit. The admin editor now supports revising an existing item’s restaurant/category, availability, nutrition values and units, provenance, ingredient/allergen disclosures, and publication status through the existing guarded full-update route; the route replaces disclosures, upserts nutrition, and writes an audit event.
+- Verification: `npm run lint`, `npm run typecheck`, `npm test` (10 files, 23 tests), `npm run build` (20 routes), and `npm run test:e2e -- --reporter=line` (24 passed at 375px, 768px, and 1440px) all passed. Disclosure display-to-edit round-trip coverage was added to Vitest.
+- Limit: there is no supplied administrator credential or persistent local PostgreSQL service, so the authenticated mutation and its post-restart persistence remain unverified in this environment.
+
 ## CP-04/06/07/09/13/14/21 — Remote PostgreSQL catalog verification
 
 - Timestamp: 2026-10-15 (Asia/Karachi)
