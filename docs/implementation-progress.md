@@ -23,3 +23,10 @@
 - Commit: `71942e54f9847960ecefba20f2091e523be00de2` (`build(app): CP-01 scaffold Next.js tooling`).
 - Push: `GIT-PUSH-BLOCKED` — retry failed against the configured remote with `Failed to connect to 127.0.0.1 port 9`.
 - Next action: establish CP-02 visual system, shared navigation and system states.
+
+## CP-02 — Design system and navigation
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added shared header/footer shell, responsive forest/cream token system, skip link and focus treatment, public landing baseline, and loading/error/not-found states.
+- Verification: `npm run lint`, `npm run typecheck`, `npm test` (1/1), and `npm run build` passed. Browser/Playwright screenshot verification is UNVERIFIED because no browser automation tool is available in this runtime; it remains required at CP-05 and CP-19.
+- Next action: commit CP-02 then implement PostgreSQL/Prisma schema and migration setup.
