@@ -29,6 +29,8 @@ jobs:
       - run: npm run typecheck
       - run: npm run db:deploy
       - run: npm run db:seed
+      - run: npm run db:seed
+      - run: npm run db:verify-seed
       - run: npm test
       - run: npm run build
       - run: npx playwright install --with-deps chromium

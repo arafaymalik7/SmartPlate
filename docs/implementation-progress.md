@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-04/21 — Seed idempotency CI increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: CI now invokes the illustrative Prisma seed twice against its clean PostgreSQL 16 service and runs a count verifier that requires exactly four restaurants, four categories, 48 items, and 48 nutrition rows.
+- Verification: workflow syntax and the standalone verifier's TypeScript compilation are checked locally; the new remote CI result is not claimed until GitHub Actions completes it.
+- Limit: local execution remains blocked by the stopped Docker Desktop engine/no supplied PostgreSQL URL.
+
 ## CP-17 — Disclosure-input increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)
