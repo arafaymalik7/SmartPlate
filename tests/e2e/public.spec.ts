@@ -15,3 +15,14 @@ test("comparison preserves unavailable values", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /compare meals/i })).toBeVisible();
   await expect(page.getByText("Not available").first()).toBeVisible();
 });
+
+test("strict allergy-related exclusions are never presented as safe", async ({ page }, testInfo) => {
+  await page.goto("/recommend");
+  await page.getByLabel(/allergy-related exclusions/i).fill("peanuts");
+  await expect(page.getByRole("heading", { name: /unable to verify/i })).toBeVisible();
+  await expect(page.getByText(/not marked safe/i)).toBeVisible();
+  await page.screenshot({
+    path: `docs/evidence/${testInfo.project.name}-recommendations.png`,
+    fullPage: true,
+  });
+});

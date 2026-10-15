@@ -1,7 +1,17 @@
-# Release notes — draft
+# SMARTPLATE release notes (draft)
 
-## Next.js migration work-in-progress
+## Current status
 
-The active branch contains a Next.js 16 / React 19 / TypeScript / Prisma 7 migration with public menu exploration, illustrative data handling, deterministic recommendation logic, comparison, initial Auth.js administrator foundation, guarded admin API routes, CI and operational documentation.
+**FUNCTIONAL BUT PARTIALLY UNVERIFIED.** The Next.js application builds, static/unit checks pass, and public production-browser journeys have real responsive evidence. PostgreSQL migration/seed execution, authenticated admin persistence, remote GitHub Actions and deployment need the stated external environments before a release can be verified.
 
-This is **not a verified production release**. PostgreSQL migration and seed execution, live administrator login/CRUD, browser E2E evidence, cloud CI and deployment remain unverified in the current environment. No `v1.0.0` tag is created.
+## Included
+
+- Public illustrative restaurant/menu, comparison and recommendation routes.
+- Deterministic recommendation eligibility, ranking and unknown-allergen handling.
+- Auth.js-based protected admin foundation, validated restaurant create API and audit-log write path.
+- PostgreSQL/Prisma schema, committed baseline migration and idempotent illustrative seed implementation.
+- Responsive Playwright coverage and CI workflow configuration.
+
+## Not a medical or restaurant-data claim
+
+All current menu venues and nutrition values are illustrative. Missing information remains unavailable and never means allergy-safe or clinically appropriate.

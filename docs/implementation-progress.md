@@ -92,3 +92,10 @@
 - Scope: configured Playwright to use an installed local Chromium when its standard headless-shell bundle is absent; browser tests run against a production build, cover 375px, 768px and 1440px viewports, and save reviewed public discovery captures under `docs/evidence/`.
 - Verification: `npm run test:e2e` passed 6/6. The restaurant-discovery captures at all three viewports were visually reviewed; navigation, restaurant content, transparent demo disclosure, links and footer are visible without overlap.
 - Remaining limits: these browser checks use typed illustrative in-memory data. Database-backed menus, authentication and admin journeys remain unverified until Docker Desktop's Linux engine is started or usable PostgreSQL `DATABASE_URL` and `DIRECT_URL` values are supplied.
+
+## CP-03/10/13/16/18/21 â€” Reconciliation increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added a versioned PostgreSQL baseline migration, a strict preference flow with non-persisted allergy-related exclusions, a Playwright safety journey, a protected admin restaurant form, transactional admin audit creation, and a PostgreSQL-backed CI workflow definition.
+- Verification: `npm run lint`, `npm run typecheck` and `npm test` passed (10 unit tests); `npm run test:e2e` passed (9 checks across 375px, 768px and 1440px). The preference capture at `docs/evidence/mobile-375-recommendations.png` was visually reviewed.
+- Unverified: `db:deploy`, seed idempotency, CI execution, authenticated admin mutation, and live PostgreSQL relations require Docker Desktop's Linux engine or a disposable PostgreSQL URL. The workflow is configured to execute migration, seed, lint, typecheck, unit, production build and browser checks when GitHub Actions runs.

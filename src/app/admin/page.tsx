@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { authOptions } from "@/lib/auth/options";
 import { SiteShell } from "@/components/site-shell";
+import { AdminConsole } from "@/components/admin-console";
 export const dynamic = "force-dynamic";
 export default async function AdminPage() {
   const session = await getServerSession(authOptions);
@@ -11,10 +12,13 @@ export default async function AdminPage() {
         <p className="state-label">Administration</p>
         <h1 className="page-title">{session ? "Admin workspace" : "Protected workspace"}</h1>
         {session ? (
-          <p className="lede">
-            Signed in as {session.user?.email}. Data management becomes available after PostgreSQL
-            migration and seed verification.
-          </p>
+          <>
+            <p className="lede">
+              Signed in as {session.user?.email}. This workspace only exposes server-authorized
+              menu-management operations.
+            </p>
+            <AdminConsole />
+          </>
         ) : (
           <>
             <p className="lede">

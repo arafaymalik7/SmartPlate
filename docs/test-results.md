@@ -32,3 +32,9 @@
 - Playwright now discovers an installed full Chromium executable when the optional headless-shell bundle is unavailable.
 - `npm run test:e2e`: passed, 6/6 across `mobile-375`, `tablet-768`, and `desktop-1440` projects against a production build.
 - Captures: `docs/evidence/mobile-375-restaurants.png`, `docs/evidence/tablet-768-restaurants.png`, and `docs/evidence/desktop-1440-restaurants.png`; each was visually inspected. The prior 0/2 attempt remains above as historical evidence, not the current result.
+
+## Preference safety journey
+
+- `npm run test:e2e`: passed, 9/9 after adding the strict allergy-related exclusion journey at each viewport.
+- Acceptance criterion: an incomplete allergen disclosure is grouped as “Unable to verify” and is explicitly not marked safe.
+- Visual evidence: `docs/evidence/mobile-375-recommendations.png`, `docs/evidence/tablet-768-recommendations.png`, and `docs/evidence/desktop-1440-recommendations.png`; the mobile capture was visually reviewed.
