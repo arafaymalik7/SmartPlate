@@ -4,6 +4,16 @@ import { getPublicCatalog } from "@/lib/public-catalog";
 
 export default async function ComparePage() {
   const catalog = await getPublicCatalog();
+  if (catalog.source === "DATABASE_UNAVAILABLE") {
+    return (
+      <SiteShell>
+        <section className="shell section empty-state">
+          <h1>Comparison is temporarily unavailable</h1>
+          <p>Published menu data could not be reached. No illustrative dishes are substituted.</p>
+        </section>
+      </SiteShell>
+    );
+  }
   return (
     <SiteShell>
       <section className="shell section">

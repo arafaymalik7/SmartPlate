@@ -3,7 +3,7 @@
 ## CP-13/14 — Published-catalog consumer increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)
-- Scope: moved recommendation and 2–3 item comparison clients onto the server-provided catalog. Published records now keep their ingredient/allergen names and explicit `ABSENT_VERIFIED` state for the deterministic safety engine; client copy identifies published versus illustrative data without calling either allergy-safe.
+- Scope: moved recommendation and 2–3 item comparison clients onto the server-provided catalog. Published records now keep their ingredient/allergen names and explicit `ABSENT_VERIFIED` state for the deterministic safety engine; client copy identifies published versus illustrative data without calling either allergy-safe. A configured database outage has a dedicated unavailable state rather than an empty recommendation result.
 - Verification: lint, strict TypeScript, 20 Vitest checks, production build, and 24 Playwright checks at 375px, 768px, and 1440px passed. Refreshed comparison and recommendation screenshots were captured by those checks.
 - Limit: live Prisma reads and authenticated administrator changes still require the unavailable PostgreSQL environment; no medical or allergy-safety claim is made.
 

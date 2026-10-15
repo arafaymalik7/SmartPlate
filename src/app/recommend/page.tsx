@@ -4,6 +4,18 @@ import { getPublicCatalog } from "@/lib/public-catalog";
 
 export default async function RecommendPage() {
   const catalog = await getPublicCatalog();
+  if (catalog.source === "DATABASE_UNAVAILABLE") {
+    return (
+      <SiteShell>
+        <section className="shell section empty-state">
+          <h1>Recommendations are temporarily unavailable</h1>
+          <p>
+            Published menu data could not be reached. No illustrative suggestions are substituted.
+          </p>
+        </section>
+      </SiteShell>
+    );
+  }
   return (
     <SiteShell>
       <RecommendationClient
