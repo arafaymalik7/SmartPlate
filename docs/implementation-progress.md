@@ -1,5 +1,11 @@
 # Implementation progress ledger
 
+## CP-04/21 — Remote repeat-seed verification
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- GitHub Actions CI run #32 for commit `91f566a` completed successfully in 2m 56s. It provisioned PostgreSQL 16, applied the migration, ran the seed twice, and completed the expected 4 restaurant / 4 category / 48 menu-item / 48 nutrition-row assertion before the normal checks.
+- This verifies idempotent illustrative seed behavior in the committed ephemeral PostgreSQL CI environment. It does not make the stopped local Docker database available or verify real restaurant data.
+
 ## CP-04/21 — Seed idempotency CI increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

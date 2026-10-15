@@ -10,6 +10,6 @@
 
 ## Configured but awaiting PostgreSQL
 
-The GitHub Actions workflow provisions an ephemeral PostgreSQL 16 service, runs the committed migration and seed, repeats the seed, verifies the expected 4/4/48/48 row counts, then runs lint/typecheck/unit/build/browser checks. CI run #20 for commit `50981b4` was confirmed successful from the public workflow feed, but this expanded repeat-seed assertion is not claimed until its newer workflow run completes. Local migration deployment, idempotent repeated seeding and authenticated admin CRUD are still unverified because Docker Desktop's Linux engine is stopped.
+The GitHub Actions workflow provisions an ephemeral PostgreSQL 16 service, runs the committed migration and seed, repeats the seed, verifies the expected 4/4/48/48 row counts, then runs lint/typecheck/unit/build/browser checks. CI run #32 for commit `91f566a` completed successfully in 2m56s, verifying the expanded repeat-seed assertion. Local migration deployment and authenticated admin CRUD are still unverified because Docker Desktop's Linux engine is stopped.
 
 Never use a production database for test migration or seed verification.
