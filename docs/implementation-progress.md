@@ -1,5 +1,11 @@
 # Implementation progress ledger
 
+## CP-19 — Rendered-link integrity increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Implementation: the responsive Playwright suite now collects internal links rendered on the public landing page and asserts every destination responds below HTTP 400; it also applies the same guard to any rendered image source. This guards current navigation and newly added rendered images against silent breakage.
+- Verification: `npm run lint`, `npm run typecheck`, `npm test` (12 files, 26 tests), `npm run build` (20 routes), and `npm run test:e2e -- --reporter=line` (27 passed at 375px, 768px, and 1440px) passed before commit.
+
 ## CP-20/21/23 — Security and testing documentation reconciliation
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

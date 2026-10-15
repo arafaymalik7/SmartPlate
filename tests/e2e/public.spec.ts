@@ -42,6 +42,28 @@ test("public crawl metadata excludes protected routes", async ({ request }) => {
   await expect(sitemap.text()).resolves.toContain("/restaurants");
 });
 
+test("rendered internal navigation and images resolve", async ({ page, request }) => {
+  await page.goto("/");
+  const hrefs = await page.locator("a[href]").evaluateAll((links) =>
+    links.map((link) => link.getAttribute("href") ?? ""),
+  );
+  const internalHrefs = [...new Set(hrefs.filter((href) => href.startsWith("/") && !href.includes("#")))];
+  expect(internalHrefs.length).toBeGreaterThan(0);
+
+  for (const href of internalHrefs) {
+    const response = await request.get(href);
+    expect(response.status(), `${href} should not be broken`).toBeLessThan(400);
+  }
+
+  const imageSources = await page.locator("img[src]").evaluateAll((images) =>
+    images.map((image) => image.getAttribute("src") ?? ""),
+  );
+  for (const source of imageSources) {
+    const response = await request.get(source);
+    expect(response.status(), `${source} should not be broken`).toBeLessThan(400);
+  }
+});
+
 test("admin workspace remains protected without a session", async ({ page }, testInfo) => {
   await page.goto("/admin");
   await expect(page.getByRole("heading", { name: /protected workspace/i })).toBeVisible();
