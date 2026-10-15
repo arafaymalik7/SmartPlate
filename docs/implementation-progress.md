@@ -7,6 +7,12 @@
 - Verification: lint, strict TypeScript, 20 Vitest checks, production build, and 24 Playwright checks at 375px, 768px, and 1440px passed. Refreshed comparison and recommendation screenshots were captured by those checks.
 - Limit: live Prisma reads and authenticated administrator changes still require the unavailable PostgreSQL environment; no medical or allergy-safety claim is made.
 
+## CP-21 — Database-mode browser assertion correction
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: corrected the restaurant empty-state browser assertion to accept the truthful published-data wording used in PostgreSQL-backed CI as well as the demonstration wording used in no-database local fallback mode.
+- Verification: lint, strict TypeScript, 20 Vitest checks, production build, and 24 local Playwright checks passed. The preceding catalog CI failures are traceable to the old fallback-only assertion; the pushed correction awaits its new CI result.
+
 ## CP-06/07/13 — Published-data catalog increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

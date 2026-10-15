@@ -55,9 +55,11 @@ test("admin workspace remains protected without a session", async ({ page }, tes
 test("restaurant search has a truthful empty state", async ({ page }) => {
   await page.goto("/restaurants");
   await page.getByLabel(/search restaurants/i).fill("no-such-venue");
-  await expect(page.getByRole("heading", { name: /no demonstration venues match/i })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /no (demonstration )?venues match/i }),
+  ).toBeVisible();
   await page.getByRole("button", { name: /clear filters/i }).click();
-  await expect(page.getByText(/4 demonstration venues shown/i)).toBeVisible();
+  await expect(page.getByText(/4 (demonstration )?venues shown/i)).toBeVisible();
 });
 
 test("menu filters retain unknown-disclosure safeguards", async ({ page }, testInfo) => {
