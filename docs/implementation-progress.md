@@ -20,3 +20,6 @@
 - Verification: `npm run lint` passed with zero warnings; `npm run typecheck` passed; `npm test` passed 1/1; `npm run build` passed and produced `/`, `/status`, and `/api/health`.
 - Environment note: direct sandbox runs could not spawn the bundled compiler (`EPERM`); the same checks passed when run with the required unsandboxed process permission. npm’s first partial Windows install failed `ENOTEMPTY`; the recovery install finished with 486 packages and lockfile.
 - Next action: record final CP-01 check output, stage only replacement-app files, commit and retry push.
+- Commit: `71942e54f9847960ecefba20f2091e523be00de2` (`build(app): CP-01 scaffold Next.js tooling`).
+- Push: `GIT-PUSH-BLOCKED` — retry failed against the configured remote with `Failed to connect to 127.0.0.1 port 9`.
+- Next action: establish CP-02 visual system, shared navigation and system states.
