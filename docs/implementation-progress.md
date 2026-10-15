@@ -80,3 +80,8 @@
 - Timestamp: 2026-10-15 (Asia/Karachi)
 - Local release checks: lint, strict TypeScript, 9/9 Vitest tests and production build passed at commit `41b234950d27ceb1e0ccc0903a5dc2c2ad2e3bd2`, pushed to `codex/smartplate-complete`.
 - Release status: FUNCTIONAL BUT PARTIALLY UNVERIFIED. PostgreSQL integration, browser E2E/accessibility captures, real admin journey, GitHub Actions result, deployment, user testing and university approval remain outstanding.
+
+## Local PostgreSQL attempt
+
+- Docker CLI and Compose are installed, but `docker compose up -d db` failed because `//./pipe/dockerDesktopLinuxEngine` does not exist: Docker Desktop's Linux engine is not running.
+- `psql` is not installed. Migration, seed and authenticated DB tests remain blocked by this environment state.
