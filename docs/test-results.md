@@ -81,7 +81,7 @@
 
 ## Latest verification snapshot
 
-- GitHub Actions CI #62 for `f3500af`: passed a clean `npm ci` install, PostgreSQL migration deployment, double seed, expected-count/catalog/visibility/recommendation verifiers, lint, strict TypeScript, the full 27-case unit suite, production build, and 33 responsive browser checks: https://github.com/arafaymalik7/SmartPlate/actions/runs/38793976765.
+- GitHub Actions CI #65 for `4ac657d`: passed a clean `npm ci` install, PostgreSQL migration deployment, double seed, expected-count/catalog/visibility/recommendation verifiers, lint, strict TypeScript, the full 27-case unit suite, production build, and 33 responsive browser checks: https://github.com/arafaymalik7/SmartPlate/actions/runs/38796238094.
 - `npm run lint`: passed with zero warnings.
 - `npm run typecheck`: passed.
 - `npm test`: CI #62 passed all 27 deterministic checks, including provenance validation, recommendation safety/ranking, fixed-window mutation limiting, summary completeness, and sign-out recovery.
