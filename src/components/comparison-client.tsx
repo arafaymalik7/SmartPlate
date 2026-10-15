@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { demoItems } from "@/lib/demo-data";
+import type { DemoItem } from "@/lib/demo-data";
 
 const metrics = [
   ["Calories", "calories", "kcal"],
@@ -14,13 +14,19 @@ const metrics = [
 const value = (number: number | null, unit: string) =>
   number === null ? "Not available" : `${number} ${unit}`;
 
-export function ComparisonClient() {
+export function ComparisonClient({
+  items,
+  isIllustrative,
+}: {
+  items: DemoItem[];
+  isIllustrative: boolean;
+}) {
   const [selectedSlugs, setSelectedSlugs] = useState(() =>
-    demoItems.slice(0, 3).map((item) => item.slug),
+    items.slice(0, 3).map((item) => item.slug),
   );
   const selectedItems = useMemo(
-    () => demoItems.filter((item) => selectedSlugs.includes(item.slug)),
-    [selectedSlugs],
+    () => items.filter((item) => selectedSlugs.includes(item.slug)),
+    [items, selectedSlugs],
   );
   const toggle = (slug: string) => {
     setSelectedSlugs((current) =>
@@ -35,12 +41,15 @@ export function ComparisonClient() {
   return (
     <>
       <fieldset className="comparison-picker">
-        <legend>Choose two or three illustrative dishes</legend>
+        <legend>Choose two or three {isIllustrative ? "illustrative" : "published"} dishes</legend>
         <p className="form-hint" aria-live="polite">
-          {selectedItems.length} selected. Nutrition is per serving and remains illustrative.
+          {selectedItems.length} selected. Nutrition is per serving and{" "}
+          {isIllustrative
+            ? "remains illustrative."
+            : "may be unavailable when no source value was published."}
         </p>
         <div className="comparison-options">
-          {demoItems.map((item) => {
+          {items.map((item) => {
             const selected = selectedSlugs.includes(item.slug);
             return (
               <label key={item.slug}>

@@ -1,11 +1,18 @@
 # Implementation progress ledger
 
+## CP-13/14 — Published-catalog consumer increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: moved recommendation and 2–3 item comparison clients onto the server-provided catalog. Published records now keep their ingredient/allergen names and explicit `ABSENT_VERIFIED` state for the deterministic safety engine; client copy identifies published versus illustrative data without calling either allergy-safe.
+- Verification: lint, strict TypeScript, 20 Vitest checks, production build, and 24 Playwright checks at 375px, 768px, and 1440px passed. Refreshed comparison and recommendation screenshots were captured by those checks.
+- Limit: live Prisma reads and authenticated administrator changes still require the unavailable PostgreSQL environment; no medical or allergy-safety claim is made.
+
 ## CP-06/07/13 — Published-data catalog increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)
 - Scope: added a server-side catalog that reads only published restaurants and available published menu items from Prisma when PostgreSQL is configured. Restaurant directory, restaurant menu, and item nutrition routes now consume the catalog; the explicit illustrative fallback remains only for no-database development. A configured-but-unreachable database renders no substituted demo records.
 - Verification: fallback behavior is unit-tested; lint, strict TypeScript, 20 Vitest checks, production build, and 24 Playwright checks at 375px, 768px, and 1440px passed. Regenerated mobile and desktop restaurant screenshots were reviewed.
-- Limit: this workspace still has no local PostgreSQL service, so the live database branch is CI/runtime-bound rather than locally executed. Recommendation and comparison clients remain illustrative until their client data flow is migrated.
+- Limit: this workspace still has no local PostgreSQL service, so the live database branch is CI/runtime-bound rather than locally executed.
 
 ## CP-16/17 — Guarded full-update increment
 

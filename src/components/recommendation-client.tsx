@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { demoItems } from "@/lib/demo-data";
+import type { DemoItem } from "@/lib/demo-data";
 import { recommend, type Diet, type Priority } from "@/lib/recommendation/engine";
 import { preferencesSchema } from "@/lib/validation/preferences";
 
@@ -11,7 +11,13 @@ const splitList = (value: string) =>
     .map((entry) => entry.trim())
     .filter(Boolean);
 
-export function RecommendationClient() {
+export function RecommendationClient({
+  items,
+  isIllustrative,
+}: {
+  items: DemoItem[];
+  isIllustrative: boolean;
+}) {
   const [diet, setDiet] = useState<Diet>("NONE");
   const [priority, setPriority] = useState<Priority>("NONE");
   const [target, setTarget] = useState(500);
@@ -58,20 +64,24 @@ export function RecommendationClient() {
     () =>
       validation.success
         ? recommend(
-            demoItems.map((item) => ({ ...item, active: true, allergens: [] })),
+            items.map((item) => ({ ...item, active: true })),
             validation.data,
           )
         : null,
-    [validation],
+    [items, validation],
   );
 
   return (
     <div className="shell section">
-      <p className="state-label">Personalize a demonstration</p>
+      <p className="state-label">
+        {isIllustrative ? "Personalize a demonstration" : "Personalize published menu data"}
+      </p>
       <h1 className="page-title">Find a meal with transparent limits.</h1>
       <p className="lede">
-        These are informational menu preferences, not medical advice. Illustration data cannot
-        confirm whether a meal is allergy-safe.
+        These are informational menu preferences, not medical advice.{" "}
+        {isIllustrative
+          ? "Illustration data cannot confirm whether a meal is allergy-safe."
+          : "Published disclosures still do not establish allergy safety or assess cross-contact."}
       </p>
       <div className="feature-grid recommendation-grid">
         <form className="feature-card" onSubmit={(event) => event.preventDefault()}>

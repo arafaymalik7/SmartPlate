@@ -74,7 +74,11 @@ export async function getPublicCatalog(): Promise<PublicCatalog> {
         ingredients: item.ingredients.map((entry) => entry.ingredient.name),
         allergenDisclosure: item.allergens.some((entry) => entry.state === "PRESENT")
           ? "PRESENT"
-          : "UNKNOWN",
+          : item.allergens.length > 0 &&
+              item.allergens.every((entry) => entry.state === "ABSENT_VERIFIED")
+            ? "ABSENT_VERIFIED"
+            : "UNKNOWN",
+        allergens: item.allergens.map((entry) => entry.allergen.name),
         sourceType: item.nutrition?.sourceType ?? "ILLUSTRATIVE",
         sourceCitation:
           item.nutrition?.sourceCitation ??
