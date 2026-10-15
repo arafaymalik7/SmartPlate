@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import { getAdminEmail } from "@/lib/auth/require-admin";
+import { hasTrustedMutationOrigin } from "@/lib/security/request-origin";
 import { menuItemSchema } from "@/lib/validation/admin";
 
 export async function POST(request: Request) {
+  if (!hasTrustedMutationOrigin(request))
+    return NextResponse.json({ error: "Untrusted request origin" }, { status: 403 });
   const email = await getAdminEmail();
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const parsed = menuItemSchema.safeParse(await request.json().catch(() => null));

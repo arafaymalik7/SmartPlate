@@ -121,3 +121,10 @@
 - Scope: added server-authorized category and menu-item creation routes, nutrition/provenance validation, category-to-restaurant ownership checks, transactional audit-log writes, and audit-event counts in the protected summary response.
 - Verification: lint and strict TypeScript passed; 12 Vitest checks passed, including invalid URL/category-slug and negative-price validation. The protected routes compile in the production build.
 - Unverified: authenticated creation/edit/unpublish/delete, relational persistence, audit rows and public published-state impact require the blocked disposable PostgreSQL environment.
+
+## CP-20 â€” Mutation-origin hardening increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added explicit same-origin checks to every current admin mutation endpoint before authorization/database access, with trusted/cross-origin/malformed-origin unit cases.
+- Verification: lint, strict TypeScript and production build passed; Vitest passed 14/14 including two origin-guard tests.
+- Remaining security work: database-backed authenticated mutation/CSRF/logout checks and production-appropriate rate limiting require a running test database and deployment context.

@@ -55,3 +55,8 @@
 - `npm test`: passed, 12/12. Admin schemas reject negative prices, malformed provenance URLs and invalid category slugs.
 - `npm run lint` and `npm run typecheck`: passed after adding guarded category/menu-item route handlers and audit summary counts.
 - Database-backed route execution is UNVERIFIED because no disposable PostgreSQL server is available locally.
+
+## Mutation origin guard
+
+- `npm test`: passed, 14/14 including same-origin, no-origin, cross-origin and malformed-origin mutation cases.
+- `npm run lint`, `npm run typecheck` and `npm run build`: passed after the guard was added to all current admin POST routes.

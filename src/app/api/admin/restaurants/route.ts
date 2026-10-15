@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAdminEmail, requireAdmin } from "@/lib/auth/require-admin";
+import { hasTrustedMutationOrigin } from "@/lib/security/request-origin";
 import { restaurantSchema } from "@/lib/validation/admin";
 export async function GET() {
   const denied = await requireAdmin();
@@ -8,6 +9,8 @@ export async function GET() {
   return NextResponse.json(await prisma.restaurant.findMany({ orderBy: { name: "asc" } }));
 }
 export async function POST(request: Request) {
+  if (!hasTrustedMutationOrigin(request))
+    return NextResponse.json({ error: "Untrusted request origin" }, { status: 403 });
   const email = await getAdminEmail();
   if (!email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const parsed = restaurantSchema.safeParse(await request.json().catch(() => null));
