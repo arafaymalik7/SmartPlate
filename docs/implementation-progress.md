@@ -67,3 +67,10 @@
 - Scope: added Auth.js/NextAuth credentials flow, hashed password bootstrap command, sign-in UI and dynamic admin route with server session check.
 - Verification: lint, strict TypeScript, 7/7 tests and production build passed. Build verifies `/admin` and `/api/auth/[...nextauth]` route compilation.
 - Unverified: actual administrator bootstrap/login/logout/unauthorized mutation tests require PostgreSQL and configured `DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`, and strong bootstrap credentials.
+
+## CP-16/17/18 — Admin server guards and validation
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: server-side admin session guard, restaurant API with validated mutation path, truthful summary endpoint and Zod validation for restaurant/menu input.
+- Verification: lint, strict typecheck, 9/9 unit tests and production build passed.
+- Unverified: direct authenticated CRUD, relational integrity, audit persistence and admin UI require PostgreSQL and a bootstrapped admin.
