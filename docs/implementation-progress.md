@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-23 — Clean-install final verification increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: performed a clean `npm ci` reinstall from the committed lockfile, then reran the complete local release sequence.
+- Verification: `npm run lint`, `npm run typecheck`, `npm test` (8 files, 16 tests), `npm run build`, and `npm run test:e2e` (24 checks at 375px, 768px, and 1440px) all passed. Existing visual evidence was retained and protected-admin captures were reviewed.
+- Limit: this is reproducible application verification, not a substitute for the still-unavailable live PostgreSQL/admin/deployment acceptance tests or institutional review.
+
 ## CP-22 — Deployment runbook increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

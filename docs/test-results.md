@@ -81,6 +81,7 @@
 
 ## Current local verification snapshot
 
+- `npm ci`: completed from `package-lock.json` before the checks below.
 - `npm run lint`: passed with zero warnings.
 - `npm run typecheck`: passed.
 - `npm test`: passed, 8 files / 16 tests, including deterministic fixed-window admin mutation limiting.

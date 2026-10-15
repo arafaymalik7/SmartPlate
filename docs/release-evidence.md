@@ -30,7 +30,8 @@ not a claim of university acceptance or a production release.
 
 ## Current verification snapshot
 
-At commit `ac38ce0`, local lint, strict TypeScript, 16 Vitest checks, and the
+At commit `06e280b`, a clean `npm ci` install was followed by local lint,
+strict TypeScript, 16 Vitest checks, and the
 production build passed. The latest public Playwright run passed 24 checks
 across 375px, 768px, and 1440px. The pushed branch is
 `codex/smartplate-complete`; use `git ls-remote --heads origin
