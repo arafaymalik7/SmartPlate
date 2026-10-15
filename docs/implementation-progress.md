@@ -30,3 +30,11 @@
 - Scope: added shared header/footer shell, responsive forest/cream token system, skip link and focus treatment, public landing baseline, and loading/error/not-found states.
 - Verification: `npm run lint`, `npm run typecheck`, `npm test` (1/1), and `npm run build` passed. Browser/Playwright screenshot verification is UNVERIFIED because no browser automation tool is available in this runtime; it remains required at CP-05 and CP-19.
 - Next action: commit CP-02 then implement PostgreSQL/Prisma schema and migration setup.
+
+## CP-03 — PostgreSQL and Prisma schema
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added Prisma 7 PostgreSQL configuration, driver-adapter client singleton, environment validation, schema models for menu/provenance/disclosure/audit data, and database operation notes.
+- Verification: `npm run db:generate` passed with Prisma Client 7.10.0; strict TypeScript passed.
+- Blocker: `DATABASE_URL`/`DIRECT_URL` point to no supplied local PostgreSQL server. `db:migrate` and relational runtime tests are UNVERIFIED; no migration was attempted against an unknown database.
+- Next action: commit CP-03, then add the idempotent illustrative seed after a local PostgreSQL instance is available.
