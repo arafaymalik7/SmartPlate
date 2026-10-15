@@ -155,3 +155,9 @@
 - Scope: replaced the fixed comparison with a bounded two-to-three dish selector, with per-serving metric table, null handling and mobile horizontal-scroll guidance.
 - Verification: production Playwright passed 21/21 and exercises selection of a different dish. The mobile comparison capture at `docs/evidence/mobile-375-comparison.png` was visually reviewed and the initially cramped table was corrected.
 - Limit: comparison currently uses labelled illustrative fallback data; persistence/bookmarking and database-backed options await the PostgreSQL environment.
+
+## CP-21 â€” Remote CI database evidence
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- GitHub Actions CI run #20 for commit `50981b4` is confirmed successful from the public workflow feed (duration 2m 05s). Its workflow provisions PostgreSQL 16, runs migration deployment and seed, then lint, strict typecheck, unit tests, production build, Chromium installation and Playwright.
+- This verifies the committed migration/seed workflow against an ephemeral CI PostgreSQL service. It does not verify the unavailable local Docker environment, production deployment, or real administrator credentials.

@@ -2,7 +2,9 @@
 
 ## Current status
 
-**FUNCTIONAL BUT PARTIALLY UNVERIFIED.** The Next.js application builds, static/unit checks pass, and public production-browser journeys have real responsive evidence. PostgreSQL migration/seed execution, authenticated admin persistence, remote GitHub Actions and deployment need the stated external environments before a release can be verified.
+**FUNCTIONAL BUT PARTIALLY UNVERIFIED.** The Next.js application builds, static/unit checks pass, and public production-browser journeys have real responsive evidence. Authenticated admin persistence and deployment still need the stated external environments before a release can be verified.
+
+GitHub Actions has successfully exercised the committed migration/seed workflow against an ephemeral PostgreSQL service through commit `50981b4`; newer queued runs are not claimed until they finish. Local Docker execution, authenticated admin persistence and deployment remain unverified.
 
 The local Docker Desktop service is stopped and Windows denied the normal service-start attempt, so its Linux containers engine must be started by the desktop user (or a disposable PostgreSQL `DATABASE_URL` and `DIRECT_URL` must be supplied) before database acceptance checks can run.
 

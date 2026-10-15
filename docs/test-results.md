@@ -73,3 +73,8 @@
 
 - `npm run test:e2e`: passed, 21/21. The test changes a selected dish and confirms the new comparison column renders while a missing nutrient remains `Not available`.
 - Visual evidence: `docs/evidence/mobile-375-comparison.png`, `docs/evidence/tablet-768-comparison.png`, and `docs/evidence/desktop-1440-comparison.png`; the mobile capture was reviewed after improving table readability.
+
+## Remote CI database workflow
+
+- GitHub Actions CI run #20 for commit `50981b4`: completed successfully (2m 05s), observed from the public Actions feed.
+- The verified workflow uses PostgreSQL 16, runs `db:deploy` and `db:seed`, then lint, typecheck, unit tests, build and Playwright. Newer runs are still in progress and are not included in this assertion.
