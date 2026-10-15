@@ -25,6 +25,7 @@
     "db:seed": "prisma db seed",
     "db:verify-seed": "tsx scripts/verify-seed-idempotency.ts",
     "db:verify-public-catalog": "tsx scripts/verify-public-catalog.ts",
+    "db:verify-public-visibility": "tsx scripts/verify-public-visibility.ts",
     "admin:bootstrap": "tsx scripts/bootstrap-admin.ts"
   },
   "dependencies": {

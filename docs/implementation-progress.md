@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-16/17 — Public publication-visibility verification increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Implementation: public catalog reads now require a published restaurant, published and available item, and either no category or a published category. A disposable-PostgreSQL verifier toggles one seeded record through draft item, unavailable item, draft category, and draft restaurant states, asserting it disappears from public results after each change and always restores the original values.
+- Local verification: `npm run lint`, `npm run typecheck`, `npm test` (10 files, 23 tests), `npm run build` (20 routes), and `npm run test:e2e -- --reporter=line` (24 passed at 375px, 768px, and 1440px) all passed. The mutation-based verifier requires CI PostgreSQL because no local database service is available.
+- Next action: verify the newly added `db:verify-public-visibility` CI step after push.
+
 ## CP-17 — Editable menu record increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

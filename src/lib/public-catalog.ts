@@ -34,7 +34,11 @@ export async function getPublicCatalog(): Promise<PublicCatalog> {
       orderBy: { name: "asc" },
       include: {
         items: {
-          where: { status: "PUBLISHED", isAvailable: true },
+          where: {
+            status: "PUBLISHED",
+            isAvailable: true,
+            OR: [{ categoryId: null }, { category: { status: "PUBLISHED" } }],
+          },
           orderBy: { name: "asc" },
           include: {
             category: { select: { name: true } },

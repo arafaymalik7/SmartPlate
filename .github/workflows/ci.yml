@@ -32,6 +32,7 @@ jobs:
       - run: npm run db:seed
       - run: npm run db:verify-seed
       - run: npm run db:verify-public-catalog
+      - run: npm run db:verify-public-visibility
       - run: npm test
       - run: npm run build
       - run: npx playwright install --with-deps chromium
