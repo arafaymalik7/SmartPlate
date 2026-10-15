@@ -2,7 +2,7 @@
 
 SMARTPLATE validates user-controlled values with Zod before admin mutations, avoids raw SQL, keeps database URLs and secrets in ignored environment files, and does not accept file uploads. The protected admin routes enforce a server session check before their database imports, and the restaurant-create mutation writes an audit record in the same transaction.
 
-Auth uses Auth.js credentials with an administrator-only bootstrap and scrypt password verification. Session cookies and CSRF protection use the maintained Auth.js/NextAuth defaults; rate limiting is not yet implemented. Live invalid-login, logout, CSRF and authorized mutation checks remain unverified until a disposable PostgreSQL environment is available.
+Auth uses Auth.js credentials with an administrator-only bootstrap and scrypt password verification. Session cookies and CSRF protection use the maintained Auth.js/NextAuth defaults. Live invalid-login, logout, CSRF and authorized mutation checks remain unverified until a disposable PostgreSQL environment is available.
 
 Every current admin mutation additionally compares an explicit browser `Origin` with the request URL before checking a session or importing the database client. Same-origin and non-browser requests are allowed; malformed or cross-origin browser requests are rejected with `403`. This is unit-tested.
 

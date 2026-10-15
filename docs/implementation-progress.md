@@ -1,5 +1,10 @@
 # Implementation progress ledger
 
+## CP-20/21/23 — Security and testing documentation reconciliation
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Documentation: reconciled the security/testing guides with the implemented 20-write per-administrator fixed-window guard, current 26-test unit suite, and CI PostgreSQL catalog/visibility/recommendation checks. The guides still distinguish these reproducible checks from the unavailable live administrator and production acceptance paths.
+
 ## CP-15 — Admin sign-out increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)
