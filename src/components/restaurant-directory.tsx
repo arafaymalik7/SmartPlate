@@ -2,22 +2,28 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { demoRestaurants } from "@/lib/demo-data";
+import type { PublicRestaurant } from "@/lib/public-catalog";
 
-export function RestaurantDirectory() {
+export function RestaurantDirectory({
+  restaurants,
+  isIllustrative,
+}: {
+  restaurants: PublicRestaurant[];
+  isIllustrative: boolean;
+}) {
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("ALL");
-  const locations = [...new Set(demoRestaurants.map((restaurant) => restaurant.location))];
+  const locations = [...new Set(restaurants.map((restaurant) => restaurant.location))];
   const results = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
-    return demoRestaurants.filter((restaurant) => {
+    return restaurants.filter((restaurant) => {
       const queryMatch = [restaurant.name, restaurant.cuisine, restaurant.location]
         .join(" ")
         .toLowerCase()
         .includes(normalizedQuery);
       return queryMatch && (location === "ALL" || restaurant.location === location);
     });
-  }, [location, query]);
+  }, [location, query, restaurants]);
 
   return (
     <>
@@ -46,7 +52,7 @@ export function RestaurantDirectory() {
         </label>
       </div>
       <p className="form-hint" aria-live="polite">
-        {results.length} demonstration venues shown.
+        {results.length} {isIllustrative ? "demonstration venues" : "venues"} shown.
       </p>
       {results.length ? (
         <div className="feature-grid">
@@ -65,7 +71,7 @@ export function RestaurantDirectory() {
         </div>
       ) : (
         <div className="empty-state">
-          <h2>No demonstration venues match</h2>
+          <h2>{isIllustrative ? "No demonstration venues match" : "No venues match"}</h2>
           <p>
             Clear the search or choose another location to view the bounded illustrative directory.
           </p>

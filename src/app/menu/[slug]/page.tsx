@@ -1,19 +1,21 @@
 import { notFound } from "next/navigation";
 import { SiteShell } from "@/components/site-shell";
-import { demoItems } from "@/lib/demo-data";
+import { getPublicCatalog } from "@/lib/public-catalog";
 
 const value = (number: number | null, unit: string) =>
   number === null ? "Not available" : `${number} ${unit}`;
 
 export default async function MenuItemPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const item = demoItems.find((value) => value.slug === slug);
+  const catalog = await getPublicCatalog();
+  const item = catalog.items.find((value) => value.slug === slug);
   if (!item) notFound();
   return (
     <SiteShell>
       <section className="shell section">
         <p className="state-label">Illustrative nutrition data</p>
         <h1 className="page-title">{item.name}</h1>
+        {catalog.source === "DATABASE" && <p className="state-label">Published nutrition data</p>}
         <p className="lede">
           {item.description} MYR {item.price.toFixed(2)} · {item.restaurant} · {item.category}
         </p>

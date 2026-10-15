@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-06/07/13 — Published-data catalog increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added a server-side catalog that reads only published restaurants and available published menu items from Prisma when PostgreSQL is configured. Restaurant directory, restaurant menu, and item nutrition routes now consume the catalog; the explicit illustrative fallback remains only for no-database development. A configured-but-unreachable database renders no substituted demo records.
+- Verification: fallback behavior is unit-tested; lint, strict TypeScript, 20 Vitest checks, production build, and 24 Playwright checks at 375px, 768px, and 1440px passed. Regenerated mobile and desktop restaurant screenshots were reviewed.
+- Limit: this workspace still has no local PostgreSQL service, so the live database branch is CI/runtime-bound rather than locally executed. Recommendation and comparison clients remain illustrative until their client data flow is migrated.
+
 ## CP-16/17 — Guarded full-update increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

@@ -15,7 +15,7 @@ export type DemoItem = {
   dietaryStatus: "VEGETARIAN_VERIFIED" | "VEGAN_VERIFIED" | "UNKNOWN";
   ingredients: string[];
   allergenDisclosure: "UNKNOWN" | "PRESENT";
-  sourceType: "ILLUSTRATIVE";
+  sourceType: "ILLUSTRATIVE" | "FOOD_COMPOSITION_DERIVED" | "RESTAURANT_VERIFIED";
   sourceCitation: string;
   reviewedAt: string;
 };

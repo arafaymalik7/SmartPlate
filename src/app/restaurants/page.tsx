@@ -1,15 +1,33 @@
 import { SiteShell } from "@/components/site-shell";
 import { RestaurantDirectory } from "@/components/restaurant-directory";
-export default function RestaurantsPage() {
+import { getPublicCatalog } from "@/lib/public-catalog";
+
+export default async function RestaurantsPage() {
+  const catalog = await getPublicCatalog();
   return (
     <SiteShell>
       <section className="shell section">
         <p className="state-label">Fictional demonstration venues</p>
         <h1 className="page-title">Browse menus with context.</h1>
         <p className="lede">
-          All restaurants and values below are illustrative—not verified restaurant records.
+          {catalog.source === "DATABASE"
+            ? "Only published and currently available records are shown. Nutrition and disclosure limits remain visible."
+            : "All restaurants and values below are illustrative—not verified restaurant records."}
         </p>
-        <RestaurantDirectory />
+        {catalog.source === "DATABASE_UNAVAILABLE" ? (
+          <div className="empty-state">
+            <h2>Published menu data is temporarily unavailable</h2>
+            <p>
+              Please try again later. No illustrative records are substituted when a configured
+              database cannot be reached.
+            </p>
+          </div>
+        ) : (
+          <RestaurantDirectory
+            restaurants={catalog.restaurants}
+            isIllustrative={catalog.source === "ILLUSTRATIVE_FALLBACK"}
+          />
+        )}
       </section>
     </SiteShell>
   );
