@@ -17,7 +17,26 @@ export const menuItemSchema = z.object({
   name: z.string().min(2).max(160),
   description: z.string().min(2).max(1200),
   price: z.coerce.number().min(0).max(100000),
+  currency: z.string().trim().length(3).default("MYR"),
   servingSize: z.string().min(1).max(80),
+  status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]).default("DRAFT"),
+  isAvailable: z.boolean().default(true),
+  dietaryStatus: z.string().trim().max(60).optional(),
   calories: z.coerce.number().min(0).max(10000).nullable().optional(),
+  proteinG: z.coerce.number().min(0).max(1000).nullable().optional(),
+  carbsG: z.coerce.number().min(0).max(1000).nullable().optional(),
+  fatG: z.coerce.number().min(0).max(1000).nullable().optional(),
+  sodiumMg: z.coerce.number().min(0).max(100000).nullable().optional(),
   sourceType: z.enum(["ILLUSTRATIVE", "FOOD_COMPOSITION_DERIVED", "RESTAURANT_VERIFIED"]),
+  sourceUrl: z.string().url().max(2048).optional().or(z.literal("")),
+  sourceCitation: z.string().trim().max(500).optional(),
+});
+
+export const categorySchema = z.object({
+  restaurantId: z.string().min(1),
+  name: z.string().trim().min(2).max(80),
+  slug: z
+    .string()
+    .trim()
+    .regex(/^[a-z0-9-]+$/),
 });

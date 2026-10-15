@@ -49,3 +49,9 @@
 - `npm run test:e2e`: passed, 15/15 after adding menu search, verified-diet filter, no-results/reset and responsive capture coverage.
 - `npm test`: includes a data-shape assertion for four fictional venues and 48 illustrative menu records, plus null-nutrition preservation.
 - Visual evidence: `docs/evidence/mobile-375-menu-filters.png`, `docs/evidence/tablet-768-menu-filters.png`, `docs/evidence/desktop-1440-menu-filters.png`; mobile was visually inspected.
+
+## Admin validation increment
+
+- `npm test`: passed, 12/12. Admin schemas reject negative prices, malformed provenance URLs and invalid category slugs.
+- `npm run lint` and `npm run typecheck`: passed after adding guarded category/menu-item route handlers and audit summary counts.
+- Database-backed route execution is UNVERIFIED because no disposable PostgreSQL server is available locally.

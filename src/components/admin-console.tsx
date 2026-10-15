@@ -7,6 +7,7 @@ type Summary = {
   items: number;
   published: number;
   itemsWithMissingNutrition: number;
+  auditEvents: number;
 };
 type Restaurant = {
   id: string;
@@ -83,6 +84,9 @@ export function AdminConsole() {
             </p>
             <p>
               <strong>{summary.itemsWithMissingNutrition}</strong> with missing nutrition
+            </p>
+            <p>
+              <strong>{summary.auditEvents}</strong> audit events
             </p>
           </>
         ) : (

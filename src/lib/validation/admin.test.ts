@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { menuItemSchema, restaurantSchema } from "./admin";
+import { categorySchema, menuItemSchema, restaurantSchema } from "./admin";
 describe("admin validation", () => {
   it("rejects negative price and invalid slug", () =>
     expect(
@@ -24,4 +24,21 @@ describe("admin validation", () => {
         status: "PUBLISHED",
       }).success,
     ).toBe(true));
+  it("rejects malformed provenance URLs and invalid category slugs", () => {
+    expect(
+      categorySchema.safeParse({ restaurantId: "x", name: "Sides", slug: "Bad slug" }).success,
+    ).toBe(false);
+    expect(
+      menuItemSchema.safeParse({
+        restaurantId: "x",
+        slug: "dish",
+        name: "Dish",
+        description: "Description",
+        price: 3,
+        servingSize: "1 serving",
+        sourceType: "ILLUSTRATIVE",
+        sourceUrl: "not a url",
+      }).success,
+    ).toBe(false);
+  });
 });

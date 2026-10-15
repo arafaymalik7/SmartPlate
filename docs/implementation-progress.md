@@ -114,3 +114,10 @@
 - Scope: expanded the illustrative public menu to 48 records (four venues, 12 dishes each), added category/search/sort/verified-diet filters and no-results reset handling, and completed item pages with serving size, nutrition values, ingredients, disclosure state, source classification and review date.
 - Verification: production Playwright passed 15/15 at 375px, 768px and 1440px; the mobile filter capture at `docs/evidence/mobile-375-menu-filters.png` was visually reviewed. A unit check verifies the four-menu/48-item shape and preservation of null nutrition values.
 - Limit: public runtime reads still use the explicitly labelled typed demonstration fallback. The equivalent PostgreSQL relation/query path and published/draft integration require the blocked database environment.
+
+## CP-16/17/18 â€” Admin mutation and audit increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added server-authorized category and menu-item creation routes, nutrition/provenance validation, category-to-restaurant ownership checks, transactional audit-log writes, and audit-event counts in the protected summary response.
+- Verification: lint and strict TypeScript passed; 12 Vitest checks passed, including invalid URL/category-slug and negative-price validation. The protected routes compile in the production build.
+- Unverified: authenticated creation/edit/unpublish/delete, relational persistence, audit rows and public published-state impact require the blocked disposable PostgreSQL environment.
