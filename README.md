@@ -6,12 +6,12 @@ SMARTPLATE is being delivered as a Next.js, TypeScript, PostgreSQL and Prisma un
 
 ## Current status
 
-The active branch is `codex/smartplate-complete`. Public menu routes, preference validation, a tested recommendation engine, comparison, Prisma schema, illustrative seed blueprint, CI workflow and operational documentation are implemented. PostgreSQL migration/seed execution, protected database-backed administration, browser E2E captures and cloud deployment remain unverified until appropriate database/browser/cloud access is supplied. See `docs/implementation-progress.md` for checkpoint evidence.
+The active branch is `codex/smartplate-complete`. Public menu routes, preference validation, a tested recommendation engine, comparison, Prisma schema, illustrative seed blueprint, CI workflow and operational documentation are implemented. Real Playwright browser evidence is captured at 375px, 768px and 1440px under `docs/evidence/`. PostgreSQL migration/seed execution, authenticated database-backed administration and cloud deployment remain unverified until appropriate database/cloud access is supplied. See `docs/implementation-progress.md` for checkpoint evidence.
 
 ## Local setup
 
 1. Install Node.js 22.18+ and PostgreSQL.
-2. Copy `.env.example` to `.env` and set local, non-production `DATABASE_URL` and `DIRECT_URL`.
+2. Copy `.env.example` to `.env` and set local, non-production `DATABASE_URL` and `DIRECT_URL`. Set `NEXT_PUBLIC_APP_URL` to the actual HTTPS origin when deploying.
 3. Run `npm ci`, `npm run db:generate`, `npm run db:migrate`, `npm run db:seed`, and `npm run dev`.
 
 ## Verification
