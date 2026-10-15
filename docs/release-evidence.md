@@ -18,24 +18,27 @@ not a claim of university acceptance or a production release.
 | 12  | Deterministic scoring, explanations, missing-data treatment                                                   | Verified                        | `135edfa`; deterministic unit coverage                                                                       |
 | 13  | Recommendation results and caveats UI                                                                         | Partial (CI database verified)  | `7891aa6`; CI #50 passed recommendations generated from the seeded PostgreSQL catalog, while live hosted acceptance remains outstanding |
 | 14  | Bounded 2–3 meal comparison with unavailable values                                                           | Verified (illustrative UI)      | `e6dc08f`; Playwright screenshots at three viewports; `e5d8785` also verifies its public catalog source in CI |
-| 15  | Auth.js credentials foundation, bootstrap, guards and protected no-session route                              | Partial                         | `b0d2283`; CI #55 passed guarded sign-out client coverage, but real administrator/database login and logout acceptance remain outstanding |
-| 16  | Guarded restaurant/category create/read, publication lifecycle, and full update routes with audit records     | Partial (CI visibility verified)| `6144fef`; CI #49 proved draft restaurant/category data disappears from PostgreSQL-backed public catalog; authenticated admin acceptance remains outstanding |
+| 15  | Auth.js credentials foundation, bootstrap, guards and protected no-session route                              | Partial                         | `f345107`; CI #60 passed direct unauthenticated admin read/mutation (`401`) and hostile-origin (`403`) browser checks, but real administrator/database login and logout acceptance remain outstanding |
+| 16  | Guarded restaurant/category create/read, publication lifecycle, and full update routes with audit records     | Partial (CI visibility verified)| `f345107`; CI #60 reran the PostgreSQL visibility workflow and direct unauthenticated-admin checks; authenticated admin acceptance remains outstanding |
 | 17  | Guarded menu/nutrition creation and full update route with disclosure/nutrition replacement and audit history | Partial                         | `cd26f0b`; run #47 passed the PostgreSQL/seed/catalog/unit/build/browser workflow; editable UI and audit update are implemented, while authenticated PostgreSQL acceptance remains outstanding |
 | 18  | Truthful summary counters and latest audit feed                                                               | Partial (CI verified)           | `def9e12`; CI #51 passed the missing-nutrition counter correction; authenticated persistence remains outstanding |
-| 19  | Responsive, keyboard, metadata, robots/sitemap and screenshot checks                                          | Verified (covered public scope) | expanded link/image integrity suite passed 30/30 at three viewports; authenticated admin keyboard testing remains unavailable |
+| 19  | Responsive, keyboard, metadata, robots/sitemap and screenshot checks                                          | Verified (covered public scope) | `f345107`; CI #60 passed the expanded link/image integrity suite 30/30 at three viewports; authenticated admin keyboard testing remains unavailable |
 | 20  | Zod, origin checks, safe errors, secret scan process and basic write limit                                    | Partial                         | `0591635`, `4316083`; distributed rate limiting/authenticated attack testing still needs deployment/database |
-| 21  | CI PostgreSQL service, migration/seed, static/unit/build/browser sequence                                     | Verified through CI #50         | `7891aa6`; CI #49/#50 additionally exercised publication visibility and database-backed recommendations after migration/seed, then passed lint/type/unit/build and 24 fallback browser checks |
+| 21  | CI PostgreSQL service, migration/seed, static/unit/build/browser sequence                                     | Verified through CI #60         | `f345107`; CI #60 reran migration, double seed, catalog/visibility/recommendation checks, lint/type/unit/build, and 30 fallback browser checks |
 | 22  | Vercel-compatible runbook and HTTPS public smoke-check script                                                 | Blocked                         | `ac38ce0`; deployment needs hosting/database credentials and public URL                                      |
 | 23  | Report draft, source register, diagrams, presentation outline, QA/release docs                                | Partial                         | `c2f62d2`, `ac38ce0`; genuine user testing, supervisor review and institutional formatting remain required   |
 
 ## Current verification snapshot
 
-At commit `06e280b`, a clean `npm ci` install was followed by local lint,
-strict TypeScript, 16 Vitest checks, and the
-production build passed. The latest public Playwright run passed 24 checks
-across 375px, 768px, and 1440px. The pushed branch is
-`codex/smartplate-complete`; use `git ls-remote --heads origin
-codex/smartplate-complete` to confirm its current remote SHA before release.
+At code commit `f345107`, local lint, strict TypeScript, 26 Vitest checks,
+the production build, and 30 public/unauthenticated-admin Playwright checks
+passed across 375px, 768px, and 1440px. GitHub Actions CI #60 independently
+passed its PostgreSQL migration, double seed, catalog, visibility and
+recommendation checks alongside that static/unit/build/browser sequence:
+https://github.com/arafaymalik7/SmartPlate/actions/runs/38791057691. The
+pushed branch is `codex/smartplate-complete`; use `git ls-remote --heads
+origin codex/smartplate-complete` to confirm its current remote SHA before
+release.
 
 ## Required human inputs to remove the remaining limits
 
