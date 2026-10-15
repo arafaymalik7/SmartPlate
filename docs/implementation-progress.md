@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-17 — Multi-disclosure entry increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: replaced the single ingredient/allergen inputs in guarded menu-item creation with per-line multi-disclosure textareas. Each line records a normalized name and explicit `PRESENT`, `ABSENT_VERIFIED`, or `UNKNOWN` state; missing or invalid states safely default to unknown.
+- Verification: lint, strict TypeScript, and 20 Vitest checks passed. Production build and responsive public Playwright checks are run before the commit; authenticated persistence remains dependent on PostgreSQL/admin access.
+- Limit: this is a compact line-oriented editor, not yet a fully interactive row editor for existing records.
+
 ## CP-13/14 — Published-catalog consumer increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

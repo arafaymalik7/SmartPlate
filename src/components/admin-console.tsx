@@ -61,10 +61,8 @@ const initialItem = {
   servingSize: "",
   status: "DRAFT",
   dietaryStatus: "",
-  ingredientName: "",
-  ingredientState: "UNKNOWN",
-  allergenName: "",
-  allergenState: "UNKNOWN",
+  ingredientDisclosures: "",
+  allergenDisclosures: "",
   calories: "",
   sodiumMg: "",
   sourceCitation: "",
@@ -75,6 +73,21 @@ async function jsonOrError(response: Response) {
   if (!response.ok) throw new Error(payload?.error ?? "The request could not be completed.");
   return payload;
 }
+
+const disclosureStates = new Set(["PRESENT", "ABSENT_VERIFIED", "UNKNOWN"]);
+const parseDisclosures = (value: string) =>
+  value
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const [name, rawState] = line.split("|").map((entry) => entry.trim());
+      return {
+        name,
+        state: disclosureStates.has(rawState) ? rawState : "UNKNOWN",
+      };
+    })
+    .filter((entry) => entry.name.length > 0);
 
 export function AdminConsole() {
   const [summary, setSummary] = useState<Summary | null>(null);
@@ -200,12 +213,8 @@ export function AdminConsole() {
       categoryId: itemForm.categoryId || undefined,
       price: Number(itemForm.price),
       dietaryStatus: itemForm.dietaryStatus || undefined,
-      ingredients: itemForm.ingredientName
-        ? [{ name: itemForm.ingredientName, state: itemForm.ingredientState }]
-        : [],
-      allergens: itemForm.allergenName
-        ? [{ name: itemForm.allergenName, state: itemForm.allergenState }]
-        : [],
+      ingredients: parseDisclosures(itemForm.ingredientDisclosures),
+      allergens: parseDisclosures(itemForm.allergenDisclosures),
       calories: numberOrNull(itemForm.calories),
       sodiumMg: numberOrNull(itemForm.sodiumMg),
       sourceType: "ILLUSTRATIVE",
@@ -489,42 +498,29 @@ export function AdminConsole() {
             />
           </label>
           <label>
-            Ingredient disclosure (optional)
-            <input
-              value={itemForm.ingredientName}
-              onChange={(event) => setItemForm({ ...itemForm, ingredientName: event.target.value })}
-            />
-          </label>
-          <label>
-            Ingredient status
-            <select
-              value={itemForm.ingredientState}
+            Ingredient disclosures (optional)
+            <textarea
+              value={itemForm.ingredientDisclosures}
               onChange={(event) =>
-                setItemForm({ ...itemForm, ingredientState: event.target.value })
+                setItemForm({ ...itemForm, ingredientDisclosures: event.target.value })
               }
-            >
-              <option value="UNKNOWN">Unknown</option>
-              <option value="PRESENT">Present</option>
-              <option value="ABSENT_VERIFIED">Absent (verified)</option>
-            </select>
-          </label>
-          <label>
-            Allergen disclosure (optional)
-            <input
-              value={itemForm.allergenName}
-              onChange={(event) => setItemForm({ ...itemForm, allergenName: event.target.value })}
+              placeholder={"oats | PRESENT\nmilk | UNKNOWN"}
             />
           </label>
+          <p className="form-hint">
+            Add one disclosure per line as <code>name | PRESENT</code>,{" "}
+            <code>name | ABSENT_VERIFIED</code>, or <code>name | UNKNOWN</code>. Omitted or
+            unrecognised states are saved as unknown.
+          </p>
           <label>
-            Allergen status
-            <select
-              value={itemForm.allergenState}
-              onChange={(event) => setItemForm({ ...itemForm, allergenState: event.target.value })}
-            >
-              <option value="UNKNOWN">Unknown</option>
-              <option value="PRESENT">Present</option>
-              <option value="ABSENT_VERIFIED">Absent (verified)</option>
-            </select>
+            Allergen disclosures (optional)
+            <textarea
+              value={itemForm.allergenDisclosures}
+              onChange={(event) =>
+                setItemForm({ ...itemForm, allergenDisclosures: event.target.value })
+              }
+              placeholder={"peanuts | ABSENT_VERIFIED\nsoy | PRESENT"}
+            />
           </label>
           <label>
             Calories (optional)
