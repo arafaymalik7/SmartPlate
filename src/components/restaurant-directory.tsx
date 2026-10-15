@@ -4,6 +4,26 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { PublicRestaurant } from "@/lib/public-catalog";
 
+function venueMonogram(name: string) {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+}
+
+function RestaurantVisual({ restaurant }: { restaurant: PublicRestaurant }) {
+  const fallbackLabel = `${restaurant.name} venue placeholder`;
+
+  return (
+    <div aria-label={fallbackLabel} className="restaurant-visual restaurant-fallback" role="img">
+      <span aria-hidden="true">{venueMonogram(restaurant.name)}</span>
+    </div>
+  );
+}
+
 export function RestaurantDirectory({
   restaurants,
   isIllustrative,
@@ -57,15 +77,18 @@ export function RestaurantDirectory({
       {results.length ? (
         <div className="feature-grid">
           {results.map((restaurant) => (
-            <article key={restaurant.slug}>
-              <p className="state-label">{restaurant.location}</p>
-              <h3>{restaurant.name}</h3>
-              <p>
-                {restaurant.cuisine} · {restaurant.description}
-              </p>
-              <Link className="text-link" href={`/restaurants/${restaurant.slug}`}>
-                View menu
-              </Link>
+            <article className="restaurant-card" key={restaurant.slug}>
+              <RestaurantVisual restaurant={restaurant} />
+              <div className="restaurant-card-copy">
+                <p className="state-label">{restaurant.location}</p>
+                <h3>{restaurant.name}</h3>
+                <p>
+                  {restaurant.cuisine} · {restaurant.description}
+                </p>
+                <Link className="text-link" href={`/restaurants/${restaurant.slug}`}>
+                  View menu
+                </Link>
+              </div>
             </article>
           ))}
         </div>

@@ -86,5 +86,5 @@
 - `npm run typecheck`: passed.
 - `npm test`: CI #62 passed all 27 deterministic checks, including provenance validation, recommendation safety/ranking, fixed-window mutation limiting, summary completeness, and sign-out recovery.
 - `npm run build`: passed; route compilation includes the protected admin read/mutation and audit handlers.
-- `npm run test:e2e`: passed, 33/33 across 375px, 768px, and 1440px. It includes public discovery, comparison, keyboard navigation, crawl metadata, rendered link integrity, protected no-session admin APIs, filters, menu-detail provenance/review context, and unknown-allergen handling.
+- `npm run test:e2e`: passed, 33/33 across 375px, 768px, and 1440px. It includes public discovery, accessible venue fallback, comparison, keyboard navigation, crawl metadata, rendered link integrity, protected no-session admin APIs, filters, menu-detail provenance/review context, and unknown-allergen handling.
 - Reviewed captures include protected admin and menu detail at all three viewports: `docs/evidence/mobile-375-admin-protected.png`, `docs/evidence/desktop-1440-admin-protected.png`, `docs/evidence/mobile-375-menu-detail.png`, `docs/evidence/tablet-768-menu-detail.png`, and `docs/evidence/desktop-1440-menu-detail.png`. Authenticated admin/database flows remain unverified without a bootstrapped account and PostgreSQL.

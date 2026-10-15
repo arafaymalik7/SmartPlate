@@ -103,6 +103,7 @@ test("admin APIs reject unauthenticated reads and mutations", async ({ request }
 
 test("restaurant search has a truthful empty state", async ({ page }) => {
   await page.goto("/restaurants");
+  await expect(page.getByRole("img", { name: "Green Ladle venue placeholder" })).toBeVisible();
   await page.getByLabel(/search restaurants/i).fill("no-such-venue");
   await expect(
     page.getByRole("heading", { name: /no (demonstration )?venues match/i }),

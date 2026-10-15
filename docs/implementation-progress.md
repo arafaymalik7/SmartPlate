@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-06/08/19 — Accessible venue fallback increment
+
+- Timestamp: 2026-10-16 (Asia/Karachi)
+- Implementation: the bounded restaurant directory now presents an original, code-native venue monogram fallback for every record without an approved image asset. The fallback has a meaningful accessible name, preserves the data-model image URL for future approved assets, and avoids presenting stock or unverified food photography as restaurant evidence.
+- Visual QA: reviewed regenerated `docs/evidence/mobile-375-restaurants.png`, `docs/evidence/tablet-768-restaurants.png`, and `docs/evidence/desktop-1440-restaurants.png`. The fallback monograms are readable and aligned at each viewport with no clipping or horizontal overflow.
+- Verification: `npm run lint`, `npm run typecheck`, focused `npx vitest run src/lib/public-catalog.test.ts --maxWorkers=1 --no-file-parallelism` (1 file, 1 passed), `npm run build` (20 routes), Impeccable detector (no findings), and `npm run test:e2e -- --reporter=line` (33 passed at 375px, 768px, and 1440px) passed before commit.
+
 ## CP-08/17/19 — Nutrition provenance and responsive detail increment
 
 - Timestamp: 2026-10-16 (Asia/Karachi)

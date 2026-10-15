@@ -6,6 +6,7 @@ export type PublicRestaurant = {
   cuisine: string;
   location: string;
   description: string;
+  imageUrl?: string | null;
 };
 export type CatalogSource = "ILLUSTRATIVE_FALLBACK" | "DATABASE" | "DATABASE_UNAVAILABLE";
 export type PublicCatalog = {
@@ -55,6 +56,7 @@ export async function getPublicCatalog(): Promise<PublicCatalog> {
       cuisine: restaurant.cuisine,
       location: restaurant.location,
       description: restaurant.description,
+      imageUrl: restaurant.imageUrl,
     }));
     const items: DemoItem[] = restaurants.flatMap((restaurant) =>
       restaurant.items.map((item) => ({
