@@ -85,6 +85,7 @@
 
 - Docker CLI and Compose are installed, but `docker compose up -d db` failed because `//./pipe/dockerDesktopLinuxEngine` does not exist: Docker Desktop's Linux engine is not running.
 - `psql` is not installed. Migration, seed and authenticated DB tests remain blocked by this environment state.
+- A normal `Start-Service com.docker.service` attempt was denied by Windows (`Cannot open com.docker.service service on computer '.'`); starting Docker Desktop's Linux containers engine requires the desktop user's permission/elevation.
 
 ## CP-19 â€” Responsive browser verification
 
