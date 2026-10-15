@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-17 — Disclosure-input increment
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: extended guarded menu-item creation with validated ingredient/allergen disclosure entries and explicit `PRESENT`, `ABSENT_VERIFIED`, or `UNKNOWN` state. The admin form can add one explicit ingredient and one explicit allergen disclosure per item; server writes use normalized connect-or-create records and preserve the selected state.
+- Verification: admin validation tests now reject unknown disclosure enums and accept explicit `UNKNOWN`; lint, strict TypeScript, 18 Vitest checks, production build, and 24 responsive public Playwright checks passed.
+- Limit: the current form is intentionally a small creation slice rather than a multi-row disclosure editor. Persisted relation behavior and authenticated UI interaction remain unverified without PostgreSQL/admin credentials.
+
 ## CP-16/17 — Publication lifecycle increment
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

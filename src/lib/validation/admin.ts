@@ -13,6 +13,10 @@ export const restaurantSchema = z.object({
 export const publicationStatusSchema = z.object({
   status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]),
 });
+const disclosureEntrySchema = z.object({
+  name: z.string().trim().min(1).max(120),
+  state: z.enum(["PRESENT", "ABSENT_VERIFIED", "UNKNOWN"]),
+});
 export const menuItemSchema = z.object({
   restaurantId: z.string().min(1),
   categoryId: z.string().min(1).optional(),
@@ -33,6 +37,8 @@ export const menuItemSchema = z.object({
   sourceType: z.enum(["ILLUSTRATIVE", "FOOD_COMPOSITION_DERIVED", "RESTAURANT_VERIFIED"]),
   sourceUrl: z.string().url().max(2048).optional().or(z.literal("")),
   sourceCitation: z.string().trim().max(500).optional(),
+  ingredients: z.array(disclosureEntrySchema).max(50).default([]),
+  allergens: z.array(disclosureEntrySchema).max(50).default([]),
 });
 
 export const categorySchema = z.object({

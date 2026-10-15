@@ -53,6 +53,10 @@ const initialItem = {
   servingSize: "",
   status: "DRAFT",
   dietaryStatus: "",
+  ingredientName: "",
+  ingredientState: "UNKNOWN",
+  allergenName: "",
+  allergenState: "UNKNOWN",
   calories: "",
   sodiumMg: "",
   sourceCitation: "",
@@ -176,6 +180,12 @@ export function AdminConsole() {
       categoryId: itemForm.categoryId || undefined,
       price: Number(itemForm.price),
       dietaryStatus: itemForm.dietaryStatus || undefined,
+      ingredients: itemForm.ingredientName
+        ? [{ name: itemForm.ingredientName, state: itemForm.ingredientState }]
+        : [],
+      allergens: itemForm.allergenName
+        ? [{ name: itemForm.allergenName, state: itemForm.allergenState }]
+        : [],
       calories: numberOrNull(itemForm.calories),
       sodiumMg: numberOrNull(itemForm.sodiumMg),
       sourceType: "ILLUSTRATIVE",
@@ -415,6 +425,44 @@ export function AdminConsole() {
               value={itemForm.dietaryStatus}
               onChange={(event) => setItemForm({ ...itemForm, dietaryStatus: event.target.value })}
             />
+          </label>
+          <label>
+            Ingredient disclosure (optional)
+            <input
+              value={itemForm.ingredientName}
+              onChange={(event) => setItemForm({ ...itemForm, ingredientName: event.target.value })}
+            />
+          </label>
+          <label>
+            Ingredient status
+            <select
+              value={itemForm.ingredientState}
+              onChange={(event) =>
+                setItemForm({ ...itemForm, ingredientState: event.target.value })
+              }
+            >
+              <option value="UNKNOWN">Unknown</option>
+              <option value="PRESENT">Present</option>
+              <option value="ABSENT_VERIFIED">Absent (verified)</option>
+            </select>
+          </label>
+          <label>
+            Allergen disclosure (optional)
+            <input
+              value={itemForm.allergenName}
+              onChange={(event) => setItemForm({ ...itemForm, allergenName: event.target.value })}
+            />
+          </label>
+          <label>
+            Allergen status
+            <select
+              value={itemForm.allergenState}
+              onChange={(event) => setItemForm({ ...itemForm, allergenState: event.target.value })}
+            >
+              <option value="UNKNOWN">Unknown</option>
+              <option value="PRESENT">Present</option>
+              <option value="ABSENT_VERIFIED">Absent (verified)</option>
+            </select>
           </label>
           <label>
             Calories (optional)

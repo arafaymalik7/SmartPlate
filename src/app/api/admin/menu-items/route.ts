@@ -64,6 +64,22 @@ export async function POST(request: Request) {
         status: parsed.data.status,
         isAvailable: parsed.data.isAvailable,
         dietaryStatus: parsed.data.dietaryStatus,
+        ingredients: {
+          create: parsed.data.ingredients.map((entry) => ({
+            state: entry.state,
+            ingredient: {
+              connectOrCreate: { where: { name: entry.name }, create: { name: entry.name } },
+            },
+          })),
+        },
+        allergens: {
+          create: parsed.data.allergens.map((entry) => ({
+            state: entry.state,
+            allergen: {
+              connectOrCreate: { where: { name: entry.name }, create: { name: entry.name } },
+            },
+          })),
+        },
         nutrition: {
           create: {
             calories: parsed.data.calories,

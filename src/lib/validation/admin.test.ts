@@ -45,4 +45,27 @@ describe("admin validation", () => {
     expect(publicationStatusSchema.safeParse({ status: "ARCHIVED" }).success).toBe(true);
     expect(publicationStatusSchema.safeParse({ status: "DELETED" }).success).toBe(false);
   });
+  it("rejects invalid ingredient and allergen disclosure states", () => {
+    const base = {
+      restaurantId: "x",
+      slug: "dish",
+      name: "Dish",
+      description: "Description",
+      price: 3,
+      servingSize: "1 serving",
+      sourceType: "ILLUSTRATIVE",
+    };
+    expect(
+      menuItemSchema.safeParse({
+        ...base,
+        allergens: [{ name: "Peanuts", state: "SAFE" }],
+      }).success,
+    ).toBe(false);
+    expect(
+      menuItemSchema.safeParse({
+        ...base,
+        ingredients: [{ name: "Oats", state: "UNKNOWN" }],
+      }).success,
+    ).toBe(true);
+  });
 });
