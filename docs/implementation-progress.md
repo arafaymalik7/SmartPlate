@@ -38,3 +38,11 @@
 - Verification: `npm run db:generate` passed with Prisma Client 7.10.0; strict TypeScript passed.
 - Blocker: `DATABASE_URL`/`DIRECT_URL` point to no supplied local PostgreSQL server. `db:migrate` and relational runtime tests are UNVERIFIED; no migration was attempted against an unknown database.
 - Next action: commit CP-03, then add the idempotent illustrative seed after a local PostgreSQL instance is available.
+
+## CP-04 — Demo dataset
+
+- Timestamp: 2026-10-15 (Asia/Karachi)
+- Scope: added an idempotent Prisma seed blueprint for four fictional restaurants and 48 illustrative dishes, plus typed demonstration records for UI/testing.
+- Verification: strict typecheck passed; Vitest passed 2/2 and checks illustrative source labels plus an intentionally unknown calorie value.
+- Blocker: seed execution against PostgreSQL is UNVERIFIED pending an approved database URL.
+- Next action: public restaurant discovery routes.
