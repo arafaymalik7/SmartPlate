@@ -21,4 +21,16 @@ describe("SignOutButton", () => {
       expect(signOutMock).toHaveBeenCalledWith({ callbackUrl: "/admin/sign-in" }),
     );
   });
+
+  it("restores the action and explains an unsuccessful sign-out", async () => {
+    signOutMock.mockRejectedValueOnce(new Error("Network error"));
+    render(<SignOutButton />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Sign out" }));
+
+    expect((await screen.findByRole("alert")).textContent).toMatch(/could not be completed/i);
+    expect((screen.getByRole("button", { name: "Sign out" }) as HTMLButtonElement).disabled).toBe(
+      false,
+    );
+  });
 });
