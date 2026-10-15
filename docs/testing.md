@@ -5,8 +5,8 @@
 - `npm run lint` completes with zero warnings.
 - `npm run typecheck` completes under strict TypeScript.
 - `npm run db:generate` generated Prisma Client 7.10.0 from the committed schema and migration baseline without a database connection.
-- `npm test` runs 26 deterministic Vitest checks for health, illustrative/public catalog data, recommendation eligibility/ranking, preference validation, admin validation/disclosure/category lifecycle defaults, password verification, mutation-origin behaviour, rate limiting, admin-summary completeness, and sign-out success/failure recovery.
-- `npm run test:e2e` runs ten production-build Playwright journeys across 375px, 768px and 1440px (30 checks). It covers public discovery, bounded comparison, keyboard skip navigation, crawl metadata, rendered internal-link/image integrity, protected unauthenticated admin API/route access, directory/menu filtering and the allergy-related unknown-disclosure safety state.
+- `npm test` contains 27 deterministic Vitest checks for health, illustrative/public catalog data, recommendation eligibility/ranking, preference validation, admin validation/disclosure/category lifecycle defaults, password verification, mutation-origin behaviour, rate limiting, admin-summary completeness, and sign-out success/failure recovery. The provenance validator additionally requires a URL, citation and valid review date before non-illustrative nutrition can be saved.
+- `npm run test:e2e` runs eleven production-build Playwright journeys across 375px, 768px and 1440px (33 checks). It covers public discovery, bounded comparison, keyboard skip navigation, crawl metadata, rendered internal-link/image integrity, protected unauthenticated admin API/route access, directory/menu filtering, menu-detail provenance/review context, and the allergy-related unknown-disclosure safety state.
 
 ## Configured but awaiting PostgreSQL
 

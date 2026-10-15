@@ -14,13 +14,15 @@ export default async function MenuItemPage({ params }: { params: Promise<{ slug:
     <SiteShell>
       <section className="shell section">
         <p className="state-label">
-          {catalog.source === "DATABASE" ? "Published nutrition data" : "Illustrative nutrition data"}
+          {catalog.source === "DATABASE"
+            ? "Published nutrition data"
+            : "Illustrative nutrition data"}
         </p>
         <h1 className="page-title">{item.name}</h1>
         <p className="lede">
           {item.description} MYR {item.price.toFixed(2)} · {item.restaurant} · {item.category}
         </p>
-        <div className="feature-grid">
+        <div className="feature-grid nutrition-detail-grid">
           <article>
             <h3>Per serving</h3>
             <p>{item.servingSize}</p>
@@ -56,6 +58,13 @@ export default async function MenuItemPage({ params }: { params: Promise<{ slug:
           <article>
             <h3>Source and review</h3>
             <p>{item.sourceCitation}</p>
+            {item.sourceUrl && (
+              <p>
+                <a href={item.sourceUrl} rel="noreferrer" target="_blank">
+                  Open source record
+                </a>
+              </p>
+            )}
             <p>
               {item.sourceType === "ILLUSTRATIVE"
                 ? "This nutrition information is illustrative, not restaurant-verified."

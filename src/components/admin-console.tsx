@@ -51,6 +51,7 @@ type Item = {
     sourceType: string;
     sourceUrl: string | null;
     sourceCitation: string | null;
+    reviewedAt: string | null;
   } | null;
   ingredients: { state: string; ingredient: { name: string } }[];
   allergens: { state: string; allergen: { name: string } }[];
@@ -94,6 +95,7 @@ const initialItem = {
   sourceType: "ILLUSTRATIVE",
   sourceUrl: "",
   sourceCitation: "",
+  reviewedAt: "",
 };
 
 async function jsonOrError(response: Response) {
@@ -241,6 +243,7 @@ export function AdminConsole() {
         (itemForm.sourceType === "ILLUSTRATIVE"
           ? "Administrator-entered illustrative record"
           : undefined),
+      reviewedAt: itemForm.reviewedAt || undefined,
     };
     if (
       await write(
@@ -624,7 +627,7 @@ export function AdminConsole() {
             </select>
           </label>
           <label>
-            Illustrative source note (optional)
+            Source citation {itemForm.sourceType === "ILLUSTRATIVE" ? "(optional)" : "(required)"}
             <input
               value={itemForm.sourceCitation}
               onChange={(event) => setItemForm({ ...itemForm, sourceCitation: event.target.value })}
@@ -642,11 +645,19 @@ export function AdminConsole() {
             </select>
           </label>
           <label>
-            Source URL (optional)
+            Source URL {itemForm.sourceType === "ILLUSTRATIVE" ? "(optional)" : "(required)"}
             <input
               type="url"
               value={itemForm.sourceUrl}
               onChange={(event) => setItemForm({ ...itemForm, sourceUrl: event.target.value })}
+            />
+          </label>
+          <label>
+            Last reviewed {itemForm.sourceType === "ILLUSTRATIVE" ? "(optional)" : "(required)"}
+            <input
+              type="date"
+              value={itemForm.reviewedAt}
+              onChange={(event) => setItemForm({ ...itemForm, reviewedAt: event.target.value })}
             />
           </label>
           <button className="button" type="submit">
@@ -829,14 +840,19 @@ export function AdminConsole() {
                               state: entry.state,
                             })),
                           ),
-                          calories: item.nutrition?.calories == null ? "" : String(item.nutrition.calories),
-                          proteinG: item.nutrition?.proteinG == null ? "" : String(item.nutrition.proteinG),
-                          carbsG: item.nutrition?.carbsG == null ? "" : String(item.nutrition.carbsG),
+                          calories:
+                            item.nutrition?.calories == null ? "" : String(item.nutrition.calories),
+                          proteinG:
+                            item.nutrition?.proteinG == null ? "" : String(item.nutrition.proteinG),
+                          carbsG:
+                            item.nutrition?.carbsG == null ? "" : String(item.nutrition.carbsG),
                           fatG: item.nutrition?.fatG == null ? "" : String(item.nutrition.fatG),
-                          sodiumMg: item.nutrition?.sodiumMg == null ? "" : String(item.nutrition.sodiumMg),
+                          sodiumMg:
+                            item.nutrition?.sodiumMg == null ? "" : String(item.nutrition.sodiumMg),
                           sourceType: item.nutrition?.sourceType ?? "ILLUSTRATIVE",
                           sourceUrl: item.nutrition?.sourceUrl ?? "",
                           sourceCitation: item.nutrition?.sourceCitation ?? "",
+                          reviewedAt: item.nutrition?.reviewedAt?.slice(0, 10) ?? "",
                         });
                         setEditingItemId(item.id);
                       }}

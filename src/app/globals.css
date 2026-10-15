@@ -217,6 +217,9 @@ button:focus-visible {
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
 }
+.nutrition-detail-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
 .feature-grid article {
   padding: 27px 0;
   border-top: 1px solid var(--forest);
@@ -533,6 +536,11 @@ button:focus-visible {
 }
 .skeleton-line.short {
   width: 60%;
+}
+@media (min-width: 761px) and (max-width: 1050px) {
+  .nutrition-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 @keyframes pulse {
   to {

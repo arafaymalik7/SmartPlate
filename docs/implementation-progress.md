@@ -1,5 +1,12 @@
 # Implementation progress ledger
 
+## CP-08/17/19 — Nutrition provenance and responsive detail increment
+
+- Timestamp: 2026-10-16 (Asia/Karachi)
+- Implementation: non-illustrative menu nutrition now requires a traceable URL, citation, and valid review date at the server validation boundary. The protected editor captures and restores that review date, update/create routes persist it, and the public detail page renders a safe external source link when a source URL exists. The illustration-only fallback retains its explicit label and cannot be mistaken for a verified source.
+- Visual QA: the menu-detail grid is balanced as four columns on desktop, two on tablet, and one on mobile. Actual reviewed Playwright captures: `docs/evidence/mobile-375-menu-detail.png`, `docs/evidence/tablet-768-menu-detail.png`, and `docs/evidence/desktop-1440-menu-detail.png`; no clipping or horizontal overflow was observed.
+- Verification: `npm run lint`, `npm run typecheck`, focused `npx vitest run src/lib/validation/admin.test.ts --maxWorkers=1 --no-file-parallelism` (1 file, 7 passed), `npm run build` (20 routes), and `npm run test:e2e -- --reporter=line` (33 passed at 375px, 768px, and 1440px) passed. The full 27-case Vitest suite is queued for the pushed CI run; authenticated PostgreSQL mutation acceptance remains intentionally unclaimed without credentials.
+
 ## CP-15/16 — Direct unauthenticated API verification increment
 
 - Timestamp: 2026-10-16 (Asia/Karachi)
@@ -22,6 +29,7 @@
 - Timestamp: 2026-10-15 (Asia/Karachi)
 - Implementation: authenticated administrator workspace now presents a keyboard-accessible sign-out action that invokes Auth.js sign-out and returns to the protected sign-in route while preventing duplicate clicks. A recoverable failure restores the control and gives an explicit retry message.
 - Verification: focused client tests cover successful and recoverable failed sign-out. `npm run lint`, `npm run typecheck`, `npm test` (12 files, 26 tests), `npm run build` (20 routes), and `npm run test:e2e -- --reporter=line` (24 passed at 375px, 768px, and 1440px) all passed before commit. GitHub Actions CI #55 for `b0d22831256481c750cc5f8f8c53cd45c9402b75` completed successfully in 2m 58s: https://github.com/arafaymalik7/SmartPlate/actions/runs/38789060761. End-to-end sign-in/sign-out still requires the supplied administrator and PostgreSQL credentials.
+
 ## CP-06/07/08 — Database-source labeling correction
 
 - Timestamp: 2026-10-15 (Asia/Karachi)

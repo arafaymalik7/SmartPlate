@@ -84,6 +84,7 @@ export async function getPublicCatalog(): Promise<PublicCatalog> {
             : "UNKNOWN",
         allergens: item.allergens.map((entry) => entry.allergen.name),
         sourceType: item.nutrition?.sourceType ?? "ILLUSTRATIVE",
+        sourceUrl: item.nutrition?.sourceUrl ?? null,
         sourceCitation:
           item.nutrition?.sourceCitation ??
           "No provenance citation has been supplied for this item.",

@@ -76,7 +76,12 @@ async function main() {
       });
       await prisma.menuItemNutrition.upsert({
         where: { menuItemId: item.id },
-        update: {},
+        update: {
+          sourceType: SourceType.ILLUSTRATIVE,
+          sourceUrl: null,
+          sourceCitation: "Fictional illustrative demo value",
+          reviewedAt: new Date("2026-10-16T00:00:00.000Z"),
+        },
         create: {
           menuItemId: item.id,
           calories: index % 5 === 0 ? null : 320 + index * 19,
@@ -86,6 +91,7 @@ async function main() {
           sodiumMg: index % 4 === 0 ? null : 240 + index * 16,
           sourceType: SourceType.ILLUSTRATIVE,
           sourceCitation: "Fictional illustrative demo value",
+          reviewedAt: new Date("2026-10-16T00:00:00.000Z"),
         },
       });
     }

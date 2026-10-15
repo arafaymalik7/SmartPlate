@@ -23,6 +23,7 @@ export async function GET() {
             sourceType: true,
             sourceUrl: true,
             sourceCitation: true,
+            reviewedAt: true,
           },
         },
         ingredients: { select: { state: true, ingredient: { select: { name: true } } } },
@@ -103,6 +104,9 @@ export async function POST(request: Request) {
             sourceType: parsed.data.sourceType,
             sourceUrl: parsed.data.sourceUrl || undefined,
             sourceCitation: parsed.data.sourceCitation,
+            reviewedAt: parsed.data.reviewedAt
+              ? new Date(`${parsed.data.reviewedAt}T00:00:00.000Z`)
+              : undefined,
           },
         },
       },

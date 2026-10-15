@@ -41,6 +41,34 @@ describe("admin validation", () => {
       }).success,
     ).toBe(false);
   });
+  it("requires traceable provenance for non-illustrative nutrition records", () => {
+    const base = {
+      restaurantId: "x",
+      slug: "dish",
+      name: "Dish",
+      description: "Description",
+      price: 3,
+      servingSize: "1 serving",
+      sourceType: "FOOD_COMPOSITION_DERIVED" as const,
+    };
+    expect(menuItemSchema.safeParse(base).success).toBe(false);
+    expect(
+      menuItemSchema.safeParse({
+        ...base,
+        sourceUrl: "https://example.test/nutrition/dish",
+        sourceCitation: "Example Food Composition Database",
+        reviewedAt: "2026-10-16",
+      }).success,
+    ).toBe(true);
+    expect(
+      menuItemSchema.safeParse({
+        ...base,
+        sourceUrl: "https://example.test/nutrition/dish",
+        sourceCitation: "Example Food Composition Database",
+        reviewedAt: "2026-99-99",
+      }).success,
+    ).toBe(false);
+  });
   it("defaults categories to draft", () => {
     expect(categorySchema.parse({ restaurantId: "x", name: "Sides", slug: "sides" }).status).toBe(
       "DRAFT",

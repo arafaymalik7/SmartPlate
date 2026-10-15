@@ -95,6 +95,9 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
                   sourceType: fullData!.sourceType,
                   sourceUrl: fullData!.sourceUrl || undefined,
                   sourceCitation: fullData!.sourceCitation,
+                  reviewedAt: fullData!.reviewedAt
+                    ? new Date(`${fullData!.reviewedAt}T00:00:00.000Z`)
+                    : undefined,
                 },
                 update: {
                   calories: fullData!.calories,
@@ -105,6 +108,9 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
                   sourceType: fullData!.sourceType,
                   sourceUrl: fullData!.sourceUrl || null,
                   sourceCitation: fullData!.sourceCitation || null,
+                  reviewedAt: fullData!.reviewedAt
+                    ? new Date(`${fullData!.reviewedAt}T00:00:00.000Z`)
+                    : null,
                 },
               },
             },

@@ -44,10 +44,12 @@ test("public crawl metadata excludes protected routes", async ({ request }) => {
 
 test("rendered internal navigation and images resolve", async ({ page, request }) => {
   await page.goto("/");
-  const hrefs = await page.locator("a[href]").evaluateAll((links) =>
-    links.map((link) => link.getAttribute("href") ?? ""),
-  );
-  const internalHrefs = [...new Set(hrefs.filter((href) => href.startsWith("/") && !href.includes("#")))];
+  const hrefs = await page
+    .locator("a[href]")
+    .evaluateAll((links) => links.map((link) => link.getAttribute("href") ?? ""));
+  const internalHrefs = [
+    ...new Set(hrefs.filter((href) => href.startsWith("/") && !href.includes("#"))),
+  ];
   expect(internalHrefs.length).toBeGreaterThan(0);
 
   for (const href of internalHrefs) {
@@ -55,9 +57,9 @@ test("rendered internal navigation and images resolve", async ({ page, request }
     expect(response.status(), `${href} should not be broken`).toBeLessThan(400);
   }
 
-  const imageSources = await page.locator("img[src]").evaluateAll((images) =>
-    images.map((image) => image.getAttribute("src") ?? ""),
-  );
+  const imageSources = await page
+    .locator("img[src]")
+    .evaluateAll((images) => images.map((image) => image.getAttribute("src") ?? ""));
   for (const source of imageSources) {
     const response = await request.get(source);
     expect(response.status(), `${source} should not be broken`).toBeLessThan(400);
@@ -120,6 +122,20 @@ test("menu filters retain unknown-disclosure safeguards", async ({ page }, testI
   await expect(page.getByText(/12 illustrative menu items shown/i)).toBeVisible();
   await page.screenshot({
     path: `docs/evidence/${testInfo.project.name}-menu-filters.png`,
+    fullPage: true,
+  });
+});
+
+test("menu detail keeps illustrative provenance and review context visible", async ({
+  page,
+}, testInfo) => {
+  await page.goto("/menu/green-ladle-garden-grain-bowl");
+  await expect(page.getByRole("heading", { name: "Garden Grain Bowl" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Source and review" })).toBeVisible();
+  await expect(page.getByText("illustrative, not restaurant-verified")).toBeVisible();
+  await expect(page.getByText("Last reviewed:")).toBeVisible();
+  await page.screenshot({
+    path: `docs/evidence/${testInfo.project.name}-menu-detail.png`,
     fullPage: true,
   });
 });

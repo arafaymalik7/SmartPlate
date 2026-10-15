@@ -17,6 +17,7 @@ export type DemoItem = {
   allergens: string[];
   allergenDisclosure: "UNKNOWN" | "PRESENT" | "ABSENT_VERIFIED";
   sourceType: "ILLUSTRATIVE" | "FOOD_COMPOSITION_DERIVED" | "RESTAURANT_VERIFIED";
+  sourceUrl: string | null;
   sourceCitation: string;
   reviewedAt: string;
 };
@@ -259,6 +260,7 @@ export const demoItems: DemoItem[] = demoRestaurants.flatMap((restaurant, restau
       dishIndex === 3 || dishIndex === 8 || dishIndex === 11 ? "PRESENT" : "UNKNOWN",
     allergens: [],
     sourceType: "ILLUSTRATIVE",
+    sourceUrl: null,
     sourceCitation: "Fictional illustrative demonstration value; not restaurant-verified.",
     reviewedAt: "2026-10-15",
   })),
