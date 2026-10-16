@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Page, type Response } from "@playwright/test";
 
 const adminEmail = process.env.E2E_ADMIN_EMAIL;
 const adminPassword = process.env.E2E_ADMIN_PASSWORD;
@@ -11,11 +11,21 @@ function formWithHeading(page: Page, heading: string) {
   return page.locator("form").filter({ has: page.getByRole("heading", { name: heading }) });
 }
 
-async function signIn(page: Page) {
+async function submitCredentials(page: Page, password: string): Promise<Response> {
   await page.goto("/admin/sign-in");
   await page.getByLabel("Email").fill(adminEmail!);
-  await page.getByLabel("Password").fill(adminPassword!);
+  await page.getByLabel("Password").fill(password);
+  const response = page.waitForResponse(
+    (candidate) =>
+      candidate.request().method() === "POST" &&
+      candidate.url().includes("/api/auth/callback/credentials"),
+  );
   await page.getByRole("button", { name: "Sign in" }).click();
+  return response;
+}
+
+async function signIn(page: Page) {
+  await submitCredentials(page, adminPassword!);
   await expect(page.getByRole("heading", { name: "Admin workspace" })).toBeVisible();
 }
 
@@ -23,12 +33,13 @@ test.describe("authenticated administrator workflow", () => {
   test.skip(!hasDisposableAdmin, "requires disposable CI credentials and PostgreSQL");
 
   test("invalid credentials do not grant access", async ({ page }) => {
-    await page.goto("/admin/sign-in");
-    await page.getByLabel("Email").fill(adminEmail!);
-    await page.getByLabel("Password").fill("not-the-disposable-password");
-    await page.getByRole("button", { name: "Sign in" }).click();
+    await submitCredentials(page, "not-the-disposable-password");
     await page.goto("/admin");
     await expect(page.getByRole("heading", { name: "Protected workspace" })).toBeVisible();
+  });
+
+  test("valid credentials receive a successful Auth.js callback", async ({ page }) => {
+    expect((await submitCredentials(page, adminPassword!)).status()).toBe(200);
   });
 
   test("valid credentials open the admin workspace", async ({ page }) => {
