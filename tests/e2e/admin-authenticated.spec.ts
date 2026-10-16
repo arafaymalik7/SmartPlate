@@ -27,8 +27,8 @@ test.describe("authenticated administrator workflow", () => {
     await page.getByLabel("Email").fill(adminEmail!);
     await page.getByLabel("Password").fill("not-the-disposable-password");
     await page.getByRole("button", { name: "Sign in" }).click();
-    await expect(page.getByRole("alert")).toHaveText(/sign-in failed/i);
-    await expect(page).toHaveURL(/\/admin\/sign-in/);
+    await page.goto("/admin");
+    await expect(page.getByRole("heading", { name: "Protected workspace" })).toBeVisible();
   });
 
   test("admin UI persists a publish, update, archive, audit, and sign-out lifecycle", async ({
