@@ -18,8 +18,11 @@ export default function SignIn() {
             password: form.get("password"),
             redirect: false,
           });
-          if (result?.error) setError("Sign-in failed. Check your credentials.");
-          else router.push("/admin");
+          if (!result || result.error || !result.ok) {
+            setError("Sign-in failed. Check your credentials.");
+            return;
+          }
+          router.push("/admin");
         }}
       >
         <label>
