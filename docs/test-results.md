@@ -1,5 +1,14 @@
 # Test results
 
+## CP-20 Prisma 7.10.1 dependency remediation
+
+- `npm audit --omit=dev`: passed, `found 0 vulnerabilities` for production dependencies.
+- `npm run db:generate`: passed; Prisma Client 7.10.1 generated without a database connection.
+- `npm run lint`, `npm run typecheck`, and `npm test`: passed; 12 test files / 27 tests.
+- `npm run build`: passed; 20 routes generated.
+- `npm run test:e2e`: passed, 33/33 production-build checks across 375px, 768px, and 1440px.
+- Database migration/seed and clean-install verification require the associated GitHub Actions run; no local PostgreSQL service was available.
+
 ## CP-01
 
 - `npm run typecheck`: passed.
