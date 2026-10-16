@@ -1,8 +1,8 @@
 import "dotenv/config";
-import { UserRole } from "../src/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient, UserRole } from "../src/generated/prisma/client";
 import { authOptions } from "../src/lib/auth/options";
 import { verifyPassword } from "../src/lib/auth/password";
-import { prisma } from "../src/lib/db/prisma";
 
 const email = process.env.E2E_ADMIN_EMAIL;
 const password = process.env.E2E_ADMIN_PASSWORD;
@@ -13,6 +13,7 @@ const verifyPasswordHash = process.argv.includes("--password") || verifyAuthoriz
 if (!email || !password || !url)
   throw new Error("Set DATABASE_URL, E2E_ADMIN_EMAIL, and E2E_ADMIN_PASSWORD for CI verification.");
 
+const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: url }) });
 let phase = "read the bootstrapped administrator";
 
 try {
