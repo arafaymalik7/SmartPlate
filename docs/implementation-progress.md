@@ -4,7 +4,7 @@
 
 - Timestamp: 2026-10-16 (Asia/Karachi)
 - Implementation: GitHub Actions now creates a fresh random password and signing secret for each disposable PostgreSQL job, bootstraps an administrator only inside that job, and runs a dedicated desktop browser journey. The journey rejects invalid credentials, signs in, creates a published restaurant/category/menu item, verifies public visibility, edits and archives the item, confirms its audit event and public removal, and signs out. No administrator credential is committed or reused outside the job.
-- Local verification: `npm run lint`, `npm run typecheck`, serialized `npx vitest run --maxWorkers=1 --no-file-parallelism` (12 files, 27 tests), `npm run build` (20 routes), and fallback `npm run test:e2e` (33 passed, 6 intentionally skipped authenticated-only cases) passed. The real authenticated path requires the disposable PostgreSQL CI job and is pending its result for this commit.
+- Local verification: `npm run lint`, `npm run typecheck`, serialized `npx vitest run --maxWorkers=1 --no-file-parallelism` (12 files, 27 tests), `npm run build` (20 routes), and fallback `npm run test:e2e -- --reporter=line` (33 passed, 6 intentionally skipped authenticated-only cases) passed. The first CI attempt showed that temporary credentials alone were not a sufficient opt-in because the fallback command clears database variables; the suite now also requires a live `DATABASE_URL`. The real authenticated path requires the disposable PostgreSQL CI job and is pending its corrected result.
 
 ## CP-20 — Prisma dependency security remediation
 

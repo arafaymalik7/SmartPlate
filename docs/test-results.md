@@ -3,7 +3,7 @@
 ## CP-15/16/17/18 authenticated CI workflow (pending remote result)
 
 - Local static and fallback verification passed: lint, strict TypeScript, 12 test files / 27 tests, production build (20 routes), and Playwright 33 passed / 6 credential-gated admin cases skipped.
-- The new `npm run test:e2e:admin` path runs only with a CI-generated administrator and disposable PostgreSQL database; the associated remote job will be recorded after completion.
+- CI run #69 initially failed in the fallback browser command because inherited disposable credentials incorrectly enabled database-only cases after the command cleared `DATABASE_URL`. The suite now explicitly requires both credentials and a live database URL; the corrected remote job will be recorded after completion.
 
 ## CP-20 Prisma 7.10.1 dependency remediation
 

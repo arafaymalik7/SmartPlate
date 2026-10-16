@@ -2,7 +2,10 @@ import { expect, test, type Page } from "@playwright/test";
 
 const adminEmail = process.env.E2E_ADMIN_EMAIL;
 const adminPassword = process.env.E2E_ADMIN_PASSWORD;
-const hasDisposableAdmin = Boolean(adminEmail && adminPassword);
+// The public browser suite intentionally clears database variables to exercise
+// illustrative fallback data. Credentials alone must not opt this suite into
+// database-backed admin mutations.
+const hasDisposableAdmin = Boolean(adminEmail && adminPassword && process.env.DATABASE_URL);
 
 function formWithHeading(page: Page, heading: string) {
   return page.locator("form").filter({ has: page.getByRole("heading", { name: heading }) });
@@ -17,7 +20,7 @@ async function signIn(page: Page) {
 }
 
 test.describe("authenticated administrator workflow", () => {
-  test.skip(!hasDisposableAdmin, "requires the disposable CI administrator");
+  test.skip(!hasDisposableAdmin, "requires disposable CI credentials and PostgreSQL");
 
   test("invalid credentials do not grant access", async ({ page }) => {
     await page.goto("/admin/sign-in");
