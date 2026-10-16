@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import Link from "next/link";
 import { authOptions } from "@/lib/auth/options";
 import { SiteShell } from "@/components/site-shell";

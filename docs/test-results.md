@@ -5,6 +5,7 @@
 - Local static and fallback verification passed: lint, strict TypeScript, 13 test files / 29 tests, production build (20 routes), and Playwright 33 passed / 6 credential-gated admin cases skipped.
 - CI run #69 initially failed in the fallback browser command because inherited disposable credentials incorrectly enabled database-only cases after the command cleared `DATABASE_URL`. The suite now explicitly requires both credentials and a live database URL; the corrected remote job will be recorded after completion.
 - The corrected isolation run exposed an ambiguous credentials-provider result in the sign-in UI. The component now treats missing, error, and non-success results as a visible failed sign-in; focused component coverage passed before the next remote run.
+- The valid browser-login gate still requires a passing remote session read. Server-side page and API session checks now import the documented `getServerSession` entry point from `next-auth/next`; the next CI run is the authoritative result.
 
 ## CP-20 Prisma 7.10.1 dependency remediation
 
