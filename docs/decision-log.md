@@ -4,7 +4,7 @@
 
 - **Decision:** pin `prisma`, `@prisma/client`, and `@prisma/adapter-pg` together at 7.10.1 rather than moving to Prisma 8 release candidates.
 - **Reason:** the prior 7.10.0 production dependency tree had transitive audit findings; 7.10.1 resolves them while retaining the declared Prisma 7 compatibility line. The currently advertised Prisma 8 package is a release candidate and is outside the project's no-prerelease maintenance policy.
-- **Evidence:** local `npm audit --omit=dev` reported zero vulnerabilities; client generation, lint, strict TypeScript, 27 unit tests, production build, and 33 responsive browser checks passed before the change was committed.
+- **Evidence:** local `npm audit --omit=dev` reported zero vulnerabilities; client generation, lint, strict TypeScript, 27 unit tests, production build, and 33 responsive browser checks passed before the change was committed. GitHub Actions CI #67 then independently passed the clean-install PostgreSQL migration/seed/catalog/visibility/recommendation and browser workflow for `9fbb17d`: https://github.com/arafaymalik7/SmartPlate/actions/runs/38881168977.
 
 ## 2026-10-15 — CP-01 JavaScript stack baseline
 

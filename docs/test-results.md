@@ -7,7 +7,7 @@
 - `npm run lint`, `npm run typecheck`, and `npm test`: passed; 12 test files / 27 tests.
 - `npm run build`: passed; 20 routes generated.
 - `npm run test:e2e`: passed, 33/33 production-build checks across 375px, 768px, and 1440px.
-- Database migration/seed and clean-install verification require the associated GitHub Actions run; no local PostgreSQL service was available.
+- GitHub Actions CI #67 passed the clean install, PostgreSQL migration/double-seed/catalog/visibility/recommendation checks, full unit suite, production build, and browser suite: https://github.com/arafaymalik7/SmartPlate/actions/runs/38881168977. No local PostgreSQL service was available.
 
 ## CP-01
 
