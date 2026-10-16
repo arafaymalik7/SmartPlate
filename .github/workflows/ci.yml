@@ -49,7 +49,10 @@ jobs:
             echo "NEXTAUTH_SECRET=$auth_secret"
           } >> "$GITHUB_ENV"
       - run: npm run admin:bootstrap
-      - run: npm run admin:verify-bootstrap
+      - name: Verify disposable administrator bootstrap
+        run: npm run admin:verify-bootstrap
+      - name: Verify disposable administrator credentials authorization
+        run: npm run admin:verify-authorizer
       - run: npm test
       - run: npm run build
       - run: npx playwright install --with-deps chromium
