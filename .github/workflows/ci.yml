@@ -55,5 +55,7 @@ jobs:
       - run: DATABASE_URL= DIRECT_URL= npm run test:e2e
       - name: Verify invalid administrator credentials
         run: npm run test:e2e:admin -- --grep "invalid credentials"
+      - name: Verify valid administrator credentials
+        run: npm run test:e2e:admin -- --grep "^valid credentials open"
       - name: Verify authenticated administrator lifecycle
         run: npm run test:e2e:admin -- --grep "admin UI persists"
