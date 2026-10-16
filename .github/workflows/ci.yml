@@ -49,6 +49,7 @@ jobs:
             echo "NEXTAUTH_SECRET=$auth_secret"
           } >> "$GITHUB_ENV"
       - run: npm run admin:bootstrap
+      - run: npm run admin:verify-bootstrap
       - run: npm test
       - run: npm run build
       - run: npx playwright install --with-deps chromium
