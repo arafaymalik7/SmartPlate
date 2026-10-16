@@ -18,11 +18,21 @@ try {
   if (!user || user.role !== UserRole.ADMIN || !verifyPassword(password, user.passwordHash))
     throw new Error("Disposable administrator bootstrap verification failed.");
 
-  const provider = authOptions.providers.find((candidate) => candidate.id === "credentials");
-  if (!provider || provider.type !== "credentials" || !provider.authorize)
+  const provider = authOptions.providers.find((candidate) => candidate.id === "credentials") as
+    | (typeof authOptions.providers)[number] & {
+        options?: {
+          authorize?: (credentials: Record<string, string>, request: Request) => Promise<unknown>;
+        };
+      }
+    | undefined;
+  // CredentialsProvider keeps the configured callback in `options`; its outer
+  // provider shell intentionally has a placeholder authorize function until
+  // NextAuth normalizes the provider for a request.
+  const authorize = provider?.options?.authorize;
+  if (!provider || provider.type !== "credentials" || !authorize)
     throw new Error("Credentials provider is not configured.");
 
-  const authorized = await provider.authorize({ email, password }, new Request("http://localhost"));
+  const authorized = await authorize({ email, password }, new Request("http://localhost"));
   if (!authorized || authorized.id !== user.id || authorized.email !== user.email)
     throw new Error("Credentials authorization verification failed.");
 
