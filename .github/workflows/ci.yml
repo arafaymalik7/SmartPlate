@@ -53,4 +53,7 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: DATABASE_URL= DIRECT_URL= npm run test:e2e
-      - run: npm run test:e2e:admin
+      - name: Verify invalid administrator credentials
+        run: npm run test:e2e:admin -- --grep "invalid credentials"
+      - name: Verify authenticated administrator lifecycle
+        run: npm run test:e2e:admin -- --grep "admin UI persists"
