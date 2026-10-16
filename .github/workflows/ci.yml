@@ -33,7 +33,24 @@ jobs:
       - run: npm run db:verify-seed
       - run: npm run db:verify-public-catalog
       - run: npm run db:verify-public-visibility
+      - name: Prepare a disposable browser administrator
+        shell: bash
+        run: |
+          browser_password="$(openssl rand -hex 32)"
+          auth_secret="$(openssl rand -hex 32)"
+          echo "::add-mask::$browser_password"
+          echo "::add-mask::$auth_secret"
+          {
+            echo "ADMIN_BOOTSTRAP_EMAIL=ci-admin@example.test"
+            echo "ADMIN_BOOTSTRAP_PASSWORD=$browser_password"
+            echo "E2E_ADMIN_EMAIL=ci-admin@example.test"
+            echo "E2E_ADMIN_PASSWORD=$browser_password"
+            echo "AUTH_SECRET=$auth_secret"
+            echo "NEXTAUTH_SECRET=$auth_secret"
+          } >> "$GITHUB_ENV"
+      - run: npm run admin:bootstrap
       - run: npm test
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: DATABASE_URL= DIRECT_URL= npm run test:e2e
+      - run: npm run test:e2e:admin

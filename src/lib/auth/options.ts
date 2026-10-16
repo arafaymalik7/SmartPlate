@@ -3,6 +3,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { verifyPassword } from "@/lib/auth/password";
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
+  // Keep the Auth.js signing key server-only and accept either documented environment name.
+  // The CI workflow supplies a fresh random value for each disposable test run.
+  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "Admin",

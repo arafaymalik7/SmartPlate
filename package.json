@@ -18,6 +18,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "test:e2e:admin": "playwright test tests/e2e/admin-authenticated.spec.ts --project=desktop-1440",
     "verify:public-url": "node scripts/verify-public-url.mjs",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",

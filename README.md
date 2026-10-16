@@ -24,6 +24,8 @@ npm run build
 npm run test:e2e
 ```
 
+`npm run test:e2e:admin` is intentionally credential-gated. GitHub Actions creates a temporary administrator and PostgreSQL database for that protected lifecycle check; do not add a reusable administrator password to a local config merely to run it.
+
 After an actual HTTPS deployment, run `npm run verify:public-url -- https://your-smartplate.example`. The command is a public smoke check and does not itself prove authenticated administration or database acceptance.
 
 ## Data integrity

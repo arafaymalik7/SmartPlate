@@ -48,6 +48,7 @@ export default defineConfig({
     env: {
       ...process.env,
       AUTH_SECRET: e2eAuthSecret,
+      NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET ?? e2eAuthSecret,
       NEXTAUTH_URL: "http://127.0.0.1:3000",
     },
   },

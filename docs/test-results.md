@@ -1,5 +1,10 @@
 # Test results
 
+## CP-15/16/17/18 authenticated CI workflow (pending remote result)
+
+- Local static and fallback verification passed: lint, strict TypeScript, 12 test files / 27 tests, production build (20 routes), and Playwright 33 passed / 6 credential-gated admin cases skipped.
+- The new `npm run test:e2e:admin` path runs only with a CI-generated administrator and disposable PostgreSQL database; the associated remote job will be recorded after completion.
+
 ## CP-20 Prisma 7.10.1 dependency remediation
 
 - `npm audit --omit=dev`: passed, `found 0 vulnerabilities` for production dependencies.
