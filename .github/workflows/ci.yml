@@ -51,6 +51,8 @@ jobs:
       - run: npm run admin:bootstrap
       - name: Verify disposable administrator bootstrap
         run: npm run admin:verify-bootstrap
+      - name: Verify disposable administrator password hash
+        run: npm run admin:verify-password
       - name: Verify disposable administrator credentials authorization
         run: npm run admin:verify-authorizer
       - run: npm test

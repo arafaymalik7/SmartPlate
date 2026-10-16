@@ -29,6 +29,7 @@
     "db:verify-public-visibility": "tsx scripts/verify-public-visibility.ts",
     "admin:bootstrap": "tsx scripts/bootstrap-admin.ts",
     "admin:verify-bootstrap": "tsx scripts/verify-admin-bootstrap.ts",
+    "admin:verify-password": "tsx scripts/verify-admin-bootstrap.ts --password",
     "admin:verify-authorizer": "tsx scripts/verify-admin-bootstrap.ts --authorize"
   },
   "dependencies": {

@@ -8,6 +8,7 @@ const email = process.env.E2E_ADMIN_EMAIL;
 const password = process.env.E2E_ADMIN_PASSWORD;
 const url = process.env.DATABASE_URL;
 const verifyAuthorizer = process.argv.includes("--authorize");
+const verifyPasswordHash = process.argv.includes("--password") || verifyAuthorizer;
 
 if (!email || !password || !url)
   throw new Error("Set DATABASE_URL, E2E_ADMIN_EMAIL, and E2E_ADMIN_PASSWORD for CI verification.");
@@ -16,10 +17,17 @@ let phase = "read the bootstrapped administrator";
 
 try {
   const user = await prisma.user.findUnique({ where: { email } });
-  if (!user || user.role !== UserRole.ADMIN || !verifyPassword(password, user.passwordHash))
-    throw new Error("Disposable administrator bootstrap verification failed.");
+  if (!user || user.role !== UserRole.ADMIN)
+    throw new Error("Disposable administrator record verification failed.");
+  if (verifyPasswordHash && !verifyPassword(password, user.passwordHash))
+    throw new Error("Disposable administrator password-hash verification failed.");
 
-  if (!verifyAuthorizer) console.log("Disposable administrator record and password hash verified.");
+  if (!verifyAuthorizer)
+    console.log(
+      verifyPasswordHash
+        ? "Disposable administrator password hash verified."
+        : "Disposable administrator record verified.",
+    );
   else {
     phase = "load the configured credentials provider";
     const provider = authOptions.providers.find((candidate) => candidate.id === "credentials") as
