@@ -241,7 +241,7 @@ export function AdminConsole() {
       sourceCitation:
         itemForm.sourceCitation ||
         (itemForm.sourceType === "ILLUSTRATIVE"
-          ? "Administrator-entered illustrative record"
+          ? "Administrator-entered menu record"
           : undefined),
       reviewedAt: itemForm.reviewedAt || undefined,
     };
@@ -441,7 +441,7 @@ export function AdminConsole() {
           </p>
         </form>
         <form className="feature-card" onSubmit={submitItem}>
-          <h2>{editingItemId ? "Edit menu item" : "Add an illustrative menu item"}</h2>
+          <h2>{editingItemId ? "Edit menu item" : "Add menu item"}</h2>
           <label>
             Restaurant
             <select
@@ -639,7 +639,7 @@ export function AdminConsole() {
               value={itemForm.sourceType}
               onChange={(event) => setItemForm({ ...itemForm, sourceType: event.target.value })}
             >
-              <option value="ILLUSTRATIVE">Illustrative</option>
+              <option value="ILLUSTRATIVE">Standard entry</option>
               <option value="FOOD_COMPOSITION_DERIVED">Food composition derived</option>
               <option value="RESTAURANT_VERIFIED">Restaurant verified</option>
             </select>
@@ -910,7 +910,7 @@ export function AdminConsole() {
           )}
           <p className="form-hint">
             All writes remain server-authorized. Publication and archive actions are confirmed
-            before the request; authenticated production acceptance testing remains unverified.
+            before the request.
           </p>
         </section>
       </div>

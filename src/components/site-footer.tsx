@@ -16,7 +16,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="shell footer-note">
-        Demo restaurants and nutrition values are illustrative, not medical or allergy-safety
+        SMARTPLATE supports everyday meal exploration and does not provide medical or allergy-safety
         advice.
       </div>
     </footer>

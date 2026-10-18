@@ -8,6 +8,8 @@
   --muted: #61736b;
   --line: #d9e2d7;
   --focus: #bb5b3f;
+  --sun: #e9bb68;
+  --wash: #edf3e8;
   font-family: Aptos, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
 }
 * {
@@ -15,12 +17,17 @@
 }
 html {
   scroll-behavior: smooth;
+  scrollbar-color: var(--pine) var(--cream);
 }
 body {
   margin: 0;
   min-width: 320px;
   background: var(--cream);
   color: var(--ink);
+}
+::selection {
+  background: #cce0c8;
+  color: var(--forest);
 }
 a {
   color: inherit;
@@ -72,8 +79,11 @@ button:focus-visible {
   border-radius: 50%;
   background: var(--forest);
   color: #fff;
-  font-size: 0.68rem;
-  letter-spacing: 0;
+  box-shadow: 0 6px 14px rgba(23, 63, 53, 0.2);
+}
+.brand-mark svg {
+  width: 19px;
+  height: 19px;
 }
 .nav-row nav {
   display: flex;
@@ -81,6 +91,28 @@ button:focus-visible {
   font-size: 0.88rem;
   color: var(--muted);
   font-weight: 650;
+}
+.nav-row nav a {
+  position: relative;
+  transition: color 180ms ease;
+}
+.nav-row nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: -7px;
+  left: 0;
+  height: 1.5px;
+  content: "";
+  background: var(--pine);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
+}
+.nav-row nav a:hover {
+  color: var(--forest);
+}
+.nav-row nav a:hover::after {
+  transform: scaleX(1);
 }
 .button {
   display: inline-flex;
@@ -96,6 +128,15 @@ button:focus-visible {
   font-size: 0.9rem;
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(23, 63, 53, 0.12);
+  transition:
+    background 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+.button:hover {
+  background: var(--pine);
+  box-shadow: 0 11px 24px rgba(23, 63, 53, 0.19);
+  transform: translateY(-1px);
 }
 .button-small {
   min-height: 38px;
@@ -104,6 +145,10 @@ button:focus-visible {
 .button-secondary {
   background: transparent;
   color: var(--forest);
+  box-shadow: none;
+}
+.button-secondary:hover {
+  background: var(--wash);
   box-shadow: none;
 }
 .skip-link {
@@ -118,7 +163,9 @@ button:focus-visible {
   top: 10px;
 }
 .hero {
-  background: linear-gradient(119deg, #eff3e9 0%, #f8f7f0 55%, #e6efe3 100%);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(119deg, #edf3e8 0%, #faf8f2 54%, #e4eee2 100%);
   border-bottom: 1px solid var(--line);
 }
 .hero-grid {
@@ -127,6 +174,10 @@ button:focus-visible {
   grid-template-columns: 1.25fr 0.75fr;
   align-items: center;
   gap: 64px;
+}
+.hero-grid > * {
+  position: relative;
+  z-index: 1;
 }
 .state-label {
   font-size: 0.75rem;
@@ -138,12 +189,19 @@ button:focus-visible {
 }
 .hero h1,
 .state-page h1,
-.section-heading h2 {
+.section-heading h2,
+.page-title {
   font-size: clamp(2.75rem, 6vw, 5.5rem);
   line-height: 0.98;
   letter-spacing: -0.055em;
   margin: 0;
   max-width: 780px;
+}
+.page-title {
+  font-size: clamp(2.75rem, 5.4vw, 4.8rem);
+  line-height: 1.01;
+  letter-spacing: -0.052em;
+  margin: 0;
 }
 .lede {
   max-width: 630px;
@@ -170,6 +228,21 @@ button:focus-visible {
   padding: 32px;
   border-radius: 16px;
   box-shadow: 0 22px 44px rgba(24, 62, 53, 0.18);
+}
+.hero-panel-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 24px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--sun);
+}
+.hero-panel-icon svg {
+  width: 25px;
+  height: 25px;
 }
 .hero-panel p {
   margin-top: 0;
@@ -224,6 +297,15 @@ button:focus-visible {
   padding: 27px 0;
   border-top: 1px solid var(--forest);
 }
+.feature-icon {
+  width: 43px;
+  height: 43px;
+  margin: 0 0 24px;
+  padding: 9px;
+  border-radius: 14px;
+  background: var(--wash);
+  color: var(--pine);
+}
 .feature-grid h3 {
   font-size: 1.22rem;
   margin: 0 0 11px;
@@ -252,7 +334,7 @@ button:focus-visible {
   background: var(--forest);
   box-shadow: 0 10px 22px rgb(23 63 53 / 18%);
   color: #fff;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   font-weight: 850;
   letter-spacing: 0.04em;
 }
@@ -283,6 +365,11 @@ button:focus-visible {
   background: #fff;
   color: var(--ink);
   padding: 9px 11px;
+}
+.feature-card input::placeholder,
+.directory-controls input::placeholder,
+.menu-controls input::placeholder {
+  color: #718178;
 }
 .feature-card input:focus,
 .feature-card select:focus {
@@ -416,6 +503,14 @@ button:focus-visible {
   color: var(--ink);
   padding: 9px 11px;
 }
+.directory-controls input:focus,
+.directory-controls select:focus,
+.menu-controls input:focus,
+.menu-controls select:focus {
+  outline: 3px solid color-mix(in srgb, var(--focus) 45%, transparent);
+  outline-offset: 1px;
+  border-color: var(--focus);
+}
 .empty-state {
   border: 1px dashed var(--pine);
   border-radius: 12px;
@@ -504,6 +599,12 @@ button:focus-visible {
   border-bottom: 1px solid var(--line);
   vertical-align: top;
 }
+.table-wrap tr:last-child td {
+  border-bottom: 0;
+}
+.table-wrap tbody tr:hover {
+  background: #f3f7ef;
+}
 .table-wrap th {
   color: var(--forest);
 }
@@ -569,6 +670,42 @@ button:focus-visible {
 .skeleton-line.short {
   width: 60%;
 }
+.home-callout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  margin-top: 84px;
+  padding: 28px 30px;
+  border-top: 1px solid var(--forest);
+  border-bottom: 1px solid var(--line);
+  background: #f1f5ed;
+}
+.home-callout-icon {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  border-radius: 16px;
+  background: var(--forest);
+  color: var(--sun);
+  box-shadow: 0 12px 24px rgba(23, 63, 53, 0.16);
+}
+.home-callout-icon svg {
+  width: 28px;
+  height: 28px;
+}
+.home-callout h2 {
+  margin: 0 0 5px;
+  font-size: 1.3rem;
+  letter-spacing: -0.025em;
+}
+.home-callout p {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
 @media (min-width: 761px) and (max-width: 1050px) {
   .nutrition-detail-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -603,6 +740,15 @@ button:focus-visible {
   .feature-grid {
     grid-template-columns: 1fr;
     gap: 26px;
+  }
+  .home-callout {
+    grid-template-columns: auto 1fr;
+    gap: 17px;
+    margin-top: 56px;
+    padding: 24px;
+  }
+  .home-callout .button {
+    grid-column: 1 / -1;
   }
   .recommendation-grid {
     grid-template-columns: 1fr;

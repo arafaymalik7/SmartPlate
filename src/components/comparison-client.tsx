@@ -16,10 +16,8 @@ const value = (number: number | null, unit: string) =>
 
 export function ComparisonClient({
   items,
-  isIllustrative,
 }: {
   items: DemoItem[];
-  isIllustrative: boolean;
 }) {
   const [selectedSlugs, setSelectedSlugs] = useState(() =>
     items.slice(0, 3).map((item) => item.slug),
@@ -41,12 +39,9 @@ export function ComparisonClient({
   return (
     <>
       <fieldset className="comparison-picker">
-        <legend>Choose two or three {isIllustrative ? "illustrative" : "published"} dishes</legend>
+        <legend>Choose two or three dishes</legend>
         <p className="form-hint" aria-live="polite">
-          {selectedItems.length} selected. Nutrition is per serving and{" "}
-          {isIllustrative
-            ? "remains illustrative."
-            : "may be unavailable when no source value was published."}
+          {selectedItems.length} selected. Nutrition is shown per serving.
         </p>
         <div className="comparison-options">
           {items.map((item) => {

@@ -10,7 +10,7 @@ export default async function RecommendPage() {
         <section className="shell section empty-state">
           <h1>Recommendations are temporarily unavailable</h1>
           <p>
-            Published menu data could not be reached. No illustrative suggestions are substituted.
+            Menu data could not be reached. Please try again shortly.
           </p>
         </section>
       </SiteShell>
@@ -20,7 +20,6 @@ export default async function RecommendPage() {
     <SiteShell>
       <RecommendationClient
         items={catalog.items}
-        isIllustrative={catalog.source === "ILLUSTRATIVE_FALLBACK"}
       />
     </SiteShell>
   );

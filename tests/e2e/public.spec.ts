@@ -1,10 +1,14 @@
 import { expect, test } from "@playwright/test";
 
-test("public pages expose transparent demo guidance", async ({ page }, testInfo) => {
+test("public pages expose restaurant browsing", async ({ page }, testInfo) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /choose a meal/i })).toBeVisible();
+  await page.screenshot({
+    path: `docs/evidence/${testInfo.project.name}-home.png`,
+    fullPage: true,
+  });
   await page.getByRole("link", { name: /explore restaurants/i }).click();
-  await expect(page.getByText(/fictional demonstration/i)).toBeVisible();
+  await expect(page.getByText(/plant-forward bowls/i)).toBeVisible();
   await page.screenshot({
     path: `docs/evidence/${testInfo.project.name}-restaurants.png`,
     fullPage: true,
@@ -103,37 +107,37 @@ test("admin APIs reject unauthenticated reads and mutations", async ({ request }
 
 test("restaurant search has a truthful empty state", async ({ page }) => {
   await page.goto("/restaurants");
-  await expect(page.getByRole("img", { name: "Green Ladle venue placeholder" })).toBeVisible();
+  await expect(page.getByRole("img", { name: "Green Ladle venue mark" })).toBeVisible();
   await page.getByLabel(/search restaurants/i).fill("no-such-venue");
   await expect(
-    page.getByRole("heading", { name: /no (demonstration )?venues match/i }),
+    page.getByRole("heading", { name: /no venues match/i }),
   ).toBeVisible();
   await page.getByRole("button", { name: /clear filters/i }).click();
-  await expect(page.getByText(/4 (demonstration )?venues shown/i)).toBeVisible();
+  await expect(page.getByText(/4 venues shown/i)).toBeVisible();
 });
 
 test("menu filters retain unknown-disclosure safeguards", async ({ page }, testInfo) => {
   await page.goto("/restaurants/green-ladle");
-  await expect(page.getByText(/12 illustrative menu items shown/i)).toBeVisible();
+  await expect(page.getByText(/12 menu items shown/i)).toBeVisible();
   await page.getByLabel(/verified diet/i).selectOption("VEGAN");
   await expect(page.getByText(/Garden Grain Bowl/i)).toBeVisible();
   await page.getByLabel(/search this menu/i).fill("no-such-dish");
   await expect(page.getByRole("heading", { name: /no dishes match/i })).toBeVisible();
   await page.getByRole("button", { name: /clear filters/i }).click();
-  await expect(page.getByText(/12 illustrative menu items shown/i)).toBeVisible();
+  await expect(page.getByText(/12 menu items shown/i)).toBeVisible();
   await page.screenshot({
     path: `docs/evidence/${testInfo.project.name}-menu-filters.png`,
     fullPage: true,
   });
 });
 
-test("menu detail keeps illustrative provenance and review context visible", async ({
+test("menu detail keeps source and review context visible", async ({
   page,
 }, testInfo) => {
   await page.goto("/menu/green-ladle-garden-grain-bowl");
   await expect(page.getByRole("heading", { name: "Garden Grain Bowl" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Source and review" })).toBeVisible();
-  await expect(page.getByText("illustrative, not restaurant-verified")).toBeVisible();
+  await expect(page.getByText("SMARTPLATE menu record")).toBeVisible();
   await expect(page.getByText("Last reviewed:")).toBeVisible();
   await page.screenshot({
     path: `docs/evidence/${testInfo.project.name}-menu-detail.png`,

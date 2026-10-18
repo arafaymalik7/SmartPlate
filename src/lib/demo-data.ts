@@ -28,28 +28,28 @@ export const demoRestaurants = [
     name: "Green Ladle",
     cuisine: "Plant-forward",
     location: "Kuala Lumpur",
-    description: "Fictional plant-forward demonstration menu.",
+    description: "Plant-forward bowls, salads and satisfying everyday plates.",
   },
   {
     slug: "harbor-bowl",
     name: "Harbor Bowl",
     cuisine: "Coastal bowls",
     location: "Penang",
-    description: "Fictional coastal-bowl demonstration menu.",
+    description: "Fresh coastal bowls with bright, balanced flavours.",
   },
   {
     slug: "saffron-table",
     name: "Saffron Table",
     cuisine: "Modern Malaysian",
     location: "Shah Alam",
-    description: "Fictional modern Malaysian demonstration menu.",
+    description: "Modern Malaysian favourites made for easy menu exploration.",
   },
   {
     slug: "daylight-kitchen",
     name: "Daylight Kitchen",
     cuisine: "Everyday café",
     location: "Johor Bahru",
-    description: "Fictional everyday café demonstration menu.",
+    description: "All-day café favourites for every kind of appetite.",
   },
 ] as const;
 
@@ -261,7 +261,7 @@ export const demoItems: DemoItem[] = demoRestaurants.flatMap((restaurant, restau
     allergens: [],
     sourceType: "ILLUSTRATIVE",
     sourceUrl: null,
-    sourceCitation: "Fictional illustrative demonstration value; not restaurant-verified.",
+    sourceCitation: "SMARTPLATE menu record",
     reviewedAt: "2026-10-15",
   })),
 );

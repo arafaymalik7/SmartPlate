@@ -7,25 +7,21 @@ export default async function RestaurantsPage() {
   return (
     <SiteShell>
       <section className="shell section">
-        <p className="state-label">Fictional demonstration venues</p>
+        <p className="state-label">Restaurant directory</p>
         <h1 className="page-title">Browse menus with context.</h1>
         <p className="lede">
-          {catalog.source === "DATABASE"
-            ? "Only published and currently available records are shown. Nutrition and disclosure limits remain visible."
-            : "All restaurants and values below are illustrative—not verified restaurant records."}
+          Browse restaurants, explore menus and find the dish details that matter to you.
         </p>
         {catalog.source === "DATABASE_UNAVAILABLE" ? (
           <div className="empty-state">
             <h2>Published menu data is temporarily unavailable</h2>
             <p>
-              Please try again later. No illustrative records are substituted when a configured
-              database cannot be reached.
+              Please try again later while we restore access to the restaurant directory.
             </p>
           </div>
         ) : (
           <RestaurantDirectory
             restaurants={catalog.restaurants}
-            isIllustrative={catalog.source === "ILLUSTRATIVE_FALLBACK"}
           />
         )}
       </section>

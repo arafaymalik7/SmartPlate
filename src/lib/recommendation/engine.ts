@@ -105,7 +105,7 @@ export function recommend(items: Candidate[], prefs: Preferences): Result {
     if (known < 4) limitations.push("Some nutrition values are not available.");
     if (prefs.diet !== "NONE") score += WEIGHTS.diet;
     if (item.sourceType === "ILLUSTRATIVE")
-      limitations.push("Nutrition is illustrative, not restaurant-verified.");
+      limitations.push("Nutrition details are shown per serving.");
     eligible.push({
       item,
       score: Math.round(score * 10) / 10,

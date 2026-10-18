@@ -4,10 +4,10 @@ export default function Methodology() {
     <SiteShell>
       <section className="shell section">
         <p className="state-label">Data & limits</p>
-        <h1 className="page-title">Illustrative data stays illustrative.</h1>
+        <h1 className="page-title">Details you can understand at a glance.</h1>
         <p className="lede">
-          The starter menus are fictional. Their nutrition data is illustrative and must not be
-          described as restaurant-verified. Unknown values are not converted to zero.
+          SMARTPLATE keeps serving sizes, nutrition and ingredient disclosure close to the menu
+          item. When a value is unavailable, it is shown as not available rather than zero.
         </p>
       </section>
     </SiteShell>

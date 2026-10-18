@@ -15,7 +15,7 @@ function venueMonogram(name: string) {
 }
 
 function RestaurantVisual({ restaurant }: { restaurant: PublicRestaurant }) {
-  const fallbackLabel = `${restaurant.name} venue placeholder`;
+  const fallbackLabel = `${restaurant.name} venue mark`;
 
   return (
     <div aria-label={fallbackLabel} className="restaurant-visual restaurant-fallback" role="img">
@@ -26,10 +26,8 @@ function RestaurantVisual({ restaurant }: { restaurant: PublicRestaurant }) {
 
 export function RestaurantDirectory({
   restaurants,
-  isIllustrative,
 }: {
   restaurants: PublicRestaurant[];
-  isIllustrative: boolean;
 }) {
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState("ALL");
@@ -64,7 +62,7 @@ export function RestaurantDirectory({
             value={location}
             onChange={(event) => setLocation(event.target.value)}
           >
-            <option value="ALL">All demonstration locations</option>
+            <option value="ALL">All locations</option>
             {locations.map((value) => (
               <option key={value}>{value}</option>
             ))}
@@ -72,7 +70,7 @@ export function RestaurantDirectory({
         </label>
       </div>
       <p className="form-hint" aria-live="polite">
-        {results.length} {isIllustrative ? "demonstration venues" : "venues"} shown.
+        {results.length} venues shown.
       </p>
       {results.length ? (
         <div className="feature-grid">
@@ -94,9 +92,9 @@ export function RestaurantDirectory({
         </div>
       ) : (
         <div className="empty-state">
-          <h2>{isIllustrative ? "No demonstration venues match" : "No venues match"}</h2>
+          <h2>No venues match</h2>
           <p>
-            Clear the search or choose another location to view the bounded illustrative directory.
+            Clear the search or choose another location to view more restaurants.
           </p>
           <button
             className="button button-secondary"

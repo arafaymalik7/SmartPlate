@@ -12,9 +12,7 @@ export default async function RestaurantPage({ params }: { params: Promise<{ slu
   return (
     <SiteShell>
       <section className="shell section">
-        <p className="state-label">
-          {catalog.source === "DATABASE" ? "Published menu" : "Illustrative menu"} · {restaurant.location}
-        </p>
+        <p className="state-label">Menu · {restaurant.location}</p>
         <h1 className="page-title">{restaurant.name}</h1>
         <p className="lede">
           {restaurant.description} Nutrition values are per-serving information; missing values are

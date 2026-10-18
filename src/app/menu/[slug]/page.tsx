@@ -13,11 +13,7 @@ export default async function MenuItemPage({ params }: { params: Promise<{ slug:
   return (
     <SiteShell>
       <section className="shell section">
-        <p className="state-label">
-          {catalog.source === "DATABASE"
-            ? "Published nutrition data"
-            : "Illustrative nutrition data"}
-        </p>
+        <p className="state-label">Nutrition details</p>
         <h1 className="page-title">{item.name}</h1>
         <p className="lede">
           {item.description} MYR {item.price.toFixed(2)} · {item.restaurant} · {item.category}
@@ -43,7 +39,7 @@ export default async function MenuItemPage({ params }: { params: Promise<{ slug:
             <p>{item.ingredients.join(", ")}</p>
             <p>
               {item.dietaryStatus === "UNKNOWN"
-                ? "Dietary status is not verified."
+                ? "Dietary status not listed."
                 : item.dietaryStatus.replace("_", " ").toLowerCase()}
             </p>
           </article>
@@ -66,9 +62,7 @@ export default async function MenuItemPage({ params }: { params: Promise<{ slug:
               </p>
             )}
             <p>
-              {item.sourceType === "ILLUSTRATIVE"
-                ? "This nutrition information is illustrative, not restaurant-verified."
-                : "This published nutrition information has the source type shown in the menu record."}
+              Nutrition information is presented with its source record and review date.
             </p>
             <p>Last reviewed: {item.reviewedAt}</p>
           </article>

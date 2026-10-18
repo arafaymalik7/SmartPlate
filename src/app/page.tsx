@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { SiteShell } from "@/components/site-shell";
+import { BalanceIcon, LeafIcon, ListCheckIcon, PlateIcon } from "@/components/ui-icons";
 export default function HomePage() {
   return (
     <SiteShell>
       <section className="hero">
         <div className="shell hero-grid">
           <div>
-            <p className="state-label">Menu clarity, without false certainty</p>
-            <h1>Choose a meal with the whole picture in view.</h1>
+            <p className="state-label">Menu clarity for everyday choices</p>
+            <h1>Choose a meal with every detail in view.</h1>
             <p className="lede">
               Explore transparent nutrition, ingredient disclosure and source context—then use your
               own preferences to compare practical options.
@@ -22,19 +23,22 @@ export default function HomePage() {
             </div>
           </div>
           <aside className="hero-panel">
-            <p>Every sample in this demo is clearly marked.</p>
+            <div className="hero-panel-icon" aria-hidden="true">
+              <LeafIcon />
+            </div>
+            <p>Everything you need for a more considered choice.</p>
             <dl>
               <div>
                 <dt>Nutrition</dt>
-                <dd>Per serving, never assumed</dd>
+                <dd>Clear per-serving details</dd>
               </div>
               <div>
                 <dt>Allergens</dt>
-                <dd>Unknown stays unknown</dd>
+                <dd>Ingredient information at a glance</dd>
               </div>
               <div>
                 <dt>Recommendations</dt>
-                <dd>Explainable, rule-based</dd>
+                <dd>Tailored to your priorities</dd>
               </div>
             </dl>
           </aside>
@@ -44,16 +48,17 @@ export default function HomePage() {
         <div className="section-heading">
           <h2>Built for the question behind the menu.</h2>
           <p>
-            SMARTPLATE helps you compare choices without presenting illustrative data as verified
-            restaurant facts.
+            SMARTPLATE brings the details that shape a decision together in a calm, useful view.
           </p>
         </div>
         <div className="feature-grid">
           <article>
+            <ListCheckIcon className="feature-icon" aria-hidden="true" />
             <h3>See what is known</h3>
-            <p>Nutrition, portions, ingredients and source labels are kept together.</p>
+            <p>Nutrition, portions and ingredients are kept together for quick scanning.</p>
           </article>
           <article>
+            <LeafIcon className="feature-icon" aria-hidden="true" />
             <h3>Set simple priorities</h3>
             <p>
               Use a calorie target, dietary preference or ingredient exclusion—without entering
@@ -61,9 +66,22 @@ export default function HomePage() {
             </p>
           </article>
           <article>
+            <BalanceIcon className="feature-icon" aria-hidden="true" />
             <h3>Understand a match</h3>
-            <p>Every result describes why it ranked and what could not be verified.</p>
+            <p>Every result explains why it suits the priorities you selected.</p>
           </article>
+        </div>
+        <div className="home-callout">
+          <div className="home-callout-icon" aria-hidden="true">
+            <PlateIcon />
+          </div>
+          <div>
+            <h2>A better way to browse the menu.</h2>
+            <p>Start with a restaurant, compare a few dishes, or set your meal preferences first.</p>
+          </div>
+          <Link className="button button-secondary" href="/compare">
+            Compare meals
+          </Link>
         </div>
       </section>
     </SiteShell>

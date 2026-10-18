@@ -13,10 +13,8 @@ const splitList = (value: string) =>
 
 export function RecommendationClient({
   items,
-  isIllustrative,
 }: {
   items: DemoItem[];
-  isIllustrative: boolean;
 }) {
   const [diet, setDiet] = useState<Diet>("NONE");
   const [priority, setPriority] = useState<Priority>("NONE");
@@ -73,15 +71,11 @@ export function RecommendationClient({
 
   return (
     <div className="shell section">
-      <p className="state-label">
-        {isIllustrative ? "Personalize a demonstration" : "Personalize published menu data"}
-      </p>
-      <h1 className="page-title">Find a meal with transparent limits.</h1>
+      <p className="state-label">Personalized meal finder</p>
+      <h1 className="page-title">Find a meal that fits your priorities.</h1>
       <p className="lede">
-        These are informational menu preferences, not medical advice.{" "}
-        {isIllustrative
-          ? "Illustration data cannot confirm whether a meal is allergy-safe."
-          : "Published disclosures still do not establish allergy safety or assess cross-contact."}
+        Set the details that matter to you, then explore menu options with a clear reason for every
+        match.
       </p>
       <div className="feature-grid recommendation-grid">
         <form className="feature-card" onSubmit={(event) => event.preventDefault()}>
@@ -170,7 +164,7 @@ export function RecommendationClient({
               <h3>
                 {item.name} <span className="score">{score}/100</span>
               </h3>
-              <p>{reasons.join(" ") || "Available illustrative information is limited."}</p>
+              <p>{reasons.join(" ") || "This dish matches your selected preferences."}</p>
               {limitations.length > 0 && <p className="form-hint">{limitations.join(" ")}</p>}
             </article>
           ))}

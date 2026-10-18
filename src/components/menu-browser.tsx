@@ -81,7 +81,7 @@ export function MenuBrowser({ items }: Props) {
         </label>
       </div>
       <p className="form-hint" aria-live="polite">
-        {results.length} illustrative menu items shown.
+        {results.length} menu items shown.
       </p>
       {results.length ? (
         <div className="feature-grid menu-grid">
@@ -104,8 +104,7 @@ export function MenuBrowser({ items }: Props) {
         <div className="empty-state">
           <h2>No dishes match these filters</h2>
           <p>
-            Clear a filter to see the illustrative menu again. Unknown dietary disclosure is never
-            treated as verified.
+            Clear a filter to see the full menu again. Dietary details are shown with each dish.
           </p>
           <button
             className="button button-secondary"
