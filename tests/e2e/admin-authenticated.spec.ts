@@ -41,7 +41,11 @@ test.describe("authenticated administrator workflow", () => {
   });
 
   test("valid credentials receive a successful Auth.js callback", async ({ page }) => {
-    expect((await submitCredentials(page, adminPassword!)).status()).toBe(200);
+    const response = await submitCredentials(page, adminPassword!);
+    const body = await response.text();
+    const error = body.match(/[?&]error=([^&"\\s]+)/)?.[1] ?? "none";
+    console.log(`::warning title=Auth callback diagnostic::status=${response.status()}, error=${error}`);
+    expect(response.status()).toBe(200);
   });
 
   test("valid credentials open the admin workspace", async ({ page }) => {
