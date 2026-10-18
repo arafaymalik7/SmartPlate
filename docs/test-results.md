@@ -5,7 +5,7 @@
 - Local static and fallback verification passed: lint, strict TypeScript, 13 test files / 29 tests, production build (20 routes), and Playwright 33 passed / 12 CI-only authenticated cases skipped.
 - CI run [39102708469](https://github.com/arafaymalik7/SmartPlate/actions/runs/39102708469) passed its clean install, PostgreSQL migration/double-seed/catalog/visibility checks, disposable administrator bootstrap, unit suite, production build, fallback browser suite, and invalid-credential denial. Its valid Credentials callback gate failed; session and lifecycle gates were skipped. A valid authenticated browser journey is therefore not claimed.
 - The corrected isolation run exposed an ambiguous credentials-provider result in the sign-in UI. The component now treats missing, error, and non-success results as a visible failed sign-in; focused component coverage passed before the next remote run.
-- Server-side page and API session checks now use the documented `getServerSession` entry point from `next-auth/next`. The remaining defect is limited to successful credential acceptance in the disposable CI environment and remains under investigation.
+- CI run [39104115120](https://github.com/arafaymalik7/SmartPlate/actions/runs/39104115120) additionally proved that the exact configured Credentials authorizer accepts the disposable administrator before Playwright starts. Invalid browser credentials return `401`, while the valid browser callback still fails after authorization during Auth.js token/session issuance. Server-side page and API session checks use the documented `getServerSession` entry point from `next-auth/next`; authenticated session/lifecycle completion remains unverified.
 
 ## CP-20 Prisma 7.10.1 dependency remediation
 
