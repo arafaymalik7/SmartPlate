@@ -47,6 +47,9 @@ jobs:
             echo "NEXTAUTH_SECRET=$auth_secret"
           } >> "$GITHUB_ENV"
       - run: npm run admin:bootstrap
+      - name: Diagnose configured administrator authorization
+        continue-on-error: true
+        run: npm run admin:verify-authorizer
       - run: npm test
       - run: npm run build
       - run: npx playwright install --with-deps chromium
