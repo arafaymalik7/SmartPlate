@@ -1,11 +1,15 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { verifyPassword } from "@/lib/auth/password";
+
+const authSecret = process.env.NEXTAUTH_SECRET ?? process.env.AUTH_SECRET;
+
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
-  // Keep the Auth.js signing key server-only and accept either documented environment name.
+  // Keep the Auth.js signing key server-only and use it for both core and JWT work.
   // The CI workflow supplies a fresh random value for each disposable test run.
-  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+  secret: authSecret,
+  ...(authSecret ? { jwt: { secret: authSecret } } : {}),
   providers: [
     CredentialsProvider({
       name: "Admin",
