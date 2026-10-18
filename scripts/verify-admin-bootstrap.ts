@@ -4,14 +4,14 @@ import { PrismaClient, UserRole } from "../src/generated/prisma/client";
 import { authOptions } from "../src/lib/auth/options";
 import { verifyPassword } from "../src/lib/auth/password";
 
-const email = process.env.E2E_ADMIN_EMAIL;
-const password = process.env.E2E_ADMIN_PASSWORD;
+const email = process.env.ADMIN_BOOTSTRAP_EMAIL;
+const password = process.env.ADMIN_BOOTSTRAP_PASSWORD;
 const url = process.env.DATABASE_URL;
 const verifyAuthorizer = process.argv.includes("--authorize");
 const verifyPasswordHash = process.argv.includes("--password") || verifyAuthorizer;
 
 if (!email || !password || !url)
-  throw new Error("Set DATABASE_URL, E2E_ADMIN_EMAIL, and E2E_ADMIN_PASSWORD for CI verification.");
+  throw new Error("Set DATABASE_URL, ADMIN_BOOTSTRAP_EMAIL, and ADMIN_BOOTSTRAP_PASSWORD for CI verification.");
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: url }) });
 let phase = "read the bootstrapped administrator";

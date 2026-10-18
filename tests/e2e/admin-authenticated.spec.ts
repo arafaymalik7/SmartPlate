@@ -1,11 +1,13 @@
 import { expect, test, type Page, type Response } from "@playwright/test";
 
-const adminEmail = process.env.E2E_ADMIN_EMAIL;
-const adminPassword = process.env.E2E_ADMIN_PASSWORD;
+const adminEmail = process.env.ADMIN_BOOTSTRAP_EMAIL;
+const adminPassword = process.env.ADMIN_BOOTSTRAP_PASSWORD;
 // The public browser suite intentionally clears database variables to exercise
 // illustrative fallback data. Credentials alone must not opt this suite into
 // database-backed admin mutations.
-const hasDisposableAdmin = Boolean(adminEmail && adminPassword && process.env.DATABASE_URL);
+const hasDisposableAdmin = Boolean(
+  process.env.CI === "true" && adminEmail && adminPassword && process.env.DATABASE_URL,
+);
 
 function formWithHeading(page: Page, heading: string) {
   return page.locator("form").filter({ has: page.getByRole("heading", { name: heading }) });

@@ -43,8 +43,6 @@ jobs:
           {
             echo "ADMIN_BOOTSTRAP_EMAIL=ci-admin@example.test"
             echo "ADMIN_BOOTSTRAP_PASSWORD=$browser_password"
-            echo "E2E_ADMIN_EMAIL=ci-admin@example.test"
-            echo "E2E_ADMIN_PASSWORD=$browser_password"
             echo "AUTH_SECRET=$auth_secret"
             echo "NEXTAUTH_SECRET=$auth_secret"
           } >> "$GITHUB_ENV"
