@@ -35,7 +35,7 @@ test.describe("authenticated administrator workflow", () => {
   test.skip(!hasDisposableAdmin, "requires disposable CI credentials and PostgreSQL");
 
   test("invalid credentials do not grant access", async ({ page }) => {
-    await submitCredentials(page, "not-the-disposable-password");
+    expect((await submitCredentials(page, "not-the-disposable-password")).status()).toBe(401);
     await page.goto("/admin");
     await expect(page.getByRole("heading", { name: "Protected workspace" })).toBeVisible();
   });
